@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dharma by MozillaSecurity</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Dharma</h1>
+        <p> A generation-based, context-free grammar fuzzer.</p>
+
+        <p class="view"><a href="https://github.com/MozillaSecurity/dharma">View the Project on GitHub <small>MozillaSecurity/dharma</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/MozillaSecurity/dharma/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/MozillaSecurity/dharma/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/MozillaSecurity/dharma">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h4>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h4>
+
+<hr>
+
+<p>None</p>
+
+<h4>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h4>
+
+<hr>
+
+<p>Generate a single test case.</p>
+
+<pre><code>% ./core/dharma.py -grammars grammar/webcrypto.dg
+</code></pre>
+
+<p>Generate a single test case with multiple grammars.</p>
+
+<pre><code>% ./core/dharma.py -grammars grammar/canvas2d.dg grammar/mediarecorder.dg
+</code></pre>
+
+<p>Generating test cases as files.</p>
+
+<pre><code>% ./core/dharma.py -grammars grammar/webcrypto.dg -storage . -count 5
+</code></pre>
+
+<p>Generate test cases, send each over WebSocket to Firefox, observe the process for crashes and bucket them.</p>
+
+<pre><code>% ./core/dharma.py -server -grammars grammar/canvas2d.dg -template var/templates/html5/default.html
+% ./framboise.py -setup inbound64-release -debug -worker 4 -testcase ~/dev/projects/fuzzers/dharma/var/index.html
+</code></pre>
+
+<p>Benchmark the generator.</p>
+
+<pre><code>% time ./core/dharma.py -grammars grammar/webcrypto.dg -count 10000 &gt; /dev/null
+</code></pre>
+
+<h4>
+<a id="grammar-cheetsheet" class="anchor" href="#grammar-cheetsheet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grammar Cheetsheet</h4>
+
+<hr>
+
+<h5>
+<a id="comment" class="anchor" href="#comment" aria-hidden="true"><span class="octicon octicon-link"></span></a>comment</h5>
+
+<pre><code>%%% comment
+</code></pre>
+
+<h5>
+<a id="controls" class="anchor" href="#controls" aria-hidden="true"><span class="octicon octicon-link"></span></a>controls</h5>
+
+<pre><code>%const% name := value
+</code></pre>
+
+<h5>
+<a id="sections" class="anchor" href="#sections" aria-hidden="true"><span class="octicon octicon-link"></span></a>sections</h5>
+
+<pre><code>%section% := value
+%section% := variable
+%section% := variance
+</code></pre>
+
+<h5>
+<a id="extension-methods" class="anchor" href="#extension-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>extension methods</h5>
+
+<pre><code>%range%(0-9)
+%range%(0.0-9.0)
+%range%(a-z)
+%range%(!-~)
+%range%(0x100-0x200)
+
+%repeat%(+variable+)
+%repeat%(+variable+, ", ")
+
+%uri%(path)
+%uri%(lookup_key)
+
+%block%(path)
+
+%choice%(foo, "bar", 1)
+</code></pre>
+
+<h5>
+<a id="assigning-values" class="anchor" href="#assigning-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>assigning values</h5>
+
+<pre><code>digit :=
+    %range%(0-9)
+
+sign :=
+    +
+    -
+
+value :=
+    +sign+%repeat%(+digit+)
+</code></pre>
+
+<h5>
+<a id="using-values" class="anchor" href="#using-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>using values</h5>
+
+<pre><code>+value+
+</code></pre>
+
+<h5>
+<a id="assigning-variables" class="anchor" href="#assigning-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>assigning variables</h5>
+
+<pre><code>variable :=
+    @variable@ = new Foo();
+</code></pre>
+
+<h5>
+<a id="using-variables" class="anchor" href="#using-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>using variables</h5>
+
+<pre><code>value :=
+    !variable!.bar();
+</code></pre>
+
+<h5>
+<a id="referencing-values-from-commondg" class="anchor" href="#referencing-values-from-commondg" aria-hidden="true"><span class="octicon octicon-link"></span></a>referencing values from common.dg</h5>
+
+<pre><code>value :=
+    attribute=+common:number+
+</code></pre>
+
+<h5>
+<a id="calling-javascript-library-functions" class="anchor" href="#calling-javascript-library-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>calling javascript library functions</h5>
+
+<pre><code>foo :=
+    Random.pick([0,1]);
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/MozillaSecurity">MozillaSecurity</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
