@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dharma WebSocket Publisher</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/undefined.js"></script>
+  </head>
+  <body style="margin:0px; padding:0px; overflow:hidden"></body>
+      <script type="text/javascript">
+      var URL = (window.URL || window.webkitURL);
+      var socket = null, target = null;
+      // ToDo: parse over location.search
+      var echo = 0; // Testcase should inform when a test case is done and should proceed to the next one. postMessage?
+      function createTargetFrame(id) {
+        var f = document.createElement("iframe");
+        f.setAttribute("id", id);
+        f.setAttribute("style", "overflow:hidden;height:100%;width:100%");
+        f.setAttribute("onload", "setTimeout(callback, " + echo +")");
+        document.body.appendChild(f);
+        return f;
+      }
+      window.addEventListener("load", function(event) {
+        if (!("WebSocket" in window)) {
+          alert("WebSocket support is not available.");
+          try {
+            window.close();
+          } catch (e) {
+            return;
+          }
+        }
+        target = createTargetFrame("target");
+        socket = new WebSocket("ws://127.0.0.1:9090");
+        socket.onopen = function(event) {
+          socket.send(JSON.stringify({status:"open"}));
+        };
+        socket.onclose = function(event) {
+          socket.send(JSON.stringify({status:"closed"}));
+        };
+        socket.onerror = function(event) {
+          console.log(event);
+        };
+        socket.onmessage = function(event) {
+          if (window.Logger) {
+              Logger.separator();
+              Logger.testcase(event.data);
+              Logger.dumpln(Logger.comment("### END OF TESTCASE"));
+          }
+          target.src = URL.createObjectURL(new Blob([event.data], {type:"text/html"}));
+        };
+      });
+      function callback() {
+        if (socket.readyState == 1) {
+          // ToDo: release window.URL.revokeObjectURL(target.src);
+          socket.send(JSON.stringify({status:"success"}));
+        }
+      }
+    </script>
+</html>

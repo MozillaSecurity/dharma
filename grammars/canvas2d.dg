@@ -1,0 +1,272 @@
+%%% Canvas2D API
+
+%%% Specification: http://www.w3.org/html/wg/drafts/2dcontext/html5_canvas/
+%%% Firefox WebIDL: https://github.com/mozilla/gecko-dev/blob/inbound/dom/webidl/CanvasRenderingContext2D.webidl
+%%% Blink WebIDL: https://github.com/mirrors/blink/tree/master/Source/core/html/canvas
+
+%%% ###########################################################################
+
+%const% VARIANCE_MAX := 10
+%const% VARIANCE_TEMPLATE := "try { %s } catch (e) { }"
+%const% MAX_REPEAT_POWER := 4
+
+%%% ###########################################################################
+
+%section% := value
+
+Canvas2DContextAttributeOptions :=
+	alpha:+common:bool+
+	willReadFrequently:+common:bool+
+
+Canvas2DContextAttributes :=
+	{ +Canvas2DContextAttributeOptions+ }
+	{ %repeat%(+Canvas2DContextAttributeOptions+, ", ") }
+
+canvasWindingRule :=
+	nonzero
+	evenodd
+
+globalCompositeOperation :=
+	source-atop
+	source-in
+	source-out
+	source-over
+	destination-atop
+	destination-in
+	destination-out
+	destination-over
+	lighter
+	copy
+	exclusion
+
+lineJoin :=
+	butt
+	round
+	square
+
+lineCap :=
+	round
+	bevel
+	miter
+
+textAlign :=
+	start
+	end
+	left
+	right
+	center
+
+textBaseline :=
+	top
+	hanging
+	middle
+	alphabetic
+	ideographic
+	bottom
+
+dash_array_values :=
+	0
+	1
+
+createPattern_params :=
+	repeat
+	repeat-x
+	repeat-y
+	no-repeat
+
+hitRegionOptionValues :=
+	id:"!hitRegion!"
+	control: null
+
+hitRegionOptions :=
+	{ +hitRegionOptionValues+ }
+	{ %repeat%(+hitRegionOptionValues+, ", ") }
+
+canvasAttributes :=
+	!context!.canvas.width=+common:number+;
+	!context!.canvas.height=+common:number+;
+	!context!.canvas.mozOpaque=+common:bool+;
+
+contextAttributes :=
+	!context!.globalAlpha=+common:number+;
+	!context!.globalCompositeOperation="+globalCompositeOperation+";
+	!context!.strokeStyle="+common:color+";
+	!context!.fillStyle="+common:color+";
+	!context!.shadowOffsetX=+common:number+;
+	!context!.shadowOffsetY=+common:number+;
+	!context!.shadowBlur="+common:number+";
+	!context!.shadowColor="+common:color+";
+	!context!.lineWidth="+common:number+";
+	!context!.lineCap="+lineCap+";
+	!context!.lineJoin="+lineJoin+";
+	!context!.lineDashOffset=+common:number+;
+	!context!.miterLimit=+common:number+;
+	!context!.font="+common:font+";
+	!context!.textAlign="+textAlign+";
+	!context!.textBaseline="+textBaseline+";
+
+Gecko_contextAttributes :=
+	!context!.mozImageSmoothingEnabled=+common:bool+;
+	!context!.mozDashOffset=+common:number+;
+	!context!.mozFillRule="+canvasWindingRule+";
+	!context!.mozDash=!dash_array!;
+	!context!.mozCurrentTransform=!currentTransform_array!;
+	!context!.mozCurrentTransformInverse=!currentTransformInverse_array!;
+
+WebKit_contextAttributes :=
+	!context!.webkitImageSmoothingEnabled=+common:bool+;
+
+textMetricReadAttributes :=
+	!textMetrics!.fontBoundingBoxAscent
+	!textMetrics!.fontBoundingBoxDescent
+	!textMetrics!.actualBoundingBoxAscent
+	!textMetrics!.actualBoundingBoxDescent
+	!textMetrics!.emHeightAscent
+	!textMetrics!.emHeightDescent
+	!textMetrics!.hangingBaseline
+	!textMetrics!.alphabeticBaseline
+	!textMetrics!.ideographicBaseline
+
+contextMethods :=
+	!context!.save();
+	!context!.restore();
+	!context!.scale(+common:number+, +common:number+);
+	!context!.rotate(+common:number+);
+	!context!.translate(+common:number+, +common:number+);
+	!context!.transform(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.setTransform(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.clearRect(+common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.fillRect(+common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.strokeRect(+common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.beginPath();
+	!context!.stroke();
+	!context!.stroke(!path2D!);
+	!context!.fill("+canvasWindingRule+");
+	!context!.fill(!path2D!, "+canvasWindingRule+");
+	!context!.clip("+canvasWindingRule+");
+	!context!.clip(!path2D!, "+canvasWindingRule+");
+	!context!.isPointInPath(+common:number+, +common:number+, "+canvasWindingRule+");
+	!context!.isPointInPath(!path2D!, +common:number+, +common:number+, "+canvasWindingRule+");
+	!context!.isPointInStroke(+common:number+, +common:number+);
+	!context!.isPointInStroke(!path2D!, +common:number+, +common:number+);
+	!context!.fillText("+common:text+", +common:number+, +common:number+);
+	!context!.strokeText("+common:text+", +common:number+, +common:number+);
+	!context!.strokeText("+common:text+", +common:number+, +common:number+, +common:number+);
+	!context!.measureText("+common:text+");
+	!context!.closePath();
+	!context!.moveTo(+common:number+, +common:number+);
+	!context!.lineTo(+common:number+, +common:number+);
+	!context!.quadraticCurveTo(+common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.bezierCurveTo(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.rect(+common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.arcTo(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.arc(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:bool+);
+	!context!.setLineDash(!dash_array!);
+	!context!.getLineDash();
+	!context!.addHitRegion(!hitRegion!);
+	!context!.removeHitRegion(!hitRegion!.id);
+	!context!.drawFocusIfNeeded(document.documentElement);
+	!context!.drawCustomFocusRing(document.documentElement);
+	!canvasGradient!.addColorStop(+common:decimal_number+, "+common:color+");
+	!context!.drawImage(!imageElement!, +common:number+, +common:number+);
+	!context!.drawImage(!imageElement!, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.drawImage(!imageElement!, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.putImageData(!imageData!, +common:number+, +common:number+);
+	!context!.putImageData(!imageData!, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.canvas.toDataURL("+common:mime_type+");
+	!context!.canvas.toBlob(function(b){n=document.createElement("img"),u=URL.createObjectURL(b);n.onload=function(){URL.revokeObjectURL(u);};n.src=u;document.body.appendChild(n);}, "+common:mime_type+", +common:number+);
+
+Gecko_contextMethods :=
+	!context!.canvas.mozGetAsFile("+common:text+", "+common:mime_type+");
+
+Blink_contextMethods :=
+	!context!.setAlpha(+common:number+);
+	!context!.setCompositeOperation("+globalCompositeOperation+");
+	!context!.setLineWidth(+common:number+);
+	!context!.setLineCap("+lineCap+");
+	!context!.setLineJoin("+lineJoin+");
+	!context!.setMiterLine(+common:number+);
+	!context!.setStrokeColor("+common:color+", +common:number+);
+	!context!.setStrokeColor(+common:number+, +common:number+);
+	!context!.setStrokeColor(+common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.setStrokeColor(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.setFillColor("+common:color+", +common:number+);
+	!context!.setFillColor(+common:number+, +common:number+);
+	!context!.setFillColor(+common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.setFillColor(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.clearShadow();
+	!context!.setShadow(+common:number+, +common:number+, +common:number+, "+common:color+", +common:number+);
+	!context!.setShadow(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.setShadow(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.setShadow(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.webkitGetImageDataHD(+common:number+, +common:number+, +common:number+, +common:number+);
+	!context!.webkitPutImageDataHD();
+	!context!.getContextAttributes();
+
+Canvas2D :=
+	+canvasAttributes+
+	+contextAttributes+
+	+contextMethods+
+	+Gecko_contextAttributes+
+	+Gecko_contextMethods+
+	+textMetricReadAttributes+;
+%%%	+WebKit_contextAttributes+
+%%%	+Blink_contextMethods+
+
+wrapper :=
+	try { +Canvas2D+ } catch(e) {}
+
+%%% ###########################################################################
+
+%section% := variable
+
+context :=
+	canvas=document.createElement("canvas"); (document.body || document.documentElement).appendChild(canvas); @context@=canvas.getContext('2d');
+	canvas=document.createElement("canvas"); (document.body || document.documentElement).appendChild(canvas); @context@=canvas.getContext('2d', +Canvas2DContextAttributes+);
+
+imageElement :=
+	x=document.createElement("img"); x.src="file://%uri%(images)"; @imageElement@=x;
+
+dash_array :=
+%%% Prevent static values in the grammar by using undefiend.js library functions.
+	x=new Array(%range%(0-32)); for(var i=0; i<x.length; i++) { x[i]=Random.pick([0,1]); }; @dash_array@=x;
+
+currentTransform_array :=
+	x=new Array(6); for(var i=0; i<x.length; i++){ x[i]=i*+common:number+; }; @currentTransform_array@=x;
+
+currentTransformInverse_array :=
+	x=new Array(6); for(var i=0; i<x.length; i++) { x[i]=i*+common:number+; }; @currentTransformInverse_array@=x;
+
+canvasGradient :=
+	@canvasGradient@=!context!.createRadialGradient(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+
+canvasPattern :=
+	@canvasPattern@=!context!.createPattern(!context!.canvas, +createPattern_params+);
+
+imageData :=
+	@imageData@=!context!.getImageData(+common:number+, +common:number+, +common:number+, +common:number+);
+	@imageData@=!context!.createImageData(!imageData!);
+	@imageData@=!context!.createImageData(+common:number+, +common:number+);
+
+textMetrics :=
+	@textMetrics@=!context!.measureText("+common:text+");
+
+path2D :=
+%%%% Todo: http://www.w3.org/TR/SVGTiny12/paths.html#PathDataBNF
+	@path2D@=new Path2D("M100,0L200,0L200,100L100,100z");
+
+hitRegion :=
+	@hitRegion@=+hitRegionOptions+;
+
+linearGradient :=
+	@linearGradient@=!context!.createLinearGradient(+common:number+, +common:number+, +common:number+, +common:number+);
+	@linearGradient@=!context!.createLinearGradient(+common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
+
+%%% ###########################################################################
+
+%section% := variance
+
+main :=
+	+Canvas2D+
+%%%	setInterval(function(){\n  %repeat%(+wrapper+, "\n  ")\n}, 0);
+
