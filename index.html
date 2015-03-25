@@ -28,15 +28,15 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h4>
-<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h4>
+          <h3>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h3>
 
 <hr>
 
 <p>None</p>
 
-<h4>
-<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h4>
+<h3>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h3>
 
 <hr>
 
@@ -66,33 +66,31 @@
 <pre><code>% time ./core/dharma.py -grammars grammar/webcrypto.dg -count 10000 &gt; /dev/null
 </code></pre>
 
+<h3>
+<a id="grammar-cheetsheet" class="anchor" href="#grammar-cheetsheet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grammar Cheetsheet</h3>
+
 <h4>
-<a id="grammar-cheetsheet" class="anchor" href="#grammar-cheetsheet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grammar Cheetsheet</h4>
-
-<hr>
-
-<h5>
-<a id="comment" class="anchor" href="#comment" aria-hidden="true"><span class="octicon octicon-link"></span></a>comment</h5>
+<a id="comment" class="anchor" href="#comment" aria-hidden="true"><span class="octicon octicon-link"></span></a>comment</h4>
 
 <pre><code>%%% comment
 </code></pre>
 
-<h5>
-<a id="controls" class="anchor" href="#controls" aria-hidden="true"><span class="octicon octicon-link"></span></a>controls</h5>
+<h4>
+<a id="controls" class="anchor" href="#controls" aria-hidden="true"><span class="octicon octicon-link"></span></a>controls</h4>
 
 <pre><code>%const% name := value
 </code></pre>
 
-<h5>
-<a id="sections" class="anchor" href="#sections" aria-hidden="true"><span class="octicon octicon-link"></span></a>sections</h5>
+<h4>
+<a id="sections" class="anchor" href="#sections" aria-hidden="true"><span class="octicon octicon-link"></span></a>sections</h4>
 
 <pre><code>%section% := value
 %section% := variable
 %section% := variance
 </code></pre>
 
-<h5>
-<a id="extension-methods" class="anchor" href="#extension-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>extension methods</h5>
+<h4>
+<a id="extension-methods" class="anchor" href="#extension-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>extension methods</h4>
 
 <pre><code>%range%(0-9)
 %range%(0.0-9.0)
@@ -111,8 +109,8 @@
 %choice%(foo, "bar", 1)
 </code></pre>
 
-<h5>
-<a id="assigning-values" class="anchor" href="#assigning-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>assigning values</h5>
+<h4>
+<a id="assigning-values" class="anchor" href="#assigning-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>assigning values</h4>
 
 <pre><code>digit :=
     %range%(0-9)
@@ -125,35 +123,35 @@ value :=
     +sign+%repeat%(+digit+)
 </code></pre>
 
-<h5>
-<a id="using-values" class="anchor" href="#using-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>using values</h5>
+<h4>
+<a id="using-values" class="anchor" href="#using-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>using values</h4>
 
 <pre><code>+value+
 </code></pre>
 
-<h5>
-<a id="assigning-variables" class="anchor" href="#assigning-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>assigning variables</h5>
+<h4>
+<a id="assigning-variables" class="anchor" href="#assigning-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>assigning variables</h4>
 
 <pre><code>variable :=
     @variable@ = new Foo();
 </code></pre>
 
-<h5>
-<a id="using-variables" class="anchor" href="#using-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>using variables</h5>
+<h4>
+<a id="using-variables" class="anchor" href="#using-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>using variables</h4>
 
 <pre><code>value :=
     !variable!.bar();
 </code></pre>
 
-<h5>
-<a id="referencing-values-from-commondg" class="anchor" href="#referencing-values-from-commondg" aria-hidden="true"><span class="octicon octicon-link"></span></a>referencing values from common.dg</h5>
+<h4>
+<a id="referencing-values-from-commondg" class="anchor" href="#referencing-values-from-commondg" aria-hidden="true"><span class="octicon octicon-link"></span></a>referencing values from common.dg</h4>
 
 <pre><code>value :=
     attribute=+common:number+
 </code></pre>
 
-<h5>
-<a id="calling-javascript-library-functions" class="anchor" href="#calling-javascript-library-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>calling javascript library functions</h5>
+<h4>
+<a id="calling-javascript-library-functions" class="anchor" href="#calling-javascript-library-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>calling javascript library functions</h4>
 
 <pre><code>foo :=
     Random.pick([0,1]);
