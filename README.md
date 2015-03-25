@@ -1,13 +1,13 @@
 Dharma
 ======
 
-#### Requirements
+<h3>Requirements</h3>
 ---
 
 None
 
 
-#### Examples
+<h3>Examples</h3>
 ---
 
 
@@ -44,27 +44,26 @@ Benchmark the generator.
 ```
 
 
-#### Grammar Cheetsheet
----
+<h3>Grammar Cheetsheet</h3>
 
-##### comment
+<h4>comment</h4>
 ```
 %%% comment
 ```
 
-##### controls
+<h4>controls</h4>
 ```
 %const% name := value
 ```
 
-##### sections
+<h4>sections</h4>
 ```
 %section% := value
 %section% := variable
 %section% := variance
 ```
 
-##### extension methods
+<h4>extension methods</h4>
 ```
 %range%(0-9)
 %range%(0.0-9.0)
@@ -83,7 +82,7 @@ Benchmark the generator.
 %choice%(foo, "bar", 1)
 ```
 
-##### assigning values
+<h4>assigning values</h4>
 ```
 digit :=
     %range%(0-9)
@@ -96,30 +95,30 @@ value :=
     +sign+%repeat%(+digit+)
 ```
 
-##### using values
+<h4>using values</h4>
 ```
 +value+
 ```
 
-##### assigning variables
+<h4>assigning variables</h4>
 ```
 variable :=
     @variable@ = new Foo();
 ```
 
-##### using variables
+<h4>using variables</h4>
 ```
 value :=
     !variable!.bar();
 ```
 
-##### referencing values from common.dg
+<h4>referencing values from common.dg</h4>
 ```
 value :=
     attribute=+common:number+
 ```
 
-##### calling javascript library functions
+<h4>calling javascript library functions</h4>
 
 ```
 foo :=
