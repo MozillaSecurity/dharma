@@ -9,7 +9,7 @@ None
 
 <h3>Examples</h3>
 ---
-Generate a single test case.
+Generate a single test-case.
 
 ```
 % ./dharma.py -grammars grammars/webcrypto.dg
@@ -21,13 +21,13 @@ Generate a single test case with multiple grammars.
 % ./dharma.py -grammars grammars/canvas2d.dg grammars/mediarecorder.dg
 ```
 
-Generating test cases as files.
+Generating test-cases as files.
 
 ```
 % ./dharma.py -grammars grammars/webcrypto.dg -storage . -count 5
 ```
 
-Generate test cases, send each over WebSocket to Firefox, observe the process for crashes and bucket them.
+Generate test-cases, send each over WebSocket to Firefox, observe the process for crashes and bucket them.
 
 ```
 % ./dharma.py -server -grammars grammars/canvas2d.dg -template grammars/var/templates/html5/default.html
