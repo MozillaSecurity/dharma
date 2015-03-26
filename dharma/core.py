@@ -206,7 +206,7 @@ class DharmaMachine(object):
         self.suffix = suffix
         self.template = template
         self.consts_set = {}
-        self.default_grammars = ["../grammar/common.dg"]
+        self.default_grammars = ["../grammars/common.dg"]
         self.grammar_level_registry = r"""^(
             (?P<comment>%%%).*|
             %const%\s*(?P<const>[A-Z_]+)\s*:=\s*(?P<value>.*)|
