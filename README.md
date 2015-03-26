@@ -9,38 +9,36 @@ None
 
 <h3>Examples</h3>
 ---
-
-
 Generate a single test case.
 
 ```
-% ./core/dharma.py -grammars grammar/webcrypto.dg
+% ./dharma.py -grammars grammars/webcrypto.dg
 ```
 
 Generate a single test case with multiple grammars.
 
 ```
-% ./core/dharma.py -grammars grammar/canvas2d.dg grammar/mediarecorder.dg
+% ./dharma.py -grammars grammars/canvas2d.dg grammars/mediarecorder.dg
 ```
 
 Generating test cases as files.
 
 ```
-% ./core/dharma.py -grammars grammar/webcrypto.dg -storage . -count 5
+% ./dharma.py -grammars grammars/webcrypto.dg -storage . -count 5
 ```
 
 Generate test cases, send each over WebSocket to Firefox, observe the process for crashes and bucket them.
 
 ```
-% ./core/dharma.py -server -grammars grammar/canvas2d.dg -template var/templates/html5/default.html
-% ./framboise.py -setup inbound64-release -debug -worker 4 -testcase ~/dev/projects/fuzzers/dharma/var/index.html
+% ./dharma.py -server -grammars grammars/canvas2d.dg -template grammars/var/templates/html5/default.html
+% ./framboise.py -setup inbound64-release -debug -worker 4 -testcase ~/dev/projects/fuzzers/dharma/grammars/var/index.html
 ```
 
 
 Benchmark the generator.
 
 ```
-% time ./core/dharma.py -grammars grammar/webcrypto.dg -count 10000 > /dev/null
+% time ./dharma.py -grammars grammars/webcrypto.dg -count 10000 > /dev/null
 ```
 
 
