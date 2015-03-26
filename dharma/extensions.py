@@ -37,6 +37,7 @@ class MetaURI(object):
         self.parent = parent
         if path in DharmaConst.URI_TABLE:
             path = DharmaConst.URI_TABLE[path]
+        path = os.path.expanduser(path)
         if os.path.isdir(path):
             self.path = [p for p in (os.path.join(path, f) for f in os.listdir(path)) if os.path.isfile(p)]
         elif os.path.exists(path):
