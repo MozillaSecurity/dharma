@@ -1,6 +1,10 @@
 Dharma
 ======
 
+[![Build Status](https://api.travis-ci.org/MozillaSecurity/dharma.svg)](https://api.travis-ci.org/MozillaSecurity/dharma.svg)
+
+
+
 <h3>Requirements</h3>
 ---
 
