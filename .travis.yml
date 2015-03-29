@@ -1,3 +1,4 @@
+# http://docs.travis-ci.com/user/build-configuration/
 # http://docs.travis-ci.com/user/languages/python/
 language: python
 python:

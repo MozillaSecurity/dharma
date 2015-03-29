@@ -1,7 +1,7 @@
 Dharma
 ======
 
-[![Build Status](https://api.travis-ci.org/MozillaSecurity/dharma.svg)](https://api.travis-ci.org/MozillaSecurity/dharma.svg)
+[![Build Status](https://api.travis-ci.org/MozillaSecurity/dharma.svg)](https://travis-ci.org/MozillaSecurity/dharma)
 
 
 
@@ -44,6 +44,11 @@ Benchmark the generator.
 ```
 % time ./dharma.py -grammars grammars/webcrypto.dg -count 10000 > /dev/null
 ```
+
+<h3>Screenshots</h3>
+
+![Dharma Demo](https://people.mozilla.com/~cdiehl/screenshots/dharma_demo.png "")
+![Dharma Menu](https://people.mozilla.com/~cdiehl/screenshots/dharma_menu.png "")
 
 
 <h3>Grammar Cheetsheet</h3>
