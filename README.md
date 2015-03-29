@@ -50,7 +50,6 @@ Benchmark the generator.
 ![Dharma Demo](https://people.mozilla.com/~cdiehl/screenshots/dharma_demo.png "")
 ![Dharma Menu](https://people.mozilla.com/~cdiehl/screenshots/dharma_menu.png "")
 
-
 <h3>Grammar Cheetsheet</h3>
 
 <h4>comment</h4>
