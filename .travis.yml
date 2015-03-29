@@ -10,5 +10,5 @@ branches:
     only:
         - master
 install: ""
-
+script: ""
 
