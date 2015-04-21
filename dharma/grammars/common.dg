@@ -1,0 +1,158 @@
+%%% Common Things
+
+%section% := value
+
+bool :=
+	true
+	false
+
+digit :=
+	%range%(0-9)
+
+byte_int :=
+	%range%(0-255)
+
+short_int :=
+	%range%(0-65535)
+
+int :=
+	%range%(0-4294967295)
+
+sign :=
+	+
+	-
+
+range_number :=
+	%range%(0-9)
+	1%range%(0-9)
+	12%range%(0-9)
+	25%range%(0-9)
+	204%range%(0-9)
+	3276%range%(0-9)
+	6553%range%(0-9)
+	214748364%range%(0-9)
+	429496729%range%(0-9)
+
+bad_number :=
+	+number+
+	+range_number+
+
+positive_integer :=
+	+digit+
+	+byte_int+
+	+short_int+
+	+int+
+
+integer :=
+	+positive_integer+
+	+sign++positive_integer+
+
+digits :=
+	%repeat%(+digit+)
+	+digit+
+
+decimal_number :=
+	+integer+.+digits+
+
+scientific_number :=
+	+decimal_number+e+integer+
+	+decimal_number+E+integer+
+
+unit_identifier :=
+	pt
+	pc
+	cm
+	mm
+	in
+	px
+	em
+	ex
+
+length :=
+	+integer+
+	+integer++unit_identifier+
+
+number :=
+	+integer+
+	+decimal_number+
+
+character :=
+	%range%(a-z)
+	%range%(A-Z)
+
+text :=
+	%repeat%(+character+)
+
+font :=
+	Arial
+
+image_mime_type :=
+	"image/gif"
+	"image/png"
+	"image/jpeg"
+	"image/webp"
+	"image/svg+xml"
+
+audio_mime_type :=
+	"audio/ogg"
+	"audio/mpeg"
+	"audio/ogg; codecs='vorbis'"
+
+video_mime_type :=
+	"video/ogg"
+	"video/ogg; codecs='theora,vorbis'"
+	"video/mp4"
+	"video/mp4; codecs='avc1.42E01E,mp4a.40.2'"
+	"video/webm; codecs='vorbis,vp8'"
+
+text_mime_type :=
+	"text/html"
+	"text/plain"
+	"text/css"
+	"text/javascript"
+
+app_mime_type :=
+	"application/xhtml+xml"
+	"application/octet-stream"
+	"application/x-shockwave-flash"
+
+mime_type :=
+	+image_mime_type+
+	+audio_mime_type+
+	+video_mime_type+
+	+text_mime_type+
+	+app_mime_type+
+
+audio_codecs :=
+	"vorbis"
+
+video_codecs :=
+	"webm"
+	"vp8"
+	"vp9"
+	"theora"
+
+codecs :=
+	+audio_codecs+
+	+video_codecs+
+
+color :=
+	red
+	green
+	blue
+	#555
+	#333
+	#222
+	rgb(%range%(0-255), %range%(0-255), %range%(0-255))
+	rgba(%range%(0-255), %range%(0-255), %range%(0-255), +number+)
+	hsl(+number+, %range%(0-100)% %range%(0-100)%)
+	hsla(+number+, %range%(0-100)% %range%(0-100)%, +number+)
+
+object :=
+	[]
+	{}
+	function() {}
+	new Object()
+	undefined
+	null
+	"+text+"
