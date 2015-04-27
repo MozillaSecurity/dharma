@@ -8,8 +8,8 @@ import random
 import logging
 import argparse
 
-from dharma.core import DharmaMachine
-from dharma.websocket import DharmaWebSocketServer
+from core.dharma import DharmaMachine
+from core.websocket import DharmaWebSocketServer
 
 
 class Dharma(object):
@@ -21,7 +21,7 @@ class Dharma(object):
                                          formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                          epilog='The exit status is 0 for non-failures and -1 for failures.')
         m = parser.add_argument_group('mandatory arguments')
-        m.add_argument('-grammars', metavar='file', type=argparse.FileType('r'), nargs='+', required=True,
+        m.add_argument('-grammars', metavar='file', type=argparse.FileType(), nargs='+', required=True,
                        help='input grammars')
         o = parser.add_argument_group('optional arguments')
         o.add_argument('-server', action='store_true', help='run in server mode')
@@ -29,13 +29,13 @@ class Dharma(object):
         o.add_argument('-server-host', metavar='host', type=str, default='127.0.0.1', help='server address')
         o.add_argument('-storage', metavar='path', help='folder for test cases')
         o.add_argument('-format', metavar='ext', default='html', help='format of test cases')
-        o.add_argument('-settings', metavar='file', type=argparse.FileType('r'),
+        o.add_argument('-settings', metavar='file', type=argparse.FileType(),
                        default=os.path.relpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                                             'settings.py')), help=" ")
         o.add_argument('-count', metavar='#', type=int, default=1, help='number of test cases')
-        o.add_argument('-prefix', metavar='file', type=argparse.FileType('r'), help='prefix data')
-        o.add_argument('-suffix', metavar='file', type=argparse.FileType('r'), help='suffix data')
-        o.add_argument('-template', metavar='file', type=argparse.FileType('r'), help='template data')
+        o.add_argument('-prefix', metavar='file', type=argparse.FileType(), help='prefix data')
+        o.add_argument('-suffix', metavar='file', type=argparse.FileType(), help='suffix data')
+        o.add_argument('-template', metavar='file', type=argparse.FileType(), help='template data')
         o.add_argument('-seed', metavar='#', type=int, default=os.getpid(), help='seed value for random')
         o.add_argument('-logging', metavar='#', default=10, type=int, choices=range(10, 60, 10),
                        help='verbosity level of logging')

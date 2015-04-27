@@ -6,7 +6,7 @@ from itertools import chain
 from collections import OrderedDict
 from string import Template
 
-from dharma.extensions import *
+from core.extensions import *
 
 
 class GenState(object):
