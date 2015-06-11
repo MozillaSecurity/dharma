@@ -173,11 +173,11 @@ contextMethods :=
 	!context!.drawImage(!imageElement!, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
 	!context!.putImageData(!imageData!, +common:number+, +common:number+);
 	!context!.putImageData(!imageData!, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+, +common:number+);
-	!context!.canvas.toDataURL("+common:mime_type+");
-	!context!.canvas.toBlob(function(b){n=document.createElement("img"),u=URL.createObjectURL(b);n.onload=function(){URL.revokeObjectURL(u);};n.src=u;document.body.appendChild(n);}, "+common:mime_type+", +common:number+);
+	!context!.canvas.toDataURL(+common:mime_type+);
+	!context!.canvas.toBlob(function(b){n=document.createElement("img"),u=URL.createObjectURL(b);n.onload=function(){URL.revokeObjectURL(u);};n.src=u;document.body.appendChild(n);}, +common:mime_type+, +common:number+);
 
 Gecko_contextMethods :=
-	!context!.canvas.mozGetAsFile("+common:text+", "+common:mime_type+");
+	!context!.canvas.mozGetAsFile("+common:text+", +common:mime_type+);
 
 Blink_contextMethods :=
 	!context!.setAlpha(+common:number+);
