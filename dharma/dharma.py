@@ -7,6 +7,7 @@ import sys
 import random
 import logging
 import argparse
+import struct
 
 from core.dharma import DharmaMachine
 from core.websocket import DharmaWebSocketServer
@@ -36,7 +37,8 @@ class Dharma(object):
         o.add_argument('-prefix', metavar='file', type=argparse.FileType(), help='prefix data')
         o.add_argument('-suffix', metavar='file', type=argparse.FileType(), help='suffix data')
         o.add_argument('-template', metavar='file', type=argparse.FileType(), help='template data')
-        o.add_argument('-seed', metavar='#', type=int, default=os.getpid(), help='seed value for random')
+        o.add_argument('-seed', metavar='#', type=int, default=struct.unpack('q', os.urandom(8))[0],
+                       help='seed value for random')
         o.add_argument('-logging', metavar='#', default=10, type=int, choices=range(10, 60, 10),
                        help='verbosity level of logging')
         o.add_argument('-recursion-limit', metavar='#', type=int, default=20000, help='max python recursion limit')
