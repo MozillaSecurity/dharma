@@ -37,8 +37,8 @@ class Dharma(object):
         o.add_argument('-prefix', metavar='file', type=argparse.FileType(), help='prefix data')
         o.add_argument('-recursion-limit', metavar='#', type=int, default=20000,
                        help='max python recursion limit')
-        o.add_argument('-seed', metavar='#', type=int, default=struct.unpack('q', os.urandom(8))[0],
-                       help='seed value for random')
+        o.add_argument('-seed', metavar='#', type=int,
+                       help='seed value for random, os.urandom will be used if not specified')
         o.add_argument('-server', action='store_true', help='run in server mode')
         o.add_argument('-server-host', metavar='host', type=str, default='127.0.0.1', help='server address')
         o.add_argument('-server-port', metavar='#', type=int, default=9090, help='server port')
@@ -56,8 +56,10 @@ class Dharma(object):
     def main(cls):
         args = cls.parse_args()
         sys.setrecursionlimit(args.recursion_limit)
-        random.seed(args.seed)
         logging.basicConfig(format='[Dharma] %(asctime)s %(levelname)s: %(message)s', level=args.logging)
+        if args.seed is None:
+            args.seed = struct.unpack('q', os.urandom(8))[0]
+        random.seed(args.seed)
         logging.info('Machine random seed: %d', args.seed)
         prefix_data = '' if not args.prefix else args.prefix.read()
         suffix_data = '' if not args.suffix else args.suffix.read()
