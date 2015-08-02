@@ -1,0 +1,326 @@
+%%% Uniform Resource Locator grammar
+
+%%% Based on the official URL BNF:
+%%% http://www.w3.org/Addressing/URL/5_BNF.html
+%%% http://www.w3.org/Protocols/rfc822/#z7
+
+%%% ############################################
+%section% := value
+
+url :=
+	+httpaddress+
+	+ftpaddress+
+	+newsaddress+
+	+nntpaddress+
+	+prosperoaddress+
+	+telnetaddress+
+	+gopheraddress+
+	+waisaddress+
+	+mailtoaddress+
+	+midaddress+
+	+cidaddress+
+
+scheme :=
+	+ialpha+
+
+httpaddress :=
+	http://+hostport+ 
+	http://+hostport+/+path+
+	http://+hostport+/+path+?+search+
+
+ftpaddress :=
+	ftp://+login+/+path+
+	ftp://+login+/+path+;+ftptype+
+
+afsaddress :=
+	afs://+cellname+/+path+
+
+newsaddress :=
+	news:+groupart+
+
+nntpaddress :=
+	nntp:+group+/+digit+
+
+midaddress :=
+	mid:+addrspec+
+
+cidaddress :=
+	cid:+addrspec+
+
+mailtoaddress :=
+	mailto:+xalphas+@+hostname+
+
+waisaddress :=
+	+waisindex+
+	+waisdoc+
+
+waisindex :=
+	wais://+hostport+/+database+
+	wais://+hostport+/+database+?+search+
+
+waisdoc :=
+	wais://+hostport+/+database+/+wtype+/+wpath+
+
+wpath :=
+	+digits+=+path+; 
+	+digits+=+path+;+wpath+
+
+groupart :=
+	*
+	+group+
+	+article+
+
+group :=
+	+ialpha+
+	+ialpha+.+group+
+
+article :=
+	+xalphas+@+host+
+
+database :=
+	+xalphas+
+
+wtype :=
+	+xalphas+
+
+prosperoaddress :=
+	+prosperolink+
+
+prosperolink :=
+	prospero://+hostport+/+hsoname+
+	prospero://+hostport+/+hsoname+%00+version+
+	prospero://+hostport+/+hsoname+%00+version++attributes+
+
+hsoname :=
+	+path+
+
+version :=
+	+digits+
+
+attributes :=
+	+attribute+
+	+attribute++attributes+
+
+attribute :=
+	+alphanums+
+
+telnetaddress :=
+	telnet://+login+
+
+gopheraddress :=
+	gopher://+hostport+
+	gopher://+hostport+/+gtype+
+	gopher://+hostport+/+gtype++gcommand+
+
+login :=
+	+hostport+
+	+user+@+hostport+
+	+user+:+password+@+hostport+
+
+hostport :=
+	+host+
+	+host+:+port+
+
+host :=
+	+hostname+
+	+hostnumber+
+
+ftptype :=
+	A+formcode+
+	E+formcode+
+	I
+	L+digits+
+
+formcode :=
+	N
+	T
+	C
+
+cellname :=
+	+hostname+
+
+hostname :=
+	+ialpha+
+	+ialpha+.+hostname+
+
+hostnumber :=
+	+digits+.+digits+.+digits+.+digits+
+
+port :=
+	+digits+
+
+gcommand :=
+	+path+
+
+path :=
+	+segment+
+	+segment+/+path+
+
+segment :=
+	+xpalphas+
+
+search :=
+	+xalphas+
+	+xalphas+++search+
+
+user :=
+	+alphanum2+
+	+alphanum2++user+
+
+password :=
+	+alphanum2+
+	+alphanum2++password+
+
+fragmentid :=
+	+xalphas+
+	
+gtype :=
+	+xalpha+
+
+alphanum2 :=
+	+alpha+
+	+digit+
+	-
+	_
+	.
+	+
+
+xalpha :=
+	+alpha+
+	+digit+
+	+safe+
+	+extra+
+	+escape+
+
+xalphas :=
+	+xalpha+
+	+xalpha++xalphas+
+
+xpalpha :=
+	+xalpha+
+	+
+
+xpalphas :=
+	+xpalpha+
+	+xpalpha++xpalphas+
+
+ialpha :=
+	+alpha+
+	+alpha++xalphas+
+
+alpha :=
+	+common:character+
+
+digit := 
+	+common:digit+
+
+safe :=
+	$
+	-
+	_
+	@
+	.
+	&
+	+
+	-
+
+extra :=
+	!
+	*
+	"
+	'
+	(
+	)
+	,
+
+reserved :=
+	=
+	;
+	/
+	#
+	?
+	:
+
+escape :=
+	%+common:hex++common:hex+
+
+national :=
+	{
+	}
+	|
+	[
+	]
+	\
+	^
+	~
+
+punctuation :=
+	<
+	>
+
+digits :=
+	+digit+
+	+digit++digits+
+
+alphanum :=
+	+alpha+
+	+digit+
+
+alphanums :=
+	+alphanum+
+	+alphanum++alphanums+
+
+addrspec :=
+	+localpart+@+domain+
+
+localpart :=
+	+words+
+
+domain :=
+	+subdomains+
+	
+subdomains := 
+	+subdomain+
+	+subdomain++subdomains+
+
+subdomain :=
+	+domainref+
+	+domainliteral+
+
+domainref :=
+	+atom+
+
+words :=
+	+word+
+	+word++words+
+
+word :=
+	+atom+
+	+quotedpair+
+
+atom :=
+	%range%(!-')
+	%range%(*-+)
+	%range%(/-9)
+	%range%(A-Z)
+	%range%(^-~)
+	-
+	=
+	?
+
+domainliteral := 
+	[+domaincon+]
+
+domaincon :=
+	+atom+
+	+quotedpair+
+	+domaincon+
+
+quotedpair :=
+	"+common:asciichar+"
+
+%%% ############################################
+%section% := variance
+
+main :=
+	+url+

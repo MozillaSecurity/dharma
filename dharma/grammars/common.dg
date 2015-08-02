@@ -76,15 +76,34 @@ number :=
 	+integer+
 	+decimal_number+
 
+hex :=
+	%range%(0-9)
+	%range%(A-F)
+
+byte :=
+	0x+hex++hex+
+
 character :=
 	%range%(a-z)
 	%range%(A-Z)
+
+asciichar :=
+	%range%(!-~)
 
 text :=
 	%repeat%(+character+)
 
 font :=
 	Arial
+
+encoding :=
+	ascii
+	utf8
+	utf16le
+	ucs2
+	base64
+	binary
+	hex
 
 image_mime_type :=
 	"image/gif"
@@ -156,3 +175,40 @@ object :=
 	undefined
 	null
 	"+text+"
+
+intoverflow :=
+	0
+	1
+	32768
+	65535
+	65536
+	357913942
+	2147483648
+	4294967296
+	8446744073709551616
+	-0
+	-1
+	-32768
+	-65535
+	-65536
+	-357913942
+	-2147483648
+	-4294967296
+	-8446744073709551616
+	0xff
+	0x3fffffff
+	0xffffffff
+	0xfffffffe
+	0x100
+	0x1000
+	0x10000
+	0x100000
+	0x80000000
+
+formatstr :=
+	%repeat%(%s)
+	%repeat%(%x)
+	%repeat%(%d)
+	AAAAA%s
+	AAAAA%x
+	AAAAA%d
