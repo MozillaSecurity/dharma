@@ -1,4 +1,4 @@
-%%% Node.js Buffer grammar 
+%%% Node.js Buffer grammar
 
 %%% Based on the official API:
 %%% https://nodejs.org/api/buffer.html#buffer_class_buffer
@@ -8,10 +8,7 @@
 %section% := value
 
 definition :=
-	+defvar+ +buftype+;
-
-defvar :=
-	var buf = new
+	!buf! +buftype+;
 
 buftype :=
 	+bufsize+
@@ -45,219 +42,219 @@ bufstr :=
 %%% Permutations ############################################
 
 permutation :=
-	buf = Buffer.concat([%repeat%(new +buftype+, ", ")]);
-	buf = Buffer.concat([%repeat%(new +buftype+, ", ")], +common:int+);
-	buf = Buffer.concat([%repeat%(new +buftype+, ", ")], +common:short_int+);
-	buf = Buffer.concat([%repeat%(new +buftype+, ", ")], +common:intoverflow+);
-	buf[+common:int+] = buf[+common:int+];
-	buf[+common:short_int+] = buf[+common:short_int+];
-	buf[+common:intoverflow+] = buf[+common:intoverflow+];
-	(new +bufsize+).copy(buf, +common:int+);
-	(new +bufsize+).copy(buf, +common:int+, +common:int+);
-	(new +bufsize+).copy(buf, +common:int+, +common:int+, +common:int+);
-	(new +bufsize+).copy(buf, +common:short_int+);
-	(new +bufsize+).copy(buf, +common:short_int+, +common:short_int+);
-	(new +bufsize+).copy(buf, +common:short_int+, +common:short_int+, +common:short_int+);
-	(new +bufsize+).copy(buf, +common:intoverflow+);
-	(new +bufsize+).copy(buf, +common:intoverflow+, +common:intoverflow+);
-	(new +bufsize+).copy(buf, +common:intoverflow+, +common:intoverflow+, +common:intoverflow+);
-	(new +bufarray+).copy(buf, +common:int+);
-	(new +bufarray+).copy(buf, +common:int+, +common:int+);
-	(new +bufarray+).copy(buf, +common:int+, +common:int+, +common:int+);
-	(new +bufarray+).copy(buf, +common:short_int+);
-	(new +bufarray+).copy(buf, +common:short_int+, +common:short_int+);
-	(new +bufarray+).copy(buf, +common:short_int+, +common:short_int+, +common:short_int+);
-	(new +bufarray+).copy(buf, +common:intoverflow+);
-	(new +bufarray+).copy(buf, +common:intoverflow+, +common:intoverflow+);
-	(new +bufarray+).copy(buf, +common:intoverflow+, +common:intoverflow+, +common:intoverflow+);
-	(new +bufbuffer+).copy(buf, +common:int+);
-	(new +bufbuffer+).copy(buf, +common:int+, +common:int+);
-	(new +bufbuffer+).copy(buf, +common:int+, +common:int+, +common:int+);
-	(new +bufbuffer+).copy(buf, +common:short_int+);
-	(new +bufbuffer+).copy(buf, +common:short_int+, +common:short_int+);
-	(new +bufbuffer+).copy(buf, +common:short_int+, +common:short_int+, +common:short_int+);
-	(new +bufbuffer+).copy(buf, +common:intoverflow+);
-	(new +bufbuffer+).copy(buf, +common:intoverflow+, +common:intoverflow+);
-	(new +bufbuffer+).copy(buf, +common:intoverflow+, +common:intoverflow+, +common:intoverflow+);
-	(new +bufstr+).copy(buf, +common:int+);
-	(new +bufstr+).copy(buf, +common:int+, +common:int+);
-	(new +bufstr+).copy(buf, +common:int+, +common:int+, +common:int+);
-	(new +bufstr+).copy(buf, +common:short_int+);
-	(new +bufstr+).copy(buf, +common:short_int+, +common:short_int+);
-	(new +bufstr+).copy(buf, +common:short_int+, +common:short_int+, +common:short_int+);
-	(new +bufstr+).copy(buf, +common:intoverflow+);
-	(new +bufstr+).copy(buf, +common:intoverflow+, +common:intoverflow+);
-	(new +bufstr+).copy(buf, +common:intoverflow+, +common:intoverflow+, +common:intoverflow+);
-	buf = buf.slice(0, +common:short_int+);
-	buf = buf.slice(+common:short_int+, +common:short_int+);
-	buf = buf.slice(0, +common:int+);
-	buf = buf.slice(+common:int+, +common:int+);
-	buf = buf.slice(0, +common:intoverflow+);
-	buf.fill("+common:character+"); 
-	buf.fill(+common:byte+); 
-	buf.fill("+common:character+", +common:short_int+); 
-	buf.fill("+common:character+", +common:int+); 
-	buf.fill("+common:character+", +common:intoverflow+); 
-	buf.fill("+common:character+", +common:short_int+, +common:short_int+); 
-	buf.fill("+common:character+", +common:int+, +common:int+); 
-	buf.fill("+common:character+", +common:intoverflow+, +common:intoverflow+); 
+	!buf! = Buffer.concat([%repeat%(new +buftype+, ", ")]);
+	!buf! = Buffer.concat([%repeat%(new +buftype+, ", ")], +common:int+);
+	!buf! = Buffer.concat([%repeat%(new +buftype+, ", ")], +common:short_int+);
+	!buf! = Buffer.concat([%repeat%(new +buftype+, ", ")], +common:intoverflow+);
+	!buf![+common:int+] = !buf![+common:int+];
+	!buf![+common:short_int+] = !buf![+common:short_int+];
+	!buf![+common:intoverflow+] = !buf![+common:intoverflow+];
+	(new +bufsize+).copy(!buf!, +common:int+);
+	(new +bufsize+).copy(!buf!, +common:int+, +common:int+);
+	(new +bufsize+).copy(!buf!, +common:int+, +common:int+, +common:int+);
+	(new +bufsize+).copy(!buf!, +common:short_int+);
+	(new +bufsize+).copy(!buf!, +common:short_int+, +common:short_int+);
+	(new +bufsize+).copy(!buf!, +common:short_int+, +common:short_int+, +common:short_int+);
+	(new +bufsize+).copy(!buf!, +common:intoverflow+);
+	(new +bufsize+).copy(!buf!, +common:intoverflow+, +common:intoverflow+);
+	(new +bufsize+).copy(!buf!, +common:intoverflow+, +common:intoverflow+, +common:intoverflow+);
+	(new +bufarray+).copy(!buf!, +common:int+);
+	(new +bufarray+).copy(!buf!, +common:int+, +common:int+);
+	(new +bufarray+).copy(!buf!, +common:int+, +common:int+, +common:int+);
+	(new +bufarray+).copy(!buf!, +common:short_int+);
+	(new +bufarray+).copy(!buf!, +common:short_int+, +common:short_int+);
+	(new +bufarray+).copy(!buf!, +common:short_int+, +common:short_int+, +common:short_int+);
+	(new +bufarray+).copy(!buf!, +common:intoverflow+);
+	(new +bufarray+).copy(!buf!, +common:intoverflow+, +common:intoverflow+);
+	(new +bufarray+).copy(!buf!, +common:intoverflow+, +common:intoverflow+, +common:intoverflow+);
+	(new +bufbuffer+).copy(!buf!, +common:int+);
+	(new +bufbuffer+).copy(!buf!, +common:int+, +common:int+);
+	(new +bufbuffer+).copy(!buf!, +common:int+, +common:int+, +common:int+);
+	(new +bufbuffer+).copy(!buf!, +common:short_int+);
+	(new +bufbuffer+).copy(!buf!, +common:short_int+, +common:short_int+);
+	(new +bufbuffer+).copy(!buf!, +common:short_int+, +common:short_int+, +common:short_int+);
+	(new +bufbuffer+).copy(!buf!, +common:intoverflow+);
+	(new +bufbuffer+).copy(!buf!, +common:intoverflow+, +common:intoverflow+);
+	(new +bufbuffer+).copy(!buf!, +common:intoverflow+, +common:intoverflow+, +common:intoverflow+);
+	(new +bufstr+).copy(!buf!, +common:int+);
+	(new +bufstr+).copy(!buf!, +common:int+, +common:int+);
+	(new +bufstr+).copy(!buf!, +common:int+, +common:int+, +common:int+);
+	(new +bufstr+).copy(!buf!, +common:short_int+);
+	(new +bufstr+).copy(!buf!, +common:short_int+, +common:short_int+);
+	(new +bufstr+).copy(!buf!, +common:short_int+, +common:short_int+, +common:short_int+);
+	(new +bufstr+).copy(!buf!, +common:intoverflow+);
+	(new +bufstr+).copy(!buf!, +common:intoverflow+, +common:intoverflow+);
+	(new +bufstr+).copy(!buf!, +common:intoverflow+, +common:intoverflow+, +common:intoverflow+);
+	!buf! = !buf!.slice(0, +common:short_int+);
+	!buf! = !buf!.slice(+common:short_int+, +common:short_int+);
+	!buf! = !buf!.slice(0, +common:int+);
+	!buf! = !buf!.slice(+common:int+, +common:int+);
+	!buf! = !buf!.slice(0, +common:intoverflow+);
+	!buf!.fill("+common:character+");
+	!buf!.fill(+common:byte+);
+	!buf!.fill("+common:character+", +common:short_int+);
+	!buf!.fill("+common:character+", +common:int+);
+	!buf!.fill("+common:character+", +common:intoverflow+);
+	!buf!.fill("+common:character+", +common:short_int+, +common:short_int+);
+	!buf!.fill("+common:character+", +common:int+, +common:int+);
+	!buf!.fill("+common:character+", +common:intoverflow+, +common:intoverflow+);
 %%%	Smalloc specific
 	smalloc.alloc(+common:int+);
 	smalloc.alloc(+common:short_int+);
 	smalloc.alloc(+common:intoverflow+);
-	smalloc.alloc(+common:int+, buf);
-	smalloc.alloc(+common:short_int+, buf);
-	smalloc.alloc(+common:intoverflow+, buf);
-	smalloc.alloc(+common:int+, buf, "+enumtype+");
-	smalloc.alloc(+common:short_int+, buf, "+enumtype+");
-	smalloc.alloc(+common:intoverflow+, buf, "+enumtype+");
-	smalloc.copyOnto(buf, +common:int+, buf, +common:int+, +common:int+);
-	smalloc.copyOnto(buf, +common:short_int+, buf, +common:short_int+, +common:short_int+);
-	smalloc.copyOnto(buf, +common:digit+, buf, +common:digit+, +common:intoverflow+);
+	smalloc.alloc(+common:int+, !buf!);
+	smalloc.alloc(+common:short_int+, !buf!);
+	smalloc.alloc(+common:intoverflow+, !buf!);
+	smalloc.alloc(+common:int+, !buf!, "+enumtype+");
+	smalloc.alloc(+common:short_int+, !buf!, "+enumtype+");
+	smalloc.alloc(+common:intoverflow+, !buf!, "+enumtype+");
+	smalloc.copyOnto(buf, +common:int+, !buf!, +common:int+, +common:int+);
+	smalloc.copyOnto(buf, +common:short_int+, !buf!, +common:short_int+, +common:short_int+);
+	smalloc.copyOnto(buf, +common:digit+, !buf!, +common:digit+, +common:intoverflow+);
 
 %%% Operations ############################################
 
 operation :=
 	Buffer.isEncoding("+encoding+");
-	Buffer.isBuffer(buf);
+	Buffer.isBuffer(!buf!);
 	Buffer.byteLength("+textcnt+", "+encoding+");
-	buf.compare(buf);
-	buf.equals(buf);
-	buf.length;
-	buf.write("+textcnt+", +common:short_int+, +common:short_int+, "+encoding+");
-	buf.write("+textcnt+", +common:int+, +common:int+, "+encoding+");
-	buf.write("+textcnt+", +common:intoverflow+, +common:intoverflow+, "+encoding+");
-	buf.writeUIntLE(+common:short_int+, +common:short_int+, %range%(0-6));
-	buf.writeUIntLE(+common:int+, +common:int+, %range%(0-6));
-	buf.writeUIntLE(+common:intoverflow+, +common:intoverflow+, %range%(0-6));
-	buf.writeUIntBE(+common:short_int+, +common:short_int+, %range%(0-6));
-	buf.writeUIntBE(+common:int+, +common:int+, %range%(0-6));
-	buf.writeUIntBE(+common:intoverflow+, +common:intoverflow+, %range%(0-6));
-	buf.writeIntLE(+common:short_int+, +common:short_int+, %range%(0-6));
-	buf.writeIntLE(+common:int+, +common:int+, %range%(0-6));
-	buf.writeIntLE(+common:intoverflow+, +common:intoverflow+, %range%(0-6));
-	buf.writeIntBE(+common:short_int+, +common:short_int+, %range%(0-6));
-	buf.writeIntBE(+common:int+, +common:int+, %range%(0-6));
-	buf.writeIntBE(+common:intoverflow+, +common:intoverflow+, %range%(0-6));
-	buf.readUIntLE(+common:short_int+, %range%(0-6));
-	buf.readUIntLE(+common:int+, %range%(0-6));
-	buf.readUIntLE(+common:intoverflow+, %range%(0-6));
-	buf.readUIntBE(+common:short_int+, %range%(0-6));
-	buf.readUIntBE(+common:int+, %range%(0-6));
-	buf.readUIntBE(+common:intoverflow+, %range%(0-6));
-	buf.readIntLE(+common:short_int+, %range%(0-6));
-	buf.readIntLE(+common:int+, %range%(0-6));
-	buf.readIntLE(+common:intoverflow+, %range%(0-6));
-	buf.readIntBE(+common:short_int+, %range%(0-6));
-	buf.readIntBE(+common:int+, %range%(0-6));
-	buf.readIntBE(+common:intoverflow+, %range%(0-6));
-	buf.toString("+encoding+", +common:short_int+, +common:short_int+);
-	buf.toString("+encoding+", +common:int+, +common:int+);
-	buf.toString("+encoding+", +common:intoverflow+, +common:intoverflow+);
-	buf.toString("+encoding+");
-	buf.toString("+encoding+", +common:short_int+);
-	buf.toString("+encoding+", +common:int+);
-	buf.toString("+encoding+", +common:intoverflow+);
-	buf.toString();
-	buf.toJSON();
-	buf.readUInt8(+common:short_int+);
-	buf.readUInt8(+common:int+);
-	buf.readUInt8(+common:intoverflow+);
-	buf.readUInt16LE(+common:short_int+);
-	buf.readUInt16LE(+common:int+);
-	buf.readUInt16LE(+common:intoverflow+);
-	buf.readUInt16BE(+common:short_int+);
-	buf.readUInt16BE(+common:int+);
-	buf.readUInt16BE(+common:intoverflow+);
-	buf.readUInt32LE(+common:short_int+);
-	buf.readUInt32LE(+common:int+);
-	buf.readUInt32LE(+common:intoverflow+);
-	buf.readUInt32BE(+common:short_int+);
-	buf.readUInt32BE(+common:int+);
-	buf.readUInt32BE(+common:intoverflow+);
-	buf.readInt8(+common:short_int+);
-	buf.readInt8(+common:int+);
-	buf.readInt8(+common:intoverflow+);
-	buf.readInt16LE(+common:short_int+);
-	buf.readInt16LE(+common:int+);
-	buf.readInt16LE(+common:intoverflow+);
-	buf.readInt16BE(+common:short_int+);
-	buf.readInt16BE(+common:int+);
-	buf.readInt16BE(+common:intoverflow+);
-	buf.readInt32LE(+common:short_int+);
-	buf.readInt32LE(+common:int+);
-	buf.readInt32LE(+common:intoverflow+);
-	buf.readInt32BE(+common:short_int+);
-	buf.readInt32BE(+common:int+);
-	buf.readInt32BE(+common:intoverflow+);
-	buf.readFloatLE(+common:short_int+);
-	buf.readFloatLE(+common:int+);
-	buf.readFloatLE(+common:intoverflow+);
-	buf.readFloatBE(+common:short_int+);
-	buf.readFloatBE(+common:int+);
-	buf.readFloatBE(+common:intoverflow+);
-	buf.readDoubleLE(+common:short_int+);
-	buf.readDoubleLE(+common:int+);	
-	buf.readDoubleLE(+common:intoverflow+);
-	buf.readDoubleBE(+common:short_int+);
-	buf.readDoubleBE(+common:int+);
-	buf.readDoubleBE(+common:intoverflow+);
-	buf.writeUInt8(+common:short_int+, +common:short_int+);
-	buf.writeUInt8(+common:int+, +common:int+);
-	buf.writeUInt8(+common:intoverflow+, +common:short_int+);
-	buf.writeUInt8(+common:short_int+, +common:intoverflow+);
-	buf.writeUInt16LE(+common:short_int+, +common:short_int+);
-	buf.writeUInt16LE(+common:int+, +common:int+);
-	buf.writeUInt16LE(+common:intoverflow+, +common:short_int+);
-	buf.writeUInt16LE(+common:short_int+, +common:intoverflow+);
-	buf.writeUInt16BE(+common:short_int+, +common:short_int+);
-	buf.writeUInt16BE(+common:int+, +common:int+);
-	buf.writeUInt16BE(+common:intoverflow+, +common:short_int+);
-	buf.writeUInt16BE(+common:short_int+, +common:intoverflow+);
-	buf.writeUInt32LE(+common:short_int+, +common:short_int+);
-	buf.writeUInt32LE(+common:int+, +common:int+);
-	buf.writeUInt32LE(+common:intoverflow+, +common:short_int+);
-	buf.writeUInt32LE(+common:short_int+, +common:intoverflow+);
-	buf.writeUInt32BE(+common:short_int+, +common:short_int+);
-	buf.writeUInt32BE(+common:int+, +common:int+);
-	buf.writeUInt32BE(+common:intoverflow+, +common:short_int+);
-	buf.writeUInt32BE(+common:short_int+, +common:intoverflow+);
-	buf.writeInt8(+common:short_int+, +common:short_int+);
-	buf.writeInt8(+common:int+, +common:int+);
-	buf.writeInt8(+common:intoverflow+, +common:short_int+);
-	buf.writeInt8(+common:short_int+, +common:intoverflow+);
-	buf.writeInt16LE(+common:short_int+, +common:short_int+);
-	buf.writeInt16LE(+common:int+, +common:int+);
-	buf.writeInt16LE(+common:intoverflow+, +common:short_int+);
-	buf.writeInt16LE(+common:short_int+, +common:intoverflow+);
-	buf.writeInt16BE(+common:short_int+, +common:short_int+);
-	buf.writeInt16BE(+common:int+, +common:int+);
-	buf.writeInt16BE(+common:intoverflow+, +common:short_int+);
-	buf.writeInt16BE(+common:short_int+, +common:intoverflow+);
-	buf.writeInt32LE(+common:short_int+, +common:short_int+);
-	buf.writeInt32LE(+common:int+, +common:int+);
-	buf.writeInt32LE(+common:intoverflow+, +common:short_int+);
-	buf.writeInt32LE(+common:short_int+, +common:intoverflow+);
-	buf.writeInt32BE(+common:short_int+, +common:short_int+);
-	buf.writeInt32BE(+common:int+, +common:int+);
-	buf.writeInt32BE(+common:intoverflow+, +common:short_int+);
-	buf.writeInt32BE(+common:short_int+, +common:intoverflow+);
-	buf.writeFloatLE(+common:short_int+, +common:short_int+);
-	buf.writeFloatLE(+common:int+, +common:int+);
-	buf.writeFloatLE(+common:intoverflow+, +common:short_int+);
-	buf.writeFloatLE(+common:short_int+, +common:intoverflow+);
-	buf.writeFloatBE(+common:short_int+, +common:short_int+);
-	buf.writeFloatBE(+common:int+, +common:int+);
-	buf.writeFloatBE(+common:intoverflow+, +common:short_int+);
-	buf.writeFloatBE(+common:short_int+, +common:intoverflow+);
-	buf.writeDoubleLE(+common:short_int+, +common:short_int+);
-	buf.writeDoubleLE(+common:int+, +common:int+);
-	buf.writeDoubleLE(+common:intoverflow+, +common:short_int+);
-	buf.writeDoubleLE(+common:short_int+, +common:intoverflow+);
-	buf.writeDoubleBE(+common:short_int+, +common:short_int+);
-	buf.writeDoubleBE(+common:int+, +common:int+);
-	buf.writeDoubleBE(+common:intoverflow+, +common:short_int+);
-	buf.writeDoubleBE(+common:short_int+, +common:intoverflow+);
+	!buf!.compare(!buf!);
+	!buf!.equals(!buf!);
+	!buf!.length;
+	!buf!.write("+textcnt+", +common:short_int+, +common:short_int+, "+encoding+");
+	!buf!.write("+textcnt+", +common:int+, +common:int+, "+encoding+");
+	!buf!.write("+textcnt+", +common:intoverflow+, +common:intoverflow+, "+encoding+");
+	!buf!.writeUIntLE(+common:short_int+, +common:short_int+, %range%(0-6));
+	!buf!.writeUIntLE(+common:int+, +common:int+, %range%(0-6));
+	!buf!.writeUIntLE(+common:intoverflow+, +common:intoverflow+, %range%(0-6));
+	!buf!.writeUIntBE(+common:short_int+, +common:short_int+, %range%(0-6));
+	!buf!.writeUIntBE(+common:int+, +common:int+, %range%(0-6));
+	!buf!.writeUIntBE(+common:intoverflow+, +common:intoverflow+, %range%(0-6));
+	!buf!.writeIntLE(+common:short_int+, +common:short_int+, %range%(0-6));
+	!buf!.writeIntLE(+common:int+, +common:int+, %range%(0-6));
+	!buf!.writeIntLE(+common:intoverflow+, +common:intoverflow+, %range%(0-6));
+	!buf!.writeIntBE(+common:short_int+, +common:short_int+, %range%(0-6));
+	!buf!.writeIntBE(+common:int+, +common:int+, %range%(0-6));
+	!buf!.writeIntBE(+common:intoverflow+, +common:intoverflow+, %range%(0-6));
+	!buf!.readUIntLE(+common:short_int+, %range%(0-6));
+	!buf!.readUIntLE(+common:int+, %range%(0-6));
+	!buf!.readUIntLE(+common:intoverflow+, %range%(0-6));
+	!buf!.readUIntBE(+common:short_int+, %range%(0-6));
+	!buf!.readUIntBE(+common:int+, %range%(0-6));
+	!buf!.readUIntBE(+common:intoverflow+, %range%(0-6));
+	!buf!.readIntLE(+common:short_int+, %range%(0-6));
+	!buf!.readIntLE(+common:int+, %range%(0-6));
+	!buf!.readIntLE(+common:intoverflow+, %range%(0-6));
+	!buf!.readIntBE(+common:short_int+, %range%(0-6));
+	!buf!.readIntBE(+common:int+, %range%(0-6));
+	!buf!.readIntBE(+common:intoverflow+, %range%(0-6));
+	!buf!.toString("+encoding+", +common:short_int+, +common:short_int+);
+	!buf!.toString("+encoding+", +common:int+, +common:int+);
+	!buf!.toString("+encoding+", +common:intoverflow+, +common:intoverflow+);
+	!buf!.toString("+encoding+");
+	!buf!.toString("+encoding+", +common:short_int+);
+	!buf!.toString("+encoding+", +common:int+);
+	!buf!.toString("+encoding+", +common:intoverflow+);
+	!buf!.toString();
+	!buf!.toJSON();
+	!buf!.readUInt8(+common:short_int+);
+	!buf!.readUInt8(+common:int+);
+	!buf!.readUInt8(+common:intoverflow+);
+	!buf!.readUInt16LE(+common:short_int+);
+	!buf!.readUInt16LE(+common:int+);
+	!buf!.readUInt16LE(+common:intoverflow+);
+	!buf!.readUInt16BE(+common:short_int+);
+	!buf!.readUInt16BE(+common:int+);
+	!buf!.readUInt16BE(+common:intoverflow+);
+	!buf!.readUInt32LE(+common:short_int+);
+	!buf!.readUInt32LE(+common:int+);
+	!buf!.readUInt32LE(+common:intoverflow+);
+	!buf!.readUInt32BE(+common:short_int+);
+	!buf!.readUInt32BE(+common:int+);
+	!buf!.readUInt32BE(+common:intoverflow+);
+	!buf!.readInt8(+common:short_int+);
+	!buf!.readInt8(+common:int+);
+	!buf!.readInt8(+common:intoverflow+);
+	!buf!.readInt16LE(+common:short_int+);
+	!buf!.readInt16LE(+common:int+);
+	!buf!.readInt16LE(+common:intoverflow+);
+	!buf!.readInt16BE(+common:short_int+);
+	!buf!.readInt16BE(+common:int+);
+	!buf!.readInt16BE(+common:intoverflow+);
+	!buf!.readInt32LE(+common:short_int+);
+	!buf!.readInt32LE(+common:int+);
+	!buf!.readInt32LE(+common:intoverflow+);
+	!buf!.readInt32BE(+common:short_int+);
+	!buf!.readInt32BE(+common:int+);
+	!buf!.readInt32BE(+common:intoverflow+);
+	!buf!.readFloatLE(+common:short_int+);
+	!buf!.readFloatLE(+common:int+);
+	!buf!.readFloatLE(+common:intoverflow+);
+	!buf!.readFloatBE(+common:short_int+);
+	!buf!.readFloatBE(+common:int+);
+	!buf!.readFloatBE(+common:intoverflow+);
+	!buf!.readDoubleLE(+common:short_int+);
+	!buf!.readDoubleLE(+common:int+);
+	!buf!.readDoubleLE(+common:intoverflow+);
+	!buf!.readDoubleBE(+common:short_int+);
+	!buf!.readDoubleBE(+common:int+);
+	!buf!.readDoubleBE(+common:intoverflow+);
+	!buf!.writeUInt8(+common:short_int+, +common:short_int+);
+	!buf!.writeUInt8(+common:int+, +common:int+);
+	!buf!.writeUInt8(+common:intoverflow+, +common:short_int+);
+	!buf!.writeUInt8(+common:short_int+, +common:intoverflow+);
+	!buf!.writeUInt16LE(+common:short_int+, +common:short_int+);
+	!buf!.writeUInt16LE(+common:int+, +common:int+);
+	!buf!.writeUInt16LE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeUInt16LE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeUInt16BE(+common:short_int+, +common:short_int+);
+	!buf!.writeUInt16BE(+common:int+, +common:int+);
+	!buf!.writeUInt16BE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeUInt16BE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeUInt32LE(+common:short_int+, +common:short_int+);
+	!buf!.writeUInt32LE(+common:int+, +common:int+);
+	!buf!.writeUInt32LE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeUInt32LE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeUInt32BE(+common:short_int+, +common:short_int+);
+	!buf!.writeUInt32BE(+common:int+, +common:int+);
+	!buf!.writeUInt32BE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeUInt32BE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeInt8(+common:short_int+, +common:short_int+);
+	!buf!.writeInt8(+common:int+, +common:int+);
+	!buf!.writeInt8(+common:intoverflow+, +common:short_int+);
+	!buf!.writeInt8(+common:short_int+, +common:intoverflow+);
+	!buf!.writeInt16LE(+common:short_int+, +common:short_int+);
+	!buf!.writeInt16LE(+common:int+, +common:int+);
+	!buf!.writeInt16LE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeInt16LE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeInt16BE(+common:short_int+, +common:short_int+);
+	!buf!.writeInt16BE(+common:int+, +common:int+);
+	!buf!.writeInt16BE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeInt16BE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeInt32LE(+common:short_int+, +common:short_int+);
+	!buf!.writeInt32LE(+common:int+, +common:int+);
+	!buf!.writeInt32LE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeInt32LE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeInt32BE(+common:short_int+, +common:short_int+);
+	!buf!.writeInt32BE(+common:int+, +common:int+);
+	!buf!.writeInt32BE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeInt32BE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeFloatLE(+common:short_int+, +common:short_int+);
+	!buf!.writeFloatLE(+common:int+, +common:int+);
+	!buf!.writeFloatLE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeFloatLE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeFloatBE(+common:short_int+, +common:short_int+);
+	!buf!.writeFloatBE(+common:int+, +common:int+);
+	!buf!.writeFloatBE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeFloatBE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeDoubleLE(+common:short_int+, +common:short_int+);
+	!buf!.writeDoubleLE(+common:int+, +common:int+);
+	!buf!.writeDoubleLE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeDoubleLE(+common:short_int+, +common:intoverflow+);
+	!buf!.writeDoubleBE(+common:short_int+, +common:short_int+);
+	!buf!.writeDoubleBE(+common:int+, +common:int+);
+	!buf!.writeDoubleBE(+common:intoverflow+, +common:short_int+);
+	!buf!.writeDoubleBE(+common:short_int+, +common:intoverflow+);
 
 %%% Utilities ############################################
 
@@ -265,7 +262,7 @@ textcnt :=
 	+common:text+
 	\u00+common:hex++common:hex+
 	\u+common:hex++common:hex++common:hex++common:hex+
-	+common:formatstr+	
+	+common:formatstr+
 
 encoding :=
 	ascii
@@ -288,11 +285,18 @@ enumtype :=
 	Uint8Clamped
 
 %%% ############################################
+%section% := variable
+
+buf :=
+	var @buf@ = new +buftype+
+
+
+%%% ############################################
 %section% := variance
 
 %%% Definition -> Create a Buffer
 %%% Permutation -> Functions from Buffer to Buffer
 %%% Operation -> Functions from Buffer to other types
 
-main := 
+main :=
 	var smalloc = require('smalloc'); +definition+ +permutation+ +operation+
