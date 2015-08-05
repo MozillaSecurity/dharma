@@ -8,7 +8,7 @@
 %section% := value
 
 definition :=
-	!buf! +buftype+;
+	!buf! = +buftype+;
 
 buftype :=
 	+bufsize+
@@ -108,9 +108,9 @@ permutation :=
 	smalloc.alloc(+common:int+, !buf!, "+enumtype+");
 	smalloc.alloc(+common:short_int+, !buf!, "+enumtype+");
 	smalloc.alloc(+common:intoverflow+, !buf!, "+enumtype+");
-	smalloc.copyOnto(buf, +common:int+, !buf!, +common:int+, +common:int+);
-	smalloc.copyOnto(buf, +common:short_int+, !buf!, +common:short_int+, +common:short_int+);
-	smalloc.copyOnto(buf, +common:digit+, !buf!, +common:digit+, +common:intoverflow+);
+	smalloc.copyOnto(!buf!, +common:int+, !buf!, +common:int+, +common:int+);
+	smalloc.copyOnto(!buf!, +common:short_int+, !buf!, +common:short_int+, +common:short_int+);
+	smalloc.copyOnto(!buf!, +common:digit+, !buf!, +common:digit+, +common:intoverflow+);
 
 %%% Operations ############################################
 
