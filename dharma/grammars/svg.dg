@@ -1,0 +1,3199 @@
+%%% SVG Grammar
+%%% Investigate: XLINK, URIs
+
+%const% MAX_REPEAT_POWER := 3
+
+%section% := value
+
+digit :=
+	%range%(0-9)
+
+sign :=
+	+
+	-
+
+integer :=
+	%repeat%(+digit+)
+	+sign+%repeat%(+digit+)
+
+digits :=
+	%repeat%(+digit+)
+
+decimal_number :=
+	+integer+.+digits+
+
+scientific_number :=
+	+decimal_number+e+integer+
+	+decimal_number+E+integer+
+
+number :=
+	+integer+
+	+decimal_number+
+%%%	+scientific_number+
+
+unit_identifier :=
+	pt
+	pc
+	cm
+	mm
+	in
+	px
+	em
+	ex
+
+length :=
+	+integer+
+	+integer++unit_identifier+
+
+coordinate :=
+	+length+
+
+number_optional_number :=
+	+number+
+	+number+, +number+
+
+angle_unit_identifier :=
+	deg
+	grad
+	rad
+
+angle :=
+	+number+
+	+number++angle_unit_identifier+
+
+color_keyword :=
+	aliceblue
+	antiquewhite
+	aqua
+	aquamarine
+	azure
+	beige
+	bisque
+	black
+	blanchedalmond
+	blue
+	blueviolet
+	brown
+	burlywood
+	cadetblue
+	chartreuse
+	chocolate
+	coral
+	cornflowerblue
+	cornsilk
+	crimson
+	cyan
+	darkblue
+	darkcyan
+	darkgoldenrod
+	darkgray
+	darkgreen
+	darkgrey
+	darkkhaki
+	darkmagenta
+	darkolivegreen
+	darkorange
+	darkorchid
+	darkred
+	darksalmon
+	darkseagreen
+	darkslateblue
+	darkslategray
+	darkslategrey
+	darkturquoise
+	darkviolet
+	deeppink
+	deepskyblue
+	dimgray
+	dimgrey
+	dodgerblue
+	firebrick
+	floralwhite
+	forestgreen
+	fuchsia
+	gainsboro
+	ghostwhite
+	gold
+	goldenrod
+	gray
+	grey
+	green
+	greenyellow
+	honeydew
+	hotpink
+	indianred
+	indigo
+	ivory
+	khaki
+	lavender
+	lavenderblush
+	lawngreen
+	lemonchiffon
+	lightblue
+	lightcoral
+	lightcyan
+	lightgoldenrodyellow
+	lightgray
+	lightgreen
+	lightgrey
+	lightpink
+	lightsalmon
+	lightseagreen
+	lightskyblue
+	lightslategray
+	lightslategrey
+	lightsteelblue
+	lightyellow
+	lime
+	limegreen
+	linen
+	magenta
+	maroon
+	mediumaquamarine
+	mediumblue
+	mediumorchid
+	mediumpurple
+	mediumseagreen
+	mediumslateblue
+	mediumspringgreen
+	mediumturquoise
+	mediumvioletred
+	midnightblue
+	mintcream
+	mistyrose
+	moccasin
+	navajowhite
+	navy
+	oldlace
+	olive
+	olivedrab
+	orange
+	orangered
+	orchid
+	palegoldenrod
+	palegreen
+	paleturquoise
+	palevioletred
+	papayawhip
+	peachpuff
+	peru
+	pink
+	plum
+	powderblue
+	purple
+	red
+	rosybrown
+	royalblue
+	saddlebrown
+	salmon
+	sandybrown
+	seagreen
+	seashell
+	sienna
+	silver
+	skyblue
+	slateblue
+	slategray
+	slategrey
+	snow
+	springgreen
+	steelblue
+	tan
+	teal
+	thistle
+	tomato
+	turquoise
+	violet
+	wheat
+	white
+	whitesmoke
+	yellow
+	yellowgreen
+
+hexadecimal :=
+	0
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	a
+	b
+	c
+	d
+	e
+	f
+
+hex :=
+	%repeat%(+hexadecimal+)
+
+byte_int :=
+	%range%(0-255)
+
+percent :=
+	%range%(0-100)%
+	+number+%
+
+percentage :=
+	%range%(0-100)%
+	+number+%
+
+color :=
+	+color_keyword+
+	#+hexadecimal++hexadecimal++hexadecimal+
+	#+hexadecimal++hexadecimal++hexadecimal++hexadecimal++hexadecimal++hexadecimal+
+	rgb(+byte_int+, +byte_int+, +byte_int+)
+	rgb(+percent+, +percent+, +percent+)
+
+icccolorvalue :=
+	0.+integer+
+
+uri_alpha :=
+	%range%(a-z)
+	%range%(A-Z)
+
+uri_digit :=
+	%range%(0-9)
+
+uri_alphanum :=
+	+uri_alpha+
+	+uri_digit+
+
+uri_mark :=
+	-
+	+
+	.
+	!
+	~
+	*
+	'
+	(
+	)
+
+uri_unreserved :=
+	+uri_alphanum+
+	+uri_mark+
+
+uri_hex :=
+	%range%(0-9)
+	%range%(a-f)
+	%range%(A-F)
+
+uri_escaped :=
+	%+uri_hex++uri_hex+
+
+uri_userinfo_chars :=
+	+uri_unreserved+
+	+uri_escaped+
+	;
+	:
+	&
+	=
+	+
+	$
+	,
+
+uri_userinfo :=
+	%repeat$(+uri_userinfo_chars+)
+
+uri_toplabel :=
+	+uri_alpha+%repeat%(+uri_alphanum+)
+
+uri_domainlabel :=
+	%repeat%(+uri_alphanum+)
+
+uri_hostname :=
+	+uri_toplabel+
+	%repeat%(+uri_domainlabel+, ".").+uri_toplabel+
+	localhost
+
+uri_ipv4address :=
+	127.0.0.1
+
+uri_host :=
+	+uri_hostname+
+	+uri_ipv4address+
+
+uri_port :=
+	%range%(0-65535)
+
+uri_hostport :=
+	+uri_host+
+	+uri_host+:+uri_port+
+
+uri_server :=
+	+uri_userinfo+@+uri_hostport+
+	+uri_hostport+
+
+uri_reg_name_chars :=
+	+uri_unreserved+
+	+uri_escaped+
+	$
+	,
+	;
+	:
+	@
+	&
+	=
+	+
+
+uri_reg_name :=
+	%repeat%(+uri_reg_name_chars+)
+
+uri_authority :=
+	+uri_server+
+	+uri_reg_name+
+
+uri_pchar :=
+	+uri_unreserved+
+	+uri_escaped+
+	:
+	@
+	&
+	=
+	+
+	$
+	,
+
+uri_segment :=
+	%repeat%(+uri_pchar+)
+	%repeat%(+uri_pchar+. ";")
+
+uri_path_segments :=
+	+uri_segment+
+	%repeat%(+uri_segment+, "/")
+
+uri_abs_path :=
+	/+uri_path_segments+
+
+uri_net_path :=
+	//+uri_authority+
+	//+uri_authority++uri_abs_path+
+
+uri_rel_segment_chars :=
+	+uri_unreserved+
+	+uri_escaped+
+	;
+	@
+	&
+	=
+	+
+	$
+	,
+
+uri_rel_segment :=
+	%repeat%(+uri_rel_segment_chars+)
+
+uri_rel_path :=
+	+uri_rel_segment+
+	+uri_rel_segment++uri_abs_path+
+
+uri_reserved :=
+	;
+	/
+	?
+	:
+	@
+	&
+	=
+	+
+	$
+	,
+
+uri_uric :=
+	+uri_reserved+
+	+uri_unreserved+
+	+uri_escaped+
+
+uri_query :=
+	%repeat%(+uri_uric+)
+
+uri_relative_uri :=
+	+uri_net_path+
+	+uri_abs_path+
+	+uri_rel_path+
+	+uri_net_path+?+uri_query+
+	+uri_abs_path+?+uri_query+
+	+uri_rel_path+?+uri_query+
+
+uri_scheme_chars :=
+	+uri_alpha+
+	+uri_digit+
+	+
+	-
+	.
+
+uri_scheme :=
+	+uri_alpha+%repeat%(+uri_scheme_chars+)
+	http
+	https
+
+uri_hier_part :=
+	+uri_net_path+
+	+uri_abs_path+
+	+uri_net_path+?+uri_query+
+	+uri_abs_path+?+uri_query+
+
+uri_uric_no_slash :=
+	+uri_unreserved+
+	+uri_escaped+
+	;
+	?
+	:
+	@
+	&
+	=
+	+
+	$
+	,
+
+uri_opaque_part :=
+	+uri_uric_no_slash+%repeat%(+uri_uric+)
+
+uri_absolute_uri :=
+	+uri_scheme+:+uri_hier_part+
+	+uri_scheme+:+uri_opaque_part+
+
+uri :=
+%%%	+uri_absolute_uri+
+%%%	+uri_relative_uri+
+%%%	+uri_absolute_uri+#!element_id!
+%%%	+uri_relative_uri+#xpointer(id("!element_id!"))
+	url(#!element_id!)
+	url(#xpointer(id('!element_id!')))
+
+paint_server_uri :=
+	+uri+
+
+paint :=
+	none
+	currentColor
+	+color+
+	+color+ icc-color(!color_profile_name!)
+	+color+ icc-color(!color_profile_name!, %repeat%(+icccolorvalue+, ", "))
+	+paint_server_uri+
+	+paint_server_uri+ none
+	+paint_server_uri+ currentColor
+	+paint_server_uri+ +color+
+	+paint_server_uri+ +color+ icc-color(!color_profile_name!)
+	+paint_server_uri+ +color+ icc-color(!color_profile_name!, %repeat%(+icccolorvalue+, ", "))
+
+transform :=
+	matrix(+number+, +number+, +number+, +number+, +number+, +number+)
+	translate(+number+)
+	translate(+number+, +number+)
+	scale(+number+)
+	scale(+number+, +number+)
+	rotate(+number+)
+	rotate(+number+, +number+, +number+)
+	skewX(+number+)
+	skewY(+number+)
+
+transform_list :=
+	%repeat%(+transform+, ", ")
+
+frequency :=
+	+number+Hz
+	+number+kHz
+
+time :=
+	+number+s
+	+number+ms
+
+svg_profile_name :=
+	tiny
+	basic
+	full
+	none
+
+view_box :=
+	+integer+ +integer+ +integer+ +integer+
+	+decimal_number+ +decimal_number+ +decimal_number+ +decimal_number+
+
+preserve_aspect_ratio_align :=
+	none
+	xMinYMin
+	xMidYMin
+	xMaxYMin
+	xMinYMid
+	xMidYMid
+	xMaxYMid
+	xMinYMax
+	xMidYMax
+	xMaxYMax
+
+preserve_aspect_ratio :=
+	+preserve_aspect_ratio_align+
+	+preserve_aspect_ratio_align+ meet
+	+preserve_aspect_ratio_align+ slice
+	defer +preserve_aspect_ratio_align+
+	defer +preserve_aspect_ratio_align+ meet
+	defer +preserve_aspect_ratio_align+ slice 
+
+core_attributes :=
+	id="@element_id@"
+	xml:base="+uri+"
+	xml:lang="en"
+	xml:lang="de"
+	xml:space="default"
+	xml:space="preserve"
+
+required_features :=
+	http://www.w3.org/TR/SVG11/feature#SVG
+	http://www.w3.org/TR/SVG11/feature#SVGDOM
+	http://www.w3.org/TR/SVG11/feature#SVG-static
+	http://www.w3.org/TR/SVG11/feature#SVGDOM-static
+	http://www.w3.org/TR/SVG11/feature#SVG-animation
+	http://www.w3.org/TR/SVG11/feature#SVGDOM-animation
+	http://www.w3.org/TR/SVG11/feature#SVG-dynamic
+	http://www.w3.org/TR/SVG11/feature#SVGDOM-dynamic
+	http://www.w3.org/TR/SVG11/feature#CoreAttribute
+	http://www.w3.org/TR/SVG11/feature#Structure
+	http://www.w3.org/TR/SVG11/feature#BasicStructure
+	http://www.w3.org/TR/SVG11/feature#ContainerAttribute
+	http://www.w3.org/TR/SVG11/feature#ConditionalProcessing
+	http://www.w3.org/TR/SVG11/feature#Image
+	http://www.w3.org/TR/SVG11/feature#Style
+	http://www.w3.org/TR/SVG11/feature#ViewportAttribute
+	http://www.w3.org/TR/SVG11/feature#Shape
+	http://www.w3.org/TR/SVG11/feature#Text
+	http://www.w3.org/TR/SVG11/feature#BasicText
+	http://www.w3.org/TR/SVG11/feature#PaintAttribute
+	http://www.w3.org/TR/SVG11/feature#BasicPaintAttribute
+	http://www.w3.org/TR/SVG11/feature#OpacityAttribute
+	http://www.w3.org/TR/SVG11/feature#GraphicsAttribute
+	http://www.w3.org/TR/SVG11/feature#BasicGraphicsAttribute
+	http://www.w3.org/TR/SVG11/feature#Marker
+	http://www.w3.org/TR/SVG11/feature#ColorProfile
+	http://www.w3.org/TR/SVG11/feature#Gradient
+	http://www.w3.org/TR/SVG11/feature#Pattern
+	http://www.w3.org/TR/SVG11/feature#Clip
+	http://www.w3.org/TR/SVG11/feature#BasicClip
+	http://www.w3.org/TR/SVG11/feature#Mask
+	http://www.w3.org/TR/SVG11/feature#Filter
+	http://www.w3.org/TR/SVG11/feature#BasicFilter
+	http://www.w3.org/TR/SVG11/feature#DocumentEventsAttribute
+	http://www.w3.org/TR/SVG11/feature#GraphicalEventsAttribute
+	http://www.w3.org/TR/SVG11/feature#AnimationEventsAttribute
+	http://www.w3.org/TR/SVG11/feature#Cursor
+	http://www.w3.org/TR/SVG11/feature#Hyperlinking
+	http://www.w3.org/TR/SVG11/feature#XlinkAttribute
+	http://www.w3.org/TR/SVG11/feature#ExternalResourcesRequired
+	http://www.w3.org/TR/SVG11/feature#View
+	http://www.w3.org/TR/SVG11/feature#Script
+	http://www.w3.org/TR/SVG11/feature#Animation
+	http://www.w3.org/TR/SVG11/feature#Font
+	http://www.w3.org/TR/SVG11/feature#BasicFont
+	http://www.w3.org/TR/SVG11/feature#Extensibility
+
+%%%conditional_attributes :=
+%%%	requiredFeatures="%repeat%(+required_features+, ",")"
+%%%	requiredExtensions="%repeat%(+required_extensions+, ",")"
+%%%	systemLanguage="en"
+
+%%% TODO link with css grammar
+style_attributes :=
+	class="@class_name@"
+%%%	style=""
+
+%%% TODO link with ecmascript grammar
+document_event_attributes :=
+	onunload=""
+	onabort=""
+	onerror=""
+	onresize=""
+	onscroll=""
+	onzoom=""
+
+graphical_event_attributes :=
+	onfocusin=""
+	onfocusout=""
+	onactivate=""
+	onclick=""
+	onmousedown=""
+	onmouseup=""
+	onmouseover=""
+	onmousemove=""
+	onmouseout=""
+	onload=""
+
+external_attributes :=
+	externalResourcesRequired="true"
+	externalResourcesRequired="false"
+
+opacity_value :=
+	%range%(0.0-1.0)
+
+enable_background_value :=
+	accumulate
+	new
+	new +number+ +number+ +number+ +number+
+	inherit
+
+container_attributes :=
+	enable-background="+enable_background_value+"
+
+shape_value :=
+	rect(+length+, +length+, +length+, +length+)
+
+clip_value :=
+	+shape_value+
+	auto
+	inherit
+
+overflow_value :=
+	visible
+	hidden
+	scroll
+	auto
+	inherit
+
+viewport_attributes :=
+	clip="+clip_value+"
+	overflow="+overflow_value+"
+
+writing_mode_value :=
+	lr-tb
+	rl-tb
+	tb-rl
+	lr
+	rl
+	tb
+	inherit
+
+presentation_text_attributes :=
+	writing-mode="+writing_mode_value+"
+
+alignment_baseline_value :=
+	auto
+	baseline
+	before-edge
+	text-before-edge
+	middle
+	central
+	after-edge
+	text-after-edge
+	ideographic
+	alphabetic
+	hanging
+	mathematical
+	inherit
+
+baseline_shift_value :=
+	baseline
+	sub
+	super
+	+percentage+
+	+length+
+	inherit
+
+direction_value :=
+	ltr
+	rtl
+	inherit
+
+dominant_baseline_value :=
+	auto
+	use-script
+	no-change
+	reset-size
+	ideographic
+	alphabetic
+	hanging
+	mathematical
+	central
+	middle
+	text-after-edge
+	text-before-edge
+	inherit
+
+glyph_angle :=
+	0deg
+	90deg
+	180deg
+	270deg
+	+angle+
+
+glyph_orientation_horizontal_value :=
+	+glyph_angle+
+	inherit
+
+glyph_orientation_vertical_value :=
+	auto
+	+glyph_angle+
+	inherit
+
+kerning_value :=
+	auto
+	+length+
+	inherit
+
+letter_spacing_value :=
+	normal
+	+length+
+	inherit
+
+text_anchor_value :=
+	start
+	middle
+	end
+	inherit
+
+text_decoration_value :=
+	none
+	underline
+	overline
+	line-through
+	blink
+	inherit
+
+unicode_bidi_value :=
+	normal
+	embed
+	bidi-override
+	inherit
+
+word_spacing_value :=
+	normal
+	+length+
+	inherit
+
+text_content_attributes :=
+	alignment-baseline="+alignment_baseline_value+"
+	baseline-shift="+baseline_shift_value+"
+	direction="+direction_value+"
+	dominant-baseline="+dominant_baseline_value+"
+	glyph-orientation-horizontal="+glyph_orientation_horizontal_value+"
+	glyph-orientation-vertical="+glyph_orientation_vertical_value+"
+	kerning="+kerning_value+"
+	letter-spacing="+letter_spacing_value+"
+	text-anchor="+text_anchor_value+"
+	text-decoration="+text_decoration_value+"
+	unicode-bidi="+unicode_bidi_value+"
+	word-spacing="+word_spacing_value+"
+
+family_name :=
+	Helvetica
+	Baskerville
+	Symbol
+	Courier
+	Verdana
+	Georgia
+
+generic_family :=
+	serif
+	sans-serif
+	cursive
+	fantasy
+	monospace
+
+font_family_value :=
+	+family_name+
+	%repeat%(+family_name+, ", ")
+	+generic_family+
+	%repeat%(+generic_family, ", ")
+	+generic_family+, +family_name+
+	inherit
+
+absolute_size :=
+	xx-small
+	x-small
+	small
+	medium
+	large
+	x-large
+	xx-large
+
+relative_size :=
+	larger
+	smaller
+
+font_size_value :=
+	+absolute_size+
+	+relative_size+
+	+length+
+	+percentage+
+	inherit
+
+font_style_value :=
+	normal
+	italic
+	oblique
+	inherit
+
+font_weight_value :=
+	normal
+	bold
+	bolder
+	lighter
+	100
+	200
+	300
+	400
+	500
+	600
+	700
+	800
+	900
+	inherit
+
+font_attributes :=
+	font-family="+font_family_value+"
+	font-size="+font_size_value+"
+	font-style="+font_style_value+"
+	font-weight="+font_weight_value+"
+
+fill_rule_value :=
+	nonzero
+	evenodd
+	inherit
+
+stroke_dasharray_value :=
+	none
+	%repeat%(+length+, ",")
+	%repeat%(+percentage+, ",")
+	inherit
+
+stroke_dashoffset_value :=
+	+percentage+
+	+length+
+	inherit
+
+stroke_linecap_value :=
+	butt
+	round
+	square
+	inherit
+
+stroke_linejoin_value :=
+	miter
+	round
+	bevel
+	inherit
+
+stroke_miterlimit_value :=
+	+number+
+	inherit
+
+stroke_width_value :=
+	+percentage+
+	+length+
+	inherit
+
+color_interpolation_value :=
+	auto
+	sRGB
+	linearRGB
+	inherit
+
+color_rendering_value :=
+	auto
+	optimizeSpeed
+	optimizeQuality
+	inherit
+
+paint_attributes :=
+	color="+color+"
+	fill="+paint+"
+	fill-rule="+fill_rule_value+"
+	stroke="+paint+"
+	stroke-dasharray="+stroke_dasharray_value+"
+	stroke-dashoffset="+stroke_dashoffset_value+"
+	stroke-linecap="+stroke_linecap_value+"
+	stroke-linejoin="+stroke_linejoin_value+"
+	stroke-miterlimit="+stroke_miterlimit_value+"
+	stroke-width="+stroke_width_value+"
+	color-interpolation="+color_interpolation_value+"
+	color-rendering="+color_rendering_value+"
+
+color_attributes :=
+	color="+color+"
+	color-interpolation="color_interpolation_value+"
+	color-rendering="+color_rendering_value+"
+
+opacity_attribute_value :=
+	+opacity_value+
+	inherit
+
+opacity_attributes :=
+	opacity="+opacity_attribute_value+"
+	stroke-opacity="+opacity_attribute_value+"
+	fill-opacity="+opacity_attribute_value+"
+
+display_value :=
+	inline
+	block
+	list-item
+	run-in
+	compact
+	marker
+	table
+	inline-table
+	table-row-group
+	table-header-group
+	table-footer-group
+	table-row
+	table-column-group
+	table-column
+	table-cell
+	table-caption
+	none
+	inherit
+
+image_rendering_value :=
+	auto
+	optimizeSpeed
+	optimizeQuality
+	inherit
+
+pointer_events_value :=
+	visiblePainted
+	visibleFill
+	visibleStroke
+	visible
+	painted
+	fill
+	stroke
+	all
+	none
+	inherit
+
+shape_rendering_value :=
+	auto
+	optimizeSpeed
+	crispEdges
+	geometricPrecision
+	inherit
+
+text_rendering_value :=
+	auto
+	optimizeSpeed
+	optimizeLegibility
+	geometricPrecision
+	inherit
+
+visibility_value :=
+	visible
+	hidden
+	collapse
+	inherit
+
+graphics_attributes :=
+	display="+display_value+"
+	image-rendering="+image_rendering_value+"
+	pointer-events="+pointer_events_value+"
+	shape-rendering="+shape_rendering_value+"
+	text-rendering="+text_rendering_value+"
+	visibility="+visibility_value+"
+
+marker_value :=
+	none
+	+uri+
+	inherit
+
+marker_attributes :=
+	marker-start="+marker_value+"
+	marker-mid="+marker_value+"
+	marker-end="+marker_value+"
+
+color_profile_value :=
+	auto
+	sRGB
+	!color_profile_name!
+	+uri+
+
+color_profile_attributes :=
+	color-profile="+color_profile_value+"
+
+gradient_attributes :=
+	stop-color="+color+"
+	stop-opacity="+opacity_value+"
+
+clip_path_value :=
+	+uri+
+	none
+	inherit
+
+clip_rule_value :=
+	nonzero
+	evenodd
+	inherit
+
+clip_attributes :=
+	clip-path="+clip_path_value+"
+	clip-rule="+clip_rule_value+"
+
+mask_value :=
+	+uri+
+	none
+	inherit
+
+mask_attributes :=
+	mask="+mask_value+"
+
+filter_value :=
+	+uri+
+	none
+	inherit
+
+filter_attributes :=
+	filter="+filter_value+"
+
+color_interpolation_filters_value :=
+	auto
+	sRGB
+	linearRGB
+	inherit
+
+filter_color_attributes :=
+	color-interpolation-filters="+color_interpolation_filters_value+"
+
+cursor_value :=
+	auto
+	crosshair
+	default
+	pointer
+	move
+	e-resize
+	ne-resize
+	nw-resize
+	n-resize
+	se-resize
+	sw-resize
+	s-resize
+	w-resize
+	text
+	wait
+	help
+	+uri+ auto
+	+uri+ crosshair
+	+uri+ default
+	+uri+ pointer
+	+uri+ move
+	+uri+ e-resize
+	+uri+ ne-resize
+	+uri+ nw-resize
+	+uri+ n-resize
+	+uri+ se-resize
+	+uri+ sw-resize
+	+uri+ s-resize
+	+uri+ w-resize
+	+uri+ text
+	+uri+ wait
+	+uri+ help
+	inherit
+
+cursor_attributes :=
+	cursor="+cursor_value+"
+
+presentation_attributes :=
+	+container_attributes+
+	+viewport_attributes+
+	+presentation_text_attributes+
+	+text_content_attributes+
+	+font_attributes+
+	+paint_attributes+
+%%%	+color_attributes+	%%% replicated in paint_attributes
+	+opacity_attributes+
+	+graphics_attributes+
+	+marker_attributes+
+	+color_profile_attributes+
+	+gradient_attributes+
+	+clip_attributes+
+	+mask_attributes+
+	+filter_attributes+
+	+filter_color_attributes+
+	+cursor_attributes+
+	flood-color="+color+"
+	flood-opacity="+opacity_value+"
+	lighting-color="+color+"
+
+svg_attributes :=
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	version="1.0"
+	version="1.1"
+	version="+number+"
+	baseProfile="+svg_profile_name+"
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	viewBox="+view_box+"
+	preserveAspectRatio="+preserve_aspect_ratio+"
+	zoomAndPan="disable"
+	zoomAndPan="magnify"
+	+core_attributes+
+	+style_attributes+
+	+document_event_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	+presentation_attributes+
+
+g_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	+presentation_attributes+
+	transform="+transform_list+"
+
+g :=
+	<g %repeat%(+g_attributes+, " ")>+svg_content_class+</g>
+
+defs_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	+presentation_attributes+
+	transform="+transform_list+"
+
+defs :=
+	<defs %repeat%(+defs_attributes+, " ")>+svg_content_class+</defs>
+
+symbol_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	+presentation_attributes+
+	viewBox="+view_box+"
+	preserveAspectRatio="+preserve_aspect_ratio+"
+
+symbol :=
+	<symbol %repeat%(+symbol_attributes+, " ")>+svg_content_class+</symbol>
+
+xlink_embed_attributes :=
+	xlink:href="+uri+"
+	xlink:role="+uri+"
+	xlink:arcrole="+uri+"
+	xlink:title="title"
+
+xlink_attributes :=
+	xlink:href="+uri+"
+	xlink:role="+uri+"
+	xlink:arcrole="+uri+"
+	xlink:title="title"
+
+use_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	+xlink_embed_attributes+
+	+presentation_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	transform="+transform_list+"
+
+use_content_class :=
+	+description_class+
+	+animation_class+
+
+use :=
+	<use xlink:href="+uri+" %repeat%(+use_attributes+, " ")></use>
+	<use xlink:href="+uri+" %repeat%(+use_attributes+, " ")>+use_content_class+</use>
+
+alphanum :=
+	%range%(a-z)
+	%range%(A-Z)
+	%range%(0-9)
+
+cdata :=
+	%repeat%(+alphanum+)
+
+string :=
+	%repeat%(+alphanum+)
+
+desc_content_class :=
+	+cdata+
+
+desc_attributes :=
+	+core_attributes+
+	+style_attributes+
+
+desc :=
+	<desc %repeat%(+desc_attributes+, " ")></desc>
+	<desc %repeat%(+desc_attributes+, " ")>+desc_content_class+</desc>
+
+title_content_class :=
+	+cdata+
+
+title_attributes :=
+	+core_attributes+
+	+style_attributes+
+
+title :=
+	<title %repeat%(+title_attributes+, " ")></title>
+	<title %repeat%(+title_attributes+, " ")>+title_content_class+</title>
+
+metadata_attributes :=
+	+core_attributes+
+
+metadata_content_class :=
+	+cdata+
+
+metadata :=
+	<metadata %repeat%(+metadata_attributes+, " ")></metadata>
+	<metadata %repeat%(+metadata_attributes+, " ")>+metadata_content_class+</metadata>
+
+description_class :=
+	+desc+
+	+title+
+	+metadata+
+
+%%% TODO integrate with ecmascript grammar
+animation_event_attributes :=
+	onbegin=""
+	onend=""
+	onrepeat=""
+	onload=""
+
+animation_attributes :=
+	+xlink_attributes+
+
+animation_attribute_name_value :=
+	top
+	fill
+	width
+	heght
+	x
+	y
+	begin
+	dur
+	end
+	min
+	max
+	restart
+	repeatCount
+	repeatDur
+	attributeName
+	attributeType
+	calcMode
+	values
+	keyTimes
+	keySplines
+	from
+	to
+	by
+	additive
+	accumulate
+	id
+	xml:base
+	xml:lang
+	xml:space
+	externalResourcesRequired
+
+attribute_type_value :=
+	CSS
+	XML
+	auto
+
+animation_attribute_attributes :=
+	attributeName="+animation_attribute_name_value+"
+	attributeType="+attribute_type_value+"
+
+hours :=
+	%range%(0-65535)
+
+minutes :=
+	%range%(0-5)%range%(0-9)
+
+seconds :=
+	%range%(0-5)%range%(0-9)
+
+fraction :=
+	%range%(0-65535)
+
+full_clock_value :=
+	+hours+:+minutes+:+seconds+
+	+hours+:+minutes+:+seconds+.+fraction+
+
+partial_clock_value :=
+	+minutes+:+seconds+
+	+minutes+:+seconds+.+fraction+
+
+timecount :=
+	%range%(0-65535)
+
+time_metric :=
+	h
+	min
+	s
+	ms
+
+timecount_value :=
+	+timecount+
+	+timecount++time_metric+
+	+timecount+.+fraction+
+	+timecount+.+fraction++time_metric+
+
+clock_value :=
+	+full_clock_value+
+	+partial_clock_value+
+	+timecount_value+
+
+offset_value :=
+	++clock_value+
+	-+clock_value+
+
+syncbase_value :=
+	!element_id!.begin
+	!element_id!.end
+	!element_id!.begin ++clock_value+
+	!element_id!.begin -+clock_value+
+	!element_id!.end ++clock_value+
+	!element_id!.end -+clock_value+
+
+event_reference :=
+	focusin
+	focusout
+	activate
+	click
+	mousedown
+	mouseup
+	mouseover
+	mousemove
+	mouseout
+	load
+	unload
+	abort
+	error
+	resize
+	scroll
+	zoom
+	begin
+	end
+	repeat
+
+event_value :=
+	+event_reference+
+	+event_reference+ ++clock_value+
+	+event_reference+ -+clock_value+
+	!element_id!.+event_reference+
+	!element_id!.+event_reference+ ++clock_value+
+	!element_id!.+event_reference+ -+clock_value+
+
+repeat_value :=
+	repeat(+integer+)
+	repeat(+integer+) ++clock_value+
+	repeat(+integer+) -+clock_value+
+	!element_id!.repeat(+integer+)
+	!element_id!.repeat(+integer+) ++clock_value+
+	!element_id!.repeat(+integer+) -+clock_value+
+
+character :=
+	%range%(!-~)
+
+access_key_value :=
+	accessKey(+character+)
+	accessKey(+character+) ++clock_value+
+	accessKey(+character+) -+clock_value+
+
+wallclock_sync_value :=
+	wallclock(+clock_value+)
+
+begin_value :=
+	+offset_value+
+	+syncbase_value+
+	+event_value+
+	+repeat_value+
+	+access_key_value+
+	+wallclock_sync_value+
+	indefinite
+
+begin_value_list :=
+	%repeat%(+begin_value+, "; ")
+
+dur_value :=
+	+clock_value+
+	media
+	indefinite
+
+end_value :=
+	+offset_value+
+	+syncbase_value+
+	+event_value+
+	+repeat_value+
+	+access_key_value+
+	+wallclock_sync_value+
+	indefinite
+
+end_value_list :=
+	%repeat%(+end_value+, "; ")
+
+min_value :=
+	+clock_value+
+	media
+
+max_value :=
+	+clock_value+
+	media
+
+restart_value :=
+	always
+	never
+	whenNotActive
+
+repeat_count_value :=
+	+integer+
+	+decimal_number+
+	indefinite
+
+repeat_dur_value :=
+	+clock_value+
+	indefinite
+
+fill_value :=
+	freeze
+	remove
+
+animation_timing_attributes :=
+	begin="+begin_value_list+"
+	dur="+dur_value+"
+	end="+end_value_list+"
+	min="+min_value+"
+	max="+max_value+"
+	restart="+restart_value+"
+	repeatCount="+repeat_count_value+"
+	repeatDur="+repeat_dur_value+"
+	fill="+fill_value+"
+
+calc_mode_value :=
+	discrete
+	linear
+	paced
+	spline
+
+values_value :=
+	+integer+
+	+decimal_number+
+
+values_value_list :=
+	%repeat%(+values_value+, "; ")
+
+key_times_value :=
+	%range%(0.0-1.0)
+
+key_times_value_list :=
+	%repeat%(+key_times_value+, "; ")
+
+key_splines_value :=
+	%range%(0.0-1.0) %range%(0.0-1.0) %range%(0.0-1.0) %range%(0.0-1.0)
+
+key_splines_value_list :=
+	%repeat%(+key_splines_value+, "; ")
+
+animation_value_attributes :=
+	calcMode="+calc_mode_value+"
+	values="+values_value_list+"
+	keyTimes="0; +key_times_value_list+"
+	keySplines="+key_splines_value_list+"
+	from="+values_value+"
+	to="+values_value+"
+	by="+values_value+"
+
+additive_value :=
+	replace
+	sum
+
+accumulate_value :=
+	none
+	sum
+
+animation_addtion_attributes :=
+	additive="+additive_value+"
+	accumulate="+accumulate_value+"
+
+animate_attributes :=
+	+core_attributes+
+	+animation_event_attributes+
+	+external_attributes+
+	+animation_attributes+
+	+animation_attribute_attributes+
+	+animation_timing_attributes+
+	+animation_value_attributes+
+	+animation_addtion_attributes+
+
+animate_content_class :=
+	+description_class+
+
+animate :=
+	<animate %repeat%(+animate_attributes+, " ")></animate>
+	<animate %repeat%(+animate_attributes+, " ")>+animate_content_class+</animate>
+
+animate_color_attributes :=
+	+core_attributes+
+	+animation_event_attributes+
+	+external_attributes+
+	+animation_attributes+
+	+animation_attribute_attributes+
+	+animation_timing_attributes+
+	+animation_value_attributes+
+	+animation_addtion_attributes+
+
+animate_color_content_class :=
+	+description_class+
+
+animate_color :=
+	<animateColor %repeat%(+animate_color_attributes+, " ")></animateColor>
+	<animateColor %repeat%(+animate_color_attributes+, " ")>+animate_color_content_class+</animateColor>
+
+animate_transform_type_value :=
+	translate
+	scale
+	rotate
+	skewX
+	skewY
+
+animate_transform_attributes :=
+	+core_attributes+
+	+animation_event_attributes+
+	+external_attributes+
+	+animation_attributes+
+	+animation_attribute_attributes+
+	+animation_timing_attributes+
+	+animation_value_attributes+
+	+animation_addtion_attributes+
+	type="+animate_transform_type_value+"
+
+animate_transform_content_class :=
+	+description_class+
+
+animate_transform :=
+	<animateTransform %repeat%(+animate_transform_attributes+, " ")></animateTransform>
+	<animateTransform %repeat%(+animate_transform_attributes+, " ")>+animate_transform_content_class+</animateTransform>
+
+animate_motion_calc_mode_value :=
+	discrete
+	linear
+	paced
+	spline
+
+coordinate_pair :=
+	+number+, +number+
+
+lineto_argument_sequence :=
+	+coordinate_pair+
+	%repeat%(+coordinate_pair+, ", ")
+
+moveto_argument_sequence :=
+	+coordinate_pair+
+	+coordinate_pair+, +lineto_argument_sequence+
+
+moveto :=
+	M +moveto_argument_sequence+
+	m +moveto_argument_sequence+
+
+closepath :=
+	Z
+	z
+
+lineto :=
+	L +lineto_argument_sequence+
+	l +lineto_argument_sequence+
+
+horizontal_lineto_argument_sequence :=
+	+number+
+	%repeat%(+number+, ", ")
+
+horizontal_lineto :=
+	H +horizontal_lineto_argument_sequence+
+	h +horizontal_lineto_argument_sequence+
+
+vertical_lineto_argument_sequence :=
+	+number+
+	%repeat%(+number+, ", ")
+
+vertical_lineto :=
+	V +vertical_lineto_argument_sequence+
+	v +vertical_lineto_argument_sequence+
+
+cureveto_argument :=
+	+coordinate_pair+, +coordinate_pair+, +coordinate_pair+
+
+cureveto_argument_sequence :=
+	+cureveto_argument+
+	%repeat%(+cureveto_argument+)
+
+curveto :=
+	C +cureveto_argument_sequence+
+	c +cureveto_argument_sequence+
+
+smooth_curveto_argument :=
+	+coordinate_pair+, +coordinate_pair+
+
+smooth_curveto_argument_sequence :=
+	+smooth_curveto_argument+
+	%repeat%(+smooth_curveto_argument+, ", ")
+
+smooth_curveto :=
+	S +smooth_curveto_argument_sequence+
+	s +smooth_curveto_argument_sequence+
+
+quadratic_bezier_curveto_argument :=
+	+coordinate_pair+, +coordinate_pair+
+
+quadratic_bezier_curveto_argument_sequence :=
+	+quadratic_bezier_curveto_argument+
+	%repeat%(+quadratic_bezier_curveto_argument+, ", ")
+
+quadratic_bezier_curveto :=
+	Q +quadratic_bezier_curveto_argument_sequence+
+	q +quadratic_bezier_curveto_argument_sequence+
+
+smooth_quadratic_bezier_curveto_argument_sequence :=
+	+coordinate_pair+
+	%repeat%(+coordinate_pair+, ", ")
+
+smooth_quadratic_bezier_curveto :=
+	T +smooth_quadratic_bezier_curveto_argument_sequence+
+	t +smooth_quadratic_bezier_curveto_argument_sequence+
+
+nonnegative_number :=
+	%range%(0-65535)
+	%range%(0.0-65535.0)
+
+arc_flag :=
+	0
+	1
+
+elliptical_arc_argument :=
+	+nonnegative_number+, +nonnegative_number+, +number+, +arc_flag+, +arc_flag+, +coordinate_pair+
+
+elliptical_arc_argument_sequence :=
+	+elliptical_arc_argument+
+	%repeat%(+elliptical_arc_argument+, ", ")
+
+elliptical_arc :=
+	A +elliptical_arc_argument_sequence+
+	a +elliptical_arc_argument_sequence+
+
+drawto_command :=
+	+closepath+
+	+lineto+
+	+horizontal_lineto+
+	+vertical_lineto+
+	+curveto+
+	+smooth_curveto+
+	+quadratic_bezier_curveto+
+	+smooth_quadratic_bezier_curveto+
+	+elliptical_arc+
+
+drawto_commands :=
+	%repeat%(+drawto_command+, " ")
+
+moveto_drawto_command_group :=
+	+moveto+
+	+moveto+ +drawto_commands+
+
+path_data :=
+	%repeat%(+moveto_drawto_command_group+, " ")
+
+key_points_value :=
+	%range%(0.0-1.0)
+
+key_points_value_list :=
+	%repeat%(+key_points_value+, "; ")
+
+rotate_value :=
+	+number+
+	auto
+	auto-reverse
+
+animate_motion_attributes :=
+	+core_attributes+
+	+animation_event_attributes+
+	+external_attributes+
+	+animation_attributes+
+	+animation_timing_attributes+
+	+animation_addtion_attributes+
+	calcMode="+animate_motion_calc_mode_value+"
+	+animation_value_attributes+
+	path="+path_data+"
+	keyPoints="+key_points_value_list+"
+	rotate="+rotate_value+"
+
+mpath_attributes :=
+	+core_attributes+
+	+xlink_attributes+
+	xlink:href="+uri+"
+
+mpath_content_class :=
+	+description_class+
+
+mpath :=
+	<mpath %repeat%(+mpath_attributes+, " ")></mpath>
+	<mpath %repeat%(+mpath_attributes+, " ")>+mpath_content_class+</mpath>
+
+animate_motion_content_class :=
+	+description_class+
+	+mpath+
+
+animate_motion :=
+	<animateMotion %repeat%(+animate_motion_attributes+, " ")></animateMotion>
+	<animateMotion %repeat%(+animate_motion_attributes+, " ")>+animate_motion_content_class+</animateMotion>
+
+set_attributes :=
+	+core_attributes+
+	+animation_event_attributes+
+	+external_attributes+
+	+animation_attributes+
+	+animation_attribute_attributes+
+	+animation_timing_attributes+
+
+set_content_class :=
+	+description_class+
+
+set :=
+	<set %repeat%(+set_attributes+, " ")></set>
+	<set %repeat%(+set_attributes+, " ")>+set_content_class+</set>
+
+animation_class :=
+	+animate+
+	+animate_color+
+	+animate_transform+
+	+animate_motion+
+	+set+
+
+svg_val :=
+	<svg %repeat%(+svg_attributes+, " ")>%repeat%(+svg_content_class+)</svg>
+
+structure_class :=
+	+svg_val+
+	+g+
+	+defs+
+	+symbol+
+	+use+
+
+switch_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	transform="+transform_list+"
+
+switch_content_class :=
+	+description_class+
+	+svg_val+
+	+g+
+	+use+
+	+text+
+	+animation_class+
+	+conditional_class+
+	+image_class+
+	+shape_class+
+	+hyperlink_class+
+	+extensibility_class+
+
+switch :=
+	<switch %repeat%(+switch_attributes+, " ")>%repeat%(+switch_content_class+)</switch>
+
+conditional_class :=
+	+switch+
+
+image_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+xlink_embed_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	preserveAspectRation="+preserve_aspect_ratio+"
+	transform="+transform_list+"
+
+image_content_class :=
+	+description_class+
+	+animation_class+
+
+image :=
+	<image %repeat%(+image_attributes+, " ")></image>
+	<image %repeat%(+image_attributes+, " ")>%repeat%(+image_content_class+)</image>
+
+image_class :=
+	+image+
+
+content_type_value :=
+	text/css
+	text/plain
+
+media_value :=
+	all
+	aural
+	braille
+	embossed
+	handheld
+	print
+	projection
+	screen
+	tty
+	tv
+
+style_element_attributes :=
+	id="@element_id@"
+	xml:base="+uri+"
+	xml:lang="en"
+	xml:lang="de"
+	type="+content_type_value+"
+	media="+media_value+"
+	title="+cdata+"
+
+style :=
+	<style %repeat%(+style_element_attributes+, " ")></style>
+
+style_class :=
+	+style+
+
+rect_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	+presentation_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	rx="+length+"
+	ry="+length+"
+	transform="+transform_list+"
+
+rect_content_class :=
+	+description_class+
+	+animation_class+
+
+rect :=
+	<rect %repeat%(+rect_attributes+, " ")></rect>
+	<rect %repeat%(+rect_attributes+, " ")>+rect_content_class+</rect>
+
+circle_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	cx="+coordinate+"
+	cy="+coordinate+"
+	r="+length+"
+	transorm="+transform_list+
+
+circle_content_class :=
+	+description_class+
+	+animation_class+
+
+circle :=
+	<circle %repeat%(+circle_attributes+, " ")></circle>
+	<circle %repeat%(+circle_attributes+, " ")>+circle_content_class+</circle>
+
+line_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	x1="+coordinate+"
+	y1="+coordinate+"
+	x2="+coordinate+"
+	y2="+coordinate+"
+	transform="+transform_list+"
+
+line_content_class :=
+	+description_class+
+	+animation_class+
+
+line :=
+	<line %repeat%(+line_attributes+, " ")></line>
+	<line %repeat%(+line_attributes+, " ")>+line_content_class+</line>
+
+points_value :=
+	+coordinate_pair+
+	%repeat%(+coordinate_pair+, ",")
+
+polyline_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	points="+points_value+"
+	transform="+transform_list+"
+
+polyline_content_class :=
+	+description_class+
+	+animation_class+
+
+polyline :=
+	<polyline %repeat%(+polyline_attributes+, " ")></polyline>
+	<polyline %repeat%(+polyline_attributes+, " ")>+polyline_content_class+</polyline>
+
+polygon_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	points="+points_value+"
+	transform="+transform_list+"
+
+polygon_content_class :=
+	+description_class+
+	+animation_class+
+
+polygon :=
+	<polygon %repeat%(+polygon_attributes+, " ")></polygon>
+	<polygon %repeat%(+polygon_attributes+, " ")>+polygon_content_class+</polygon>
+
+ellipse_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	cx="+coordinate+"
+	cy="+coordinate+"
+	rx="+length+"
+	ry="+length+"
+	transform="+transform_list+"
+
+ellipse_content_class :=
+	+description_class+
+	+animation_class+
+
+ellipse :=
+	<ellipse %repeat%(+ellipse_attributes+, " ")></ellipse>
+	<ellipse %repeat%(+ellipse_attributes+, " ")>+ellipse_content_class+</ellipse>
+
+path_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	d="+path_data+"
+	pathLength="+number+"
+	transform="+transform_list+"
+
+path_content_class :=
+	+description_class+
+	+animation_class+
+
+path :=
+	<path %repeat%(+path_attributes+, " ")></path>
+	<path %repeat%(+path_attributes+, " ")>+path_content_class+</path>
+
+shape_class :=
+	+rect+
+	+circle+
+	+line+
+	+polyline+
+	+polygon+
+	+ellipse+
+	+path+
+
+tspan_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	dx="+length+"
+	dy="+length+"
+	rotate="%repeat%(+number+, ",")"
+	textLength="+length+"
+	lengthAdjust="+length_adjust_value+"
+
+tspan_content_class :=
+	+tspan+
+	+tref+
+	+alt_glyph+
+	+animate+
+	+set+
+	+animate_color+
+	+description_class+
+	+hyperlink_class+
+
+tspan :=
+	<tspan %repeat%(+tspan_attributes+, " ")>+tspan_content_class+</tspan>
+	<tspan %repeat%(+tspan_attributes+, " ")>%repeat%(+tspan_content_class+)</tspan>
+
+tref_content_class :=
+	+animate+
+	+set+
+	+animate_color+
+	+description_class+
+
+tref_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	dx="+length+"
+	dy="+length+"
+	rotate="%repeat%(+number+, ",")"
+	textLength="+length+"
+	lengthAdjust="+length_adjust_value+"
+
+tref :=
+	<tref xlink:href="+uri+" %repeat%(+tref_attributes+, " ")>+tref_content_class+</tref>
+	<tref xlink:href="+uri+" %repeat%(+tref_attributes+, " ")>%repeat%(+tref_content_class+)</tref>
+
+method_value :=
+	align
+	stretch
+
+spacing_value :=
+	auto
+	exact
+
+text_path_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	startOffset="+length+"
+	textLength="+length+"
+	lengthAdjust="+length_adjust_value+"
+	method="+method_value+"
+	spacing="+spacing_value+"
+
+text_path_content_class :=
+	+tspan+
+	+tref+
+	+alt_glyph+
+	+animate+
+	+set+
+	+animate_color+
+	+description_class+
+	+hyperlink_class+
+
+text_path :=
+	<textPath %repeat%(+text_path_attributes+, " ")>+text_path_content_class+</textPath>
+	<textPath %repeat%(+text_path_attributes+, " ")>%repeat%(+text_path_content_class+)</textPath>
+
+format_value :=
+	truedoc-pfr
+	embedded-opentype
+	type-1
+	truetype
+	opentype
+	truetype-gx
+	speedo
+	intellifont
+
+alt_glyph_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	dx="+length+"
+	dy="+length+"
+	glyphRef="+cdata+"
+	format="+format_value+"
+	rotate="%repeat%(+number+, ",")"
+
+alt_glyph :=
+	<altGlyph %repeat%(+alt_glyph_attributes+, " ")></altGlyph>
+
+text_content :=
+	+tspan+
+	+tref+
+	+text_path+
+	+alt_glyph+
+	
+length_adjust_value :=
+	spacing
+	spacingAndGlyphs
+
+text_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	dx="+length+"
+	dy="+length+"
+	rotate="%repeat%(+number+, ",")"
+	textLength="+length+"
+	lengthAdjust="+length_adjust_value+"
+	transform="+transform_list+"
+
+text_content_class :=
+	+description_class+
+	+animation_class+
+	+text_content+
+	+hyperlink_class+
+
+text :=
+	<text %repeat%(+text_attributes+, " ")></text>
+	<text %repeat%(+text_attributes+, " ")>+text_content_class+</text>
+
+glyph_ref_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+xlink_attributes+
+	x="+number+"
+	y="+number+"
+	dx="+number+"
+	dy="+number+"
+	glyphRef="+cdata+"
+	format="+format_value+"
+
+glyph_ref :=
+	<glyphRef %repeat%(+glyph_ref_attributes+, " ")></glyphRef>
+
+alt_glyph_item_attributes :=
+	+core_attributes+
+
+alt_glyph_item_content_class :=
+	+glyph_ref+
+
+alt_glyph_item :=
+	<altGlyphItem %repeat%(+alt_glyph_item_attributes+, " ")>+alt_glyph_item_content_class+</alyGlyphItem>
+	<altGlyphItem %repeat%(+alt_glyph_item_attributes+, " ")>%repeat%(+alt_glyph_item_content_class+)</alyGlyphItem>
+
+alt_glyph_def_attributes :=
+	+core_attributes+
+
+alt_glyph_def_content_class :=
+	+glyph_ref+
+	+alt_glyph_item+
+
+alt_glyph_def :=
+	<altGlyphDef %repeat%(+alt_glyph_def_attributes+, " " )>+alt_glyph_def_content_class+</altGlyphDef>
+	<altGlyphDef %repeat%(+alt_glyph_def_attributes+, " " )>%repeat%(+alt_glyph_def_content_class+)</altGlyphDef>
+
+text_class :=
+	+text+
+	+alt_glyph_def+
+
+marker_units_value :=
+	strokeWidth
+	userSpaceOnUse
+
+orient_value :=
+	auto
+	+angle+
+
+marker_element_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+external_attributes+
+	refX="+coordinate+"
+	refY="+coordinate+"
+	markerUnits="+marker_units_value+"
+	markerWidth="+length+"
+	markerHeight="+length+"
+	orient="+orient_value+"
+	viewBox="+view_box+"
+	preserveAspectRatio="+preserve_aspect_ratio+"
+
+marker_content_class :=
+	+svg_content_class+
+
+marker :=
+	<marker %repeat%(+marker_attributes+, " ")>+marker_content_class+</marker>
+
+marker_class :=
+	+marker+
+
+local_value :=
+	33BC7F1C156FA0D72F8F717AE5886BD4
+	+cdata+
+
+rendering_intent_value :=
+	auto
+	perceptual
+	relative-colorimetric
+	saturation
+	absolute-colorimetric
+
+color_profile_element_attributes :=
+	+core_attributes+
+	+xlink_attributes+
+	local="+local_value+"
+	name="@color_profile_name@"
+	rendering-intent="+rendering_intent_value+"
+
+color_profile_content_class :=
+	+description_class+
+
+color_profile :=
+	<color-profile %repeat%(+color_profile_element_attributes+, " ")></color-profile>
+	<color-profile %repeat%(+color_profile_element_attributes+, " ")>+color_profile_content_class+</color-profile>
+
+color_profile_class :=
+	+color_profile+
+
+stop_offset_value :=
+	+number+
+	+percentage+
+
+stop_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	offset="+stop_offset_value+"
+
+stop_content_class :=
+	+animate+
+	+set+
+	+animate_color+
+
+stop :=
+	<stop %repeat%(+stop_attributes+, " ")>+stop_content_class+</stop>
+
+gradient_units_value :=
+	userSpaceOnUse
+	objectBoundingBox
+
+spread_method_value :=
+	pad
+	reflect
+	repeat
+
+linear_gradient_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	x1="+coordinate+"
+	x2="+coordinate+"
+	y1="+coordinate+"
+	y2="+coordinate+"
+	gradientUnits="+gradient_units_value+"
+	gradientTransform="+transform_list+"
+	spreadMethod="+spread_method_value+"
+
+linear_gradient_content_class :=
+	+description_class+
+	+stop+
+	+animate+
+	+set+
+	+animate_transform+
+
+linear_gradient :=
+	<linearGradient %repeat%(+linear_gradient_attributes+, " ")>+linear_gradient_content_class+</linearGradient>
+
+radial_gradient_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	cx="+coordinate+"
+	cy="+coordinate+"
+	r="+length+"
+	fx="+coordinate+"
+	fy="+coordinate+"
+	gradientUnits="+gradient_units_value+"
+	gradientTransform="+transform_list+"
+	spreadMethod="+spread_method_value+"
+
+radial_gradient_content_class :=
+	+description_class+
+	+stop+
+	+animate+
+	+set+
+	+animate_transform+
+
+radial_gradient :=
+	<radialGradient %repeat%(+radial_gradient_attributes+, " ")>+radial_gradient_content_class+</radialGradient>
+
+gradient_class :=
+	+linear_gradient+
+	+radial_gradient+
+
+pattern_units_value :=
+	userSpaceOnUse
+	objectBoundingBox
+
+pattern_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	patternUnits="+pattern_units_value+"
+	patternContentUnits="+pattern_units_value+"
+	patternTransform="+transform_list+"
+	viewBox="+view_box+"
+	preserveAspectRatio="+preserve_aspect_ratio+"
+
+pattern :=
+	<pattern %repeat%(+pattern_attributes+, " ")>+svg_content_class+</pattern>
+	<pattern %repeat%(+pattern_attributes+, " ")>%repeat%(+svg_content_class+)</pattern>
+
+pattern_class :=
+	+pattern+
+
+clip_path_units_value :=
+	userSpaceOnUse
+	objectBoundingBox
+
+clip_path_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+external_attributes+
+	transform="+transform_list+"
+	clipPathUnits="+clip_path_units_value+"
+
+clip_path_content_class :=
+	+description_class+
+	+animation_class+
+	+use+
+	+shape_class+
+
+clip_path :=
+	<clipPath %repeat%(+clip_path_attributes+, " ")>+clip_path_content_class+</clipPath>
+
+clip_class :=
+	+clip_path+
+
+mask_units_value :=
+	userSpaceOnUse
+	objectBoundingBox
+
+mask_element_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	maskUnits="+mask_units_value+"
+	maskContentUnits="+mask_units_value+"
+
+mask :=
+	<mask %repeat%(+mask_element_attributes+, " ")>+svg_content_class+</svg>
+
+mask_class :=
+	+mask+
+
+filter_primitive_attributes :=
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	result="@filter_primitive_ref@"
+
+in_value :=
+	!filter_primitive_ref!
+	SourceGraphic
+	SourceAlpha
+	BackgroundImage
+	BackgroundAlpha
+	BackgroundAlpha
+	StrokePaint
+
+feBlend_mode_value :=
+	normal
+	multiply
+	screen
+	darken
+	lighten
+
+feBlend_attributes :=
+	+core_attributes=
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	mode="+feBlend_mode_value+"
+
+feBlend_content_class :=
+	+animate+
+	+set+
+
+feBlend :=
+	<feBlend in="+in_value+" in2="+in_value+" %repeat%(+feBlend_attributes+, " ")>+feBlend_content_class+</feBlend>
+
+feFlood_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+color_attributes+
+	+filter_color_attributes+
+	+filter_primitive_attributes+
+	flood-color="+color+"
+	flood-opacity="+opacity_value+"
+
+feFlood_content_class :=
+	+animate+
+	+set+
+	+animate_color+
+
+feFlood :=
+	<feFlood %repeat%(+feFlood_attributes+, " ")>+feFlood_content_class+</feFlood>
+
+feColorMatrix_type_value :=
+	matrix
+	saturate
+	hueRotate
+	luminanceToAlpha
+
+feColorMatrix_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	type="+feColorMatrix_type_value+"
+	values="%repeat%(+number+, " ")"
+
+feColorMatrix_content_class :=
+	+animate+
+	+set+
+
+feColorMatrix :=
+	<feColorMatrix in="+in_value+" %repeat%(+feColorMatrix_attributes+, " ")>+feColorMatrix_content_class+</feColorMatrix>
+
+feFunc_type_value :=
+	identity
+	table
+	discrete
+	linear
+	gamma
+
+feFunc_attributes :=
+	+core_attributes+
+	type="+feFunc_type_value+"
+	tableValues="%repeat%(+number+, " ")"
+	slope="+number+"
+	intercept="+number+"
+	amplitude="+number+"
+	exponent="+number+"
+	offset="+number+"
+
+feFunc_content_class :=
+	+animate+
+	+set+
+
+feFuncR :=
+	<feFuncR %repeat%(+feFunc_attributes+, " ")>+feFunc_content_class+</feFuncR>
+
+feFuncG :=
+	<feFuncG %repeat%(+feFunc_attributes+, " ")>+feFunc_content_class+</feFuncG>
+
+feFuncB :=
+	<feFuncB %repeat%(+feFunc_attributes+, " ")>+feFunc_content_class+</feFuncB>
+
+feFuncA :=
+	<feFuncA %repeat%(+feFunc_attributes+, " ")>+feFunc_content_class+</feFuncA>
+
+feComponentTransfer_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+
+feComponentTransfer_content_class :=
+	+feFuncR+
+	+feFuncG+
+	+feFuncB+
+	+feFuncA+
+
+feComponentTransfer :=
+	<feComponentTransfer in="+in_value+" %repeat%(+feComponentTransfer_attributes+, " ")>+feComponentTransfer_content_class+</feComponentTransfer>
+
+feComposite_operator_value :=
+	over
+	in
+	out
+	atop
+	xor
+	arithmetic
+
+feComposite_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	operator="+feComposite_operator_value+"
+	k1="+number+"
+	k2="+number+"
+	k3="+number+"
+	k4="+number+"
+
+feComposite_content_class :=
+	+animate+
+	+set+
+
+feComposite :=
+	<feComposite in="+in_value+" %repeat%(+feComposite_attributes+, " ")>+feComposite_content_class+</feComposite>
+
+feConvolveMatrix_edge_value :=
+	duplicate
+	wrap
+	none
+
+boolean :=
+	true
+	false
+
+feConvolveMatrix_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	order="+number_optional_number+"
+	kernelMatrix="%repeat%(+number+, " ")"
+	divisor="+number+"
+	bias="+number+"
+	targetX="+integer+"
+	targetY="+integer+"
+	edgeMode="+feConvolveMatrix_edge_value+"
+	kernelUnitLength="+number_optional_number+"
+	preserveAlpha="+boolean+"
+
+feConvolveMatrix_content_class :=
+	+animate+
+	+set+
+
+feConvolveMatrix :=
+	<feConvolveMatrix in="+in_value+" %repeat%(+feConvolveMatrix_attributes+, " ")>+feConvolveMatrix_content_class+</feConvolveMatrix>
+
+feLight_content_class :=
+	+animate+
+	+set+
+
+feDistantLight_attributes :=
+	+core_attributes+
+	azimuth="+number+"
+	elevation="+number+"
+
+feDistantLight :=
+	<feDistantLight %repeat%(+feDistantLight_attributes+, " ")>+feLight_content_class+</feDistantLight>
+
+fePointLight_attributes :=
+	+core_attributes+
+	x="+number+"
+	y="+number+"
+	z="+number+"
+
+fePointLight :=
+	<fePointLight %repeat%(+fePointLight_attributes+, " ")>+feLight_content_class+</fePointLight>
+
+feSpotLight_attributes :=
+	+core_attributes+
+	x="+number+"
+	y="+number+"
+	z="+number+"
+	pointsAtX="+number+"
+	pointsAtY="+number+"
+	pointsAtZ="+number+"
+	specularExponent="+number+"
+	limitingConeAngle="+number+"
+
+feSpotLight :=
+	<feSpotLight %repeat%(+feSpotLight_attributes+, " ")>+feLight_content_class+</feSpotLight>
+
+feDiffuseLighting_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	surfaceScale="+number+"
+	diffuseConstant="+number+"
+	kernelUnitLength="+number_optional_number+"
+
+feDiffuseLighting_content_class :=
+	+feDistantLight+
+	+fePointLight+
+	+feSpotLight+
+	+animate+
+	+set+
+	+animate_color+
+
+feDiffuseLighting :=
+	<feDiffuseLighting in="+in_value+" %repeat%(+feDiffuseLighting_attributes+, " ")>+feDiffuseLighting_content_class+</feDiffuseLighting>
+
+channel_selector_value :=
+	R
+	G
+	B
+	A
+
+feDisplacementMap_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	scale="+number+"
+	xChannelSelector="+channel_selector_value+"
+	yChannelSelector="+channel_selector_value+"
+
+feDisplacementMap_content_class :=
+	+animate+
+	+set+
+
+feDisplacementMap :=
+	<feDisplacementMap in="+in_value+" in2="+in_value+" %repeat%(+feDisplacementMap_attributes+, " ")>+feDisplacementMap_content_class+</feDisplacementMap>
+
+feGaussianBlur_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	stdDeviation="+number_optional_number+"
+
+feGaussianBlur_content_class :=
+	+animate+
+	+set+
+
+feGaussianBlur :=
+	<feGaussianBlur in="+in_value+" %repeat%(+feGaussianBlur_attributes+, " ")>+feGaussianBlur_content_class+</feGaussianBlur>
+
+feImage_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	preserveAspectRatio="+preserve_aspect_ratio+"
+
+feImage_content_class :=
+	+animate+
+	+set+
+	+animate_transform+
+
+feImage :=
+	<feImage %repeat%(+feImage_attributes+, " ")>+feImage_content_class+</feImage>
+
+feMergeNode_attributes :=
+	+core_attributes+
+
+feMergeNode_content_class :=
+	+animate+
+	+set+
+
+feMergeNode :=
+	<feMergeNode in="+in_value+" %repeat%(+feMergeNode_attributes+, " ")>+feMergeNode_content_class+</feMergeNode>
+
+feMerge_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+
+feMerge_content_class :=
+	+feMergeNode+
+
+feMerge :=
+	<feMerge %repeat%(+feMerge_attributes+, " ")>+feMerge_content_class+</feMerge>
+
+feMorphology_operator_value :=
+	erode
+	dilate
+
+feMorphology_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	operator="+feMorphology_operator_value+"
+	radius="+number_optional_number+"
+
+feMorphology_content_class :=
+	+animate+
+	+set+
+
+feMorphology :=
+	<feMorphology in="+in_value+" %repeat%(+feMorphology_attributes+, " ")>+feMorphology_content_class+</feMorphology>
+
+feOffset_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	dx="+number+"
+	dy="+number+"
+
+feOffset_content_class :=
+	+animate+
+	+set+
+
+feOffset :=
+	<feOffset in="+in_value+" %repeat%(+feOffset_attributes+, " ")>+feOffset_content_class+</feOffset>
+
+feSpecularLighting_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	surfaceScale="+number+"
+	specularConstant="+number+"
+	specularExponent="+number+"
+	kernelUnitLength="+number_optional_number+"
+
+feSpecularLighting_content_class :=
+	+feDistantLight+
+	+fePointLight+
+	+feSpotLight+
+	+animate+
+	+set+
+	+animate_color+
+
+feSpecularLighting :=
+	<feSpecularLighting in="+in_value+" %repeat%(+feSpecularLighting_attributes+, " ")>+feSpecularLighting_content_class+</feSpecularLighting>
+
+feTile_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+
+feTile_content_class :=
+	+animate+
+	+set+
+
+feTile :=
+	<feTile in="+in_value+" %repeat%(+feTile_attributes+, " ")>+feTile_content_class+</feTile>
+
+feTurbulence_stich_tiles_value :=
+	stich
+	noStich
+
+feTurbulence_type_value :=
+	fractalNoise
+	turbulence
+
+feTurbulence_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+filter_primitive_attributes+
+	baseFrequency="+number_optional_number+"
+	numOctaves="+integer+"
+	seed="+number+"
+	stichTiles="+feTurbulence_stich_tiles_value+"
+	type="+feTurbulence_type_value+"
+
+feTurbulence_content_class :=
+	+animate+
+	+set+
+
+feTurbulence :=
+	<feTurbulence %repeat%(+feTurbulence_attributes+, " ")>+feTurbulence_content_class+</feTurbulence>
+
+filter_primitive_class :=
+	+feBlend+
+	+feFlood+
+	+feColorMatrix+
+	+feComponentTransfer+
+	+feComposite+
+	+feConvolveMatrix+
+	+feDiffuseLighting+
+	+feDisplacementMap+
+	+feGaussianBlur+
+	+feImage+
+	+feMerge+
+	+feMorphology+
+	+feOffset+
+	+feSpecularLighting+
+	+feTile+
+	+feTurbulence+
+
+filter_units_value :=
+	userSpaceOnUse
+	objectBoundingBox
+
+small_number_optional_number :=
+	%range%(0-1024)
+	%range%(0-1024), %range%(0-1024)
+
+filter_element_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	filterRes="+small_number_optional_number+"
+	filterUnits="+filter_units_value+"
+	primitveUnits="+filter_units_value+"
+
+filter_content_class :=
+	+description_class+
+	+animate+
+	+set+
+	+filter_primitive_class+
+
+filter :=
+	<filter %repeat%(+filter_element_attributes+, " ")>+filter_content_class+</filter>
+
+filter_class :=
+	+filter+
+
+cursor_element_attributes :=
+	+core_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+
+cursor_content_class :=
+	+description_class+
+
+cursor :=
+	<cursor xlink:href="+uri+" %repeat%(+cursor_element_attributes+, " ")></cursor>
+	<cursor xlink:href="+uri+" %repeat%(+cursor_element_attributes+, " ")>+cursor_content_class+</cursor>
+
+cursor_class :=
+	+cursor+
+
+target_value :=
+	_replace
+	_self
+	_parent
+	_top
+	_blank
+	@a_target@
+	!a_target!
+
+a_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	transform="+transform_list+"
+	target="+target_value+"
+
+a_content_class :=
+	+svg_content_class+
+
+a :=
+	<a %repeat%(+a_attributes+, " ")>+a_content_class+</a>
+	<a %repeat%(+a_attributes+, " ")>%repeat%(+a_content_class+)</a>
+
+hyperlink_class :=
+	+a+
+
+zoom_and_pan_value :=
+	disable
+	magnify
+
+view_attributes :=
+	+core_attributes+
+	+external_attributes+
+	viewBox="+view_box+"
+	preserveAspectRatio="+preserve_aspect_ratio+"
+	zoomAndPan="+zoom_and_pan_value+"
+	viewTarget="!a_target!"
+
+view_content_class :=
+	+description_class+
+
+view :=
+	<view %repeat%(+view_attributes+, " ")></view>
+	<view %repeat%(+view_attributes+, " ")>+view_content_class+</view>
+
+view_class :=
+	+view+
+
+script_attributes :=
+	+core_attributes+
+	+xlink_attributes+
+	+external_attributes+
+	type="application/ecmascript"
+
+%%% TODO: link with ecmascript grammar
+script :=
+	<script %repeat%(+script_attributes+, " ")><![CDATA[ try { child = document.getElementById("!element_id!"); child.parentNode.removeChild(child); } catch(e) {} ]]></script>
+
+script_class :=
+	+script+
+
+font_face_format_string_value :=
+	%repeat%(+format_value+, ", ")
+
+font_face_format_attributes :=
+	+core_attributes+
+	string="+font_face_format_string_value+"
+
+font_face_format :=
+	<font-face-format %repeat%(+font_face_format_attributes+, " ")></font-face-format>
+
+font_face_uri_attributes :=
+	+core_attributes+
+	+xlink_attributes+
+
+font_face_uri_content_class :=
+	+font_face_format+
+
+font_face_uri :=
+	<font-face-uri %repeat%(+font_face_uri_attributes+, " ")>+font_face_uri_content_class+</font-face-uri>
+
+font_face_name_value :=
+	+family_name+
+
+font_face_name_attributes :=
+	+core_attributes+
+	name="+font_face_name_value+"
+
+font_face_name :=
+	<font-face-name %repeat%(+font_face_name_attributes+, " ")></font-face-name>
+
+font_face_src_content_class :=
+	+font_face_uri+
+	+font_face_name+
+
+font_face_src :=
+	<font-face-src %repeat%(+core_attributes+, " ")>+font_face_src_content_class+</font-face-src>
+
+unicode_range_value :=
+	U++hex+
+	U++hex+-+hex+
+
+panose_value :=
+	+integer+ +integer+ +integer+ +integer+ +integer+ +integer+ +integer+ +integer+ +integer+ +integer+
+
+widths_value :=
+	+unicode_range_value+ %repeat%(+number+, " ")
+	+unicode_range_value+ %repeat%(+number+, " "), +unicode_range_value+ %repeat%(+number+, " ")
+	%repeat%(+number+, " ")
+	%repeat%(+number+, " "), +unicode_range_value+ %repeat%(+number+, " ")
+	%repeat%(+number+, " "), %repeat%(+number+, " ")
+
+bbox_value :=
+	+number+, +number+, +number+, +number+
+
+font_face_attributes :=
+	+core_attributes+
+	+font_attributes+
+	unicode-range="+unicode_range_value+"
+	units-per-em="+number+"
+	panose-1="+panose_value+"
+	stemv="+number+"
+	stemh="+number+"
+	slope="+number+"
+	cap-height="+number+"
+	x-height="+number+"
+	accent-height="+number+"
+	ascent="+number+"
+	descent="+number+"
+	widths="+widths_value+"
+	bbox="+bbox_value+"
+	ideographic="+number+"
+	alphabetic="+number+"
+	mathematical="+number+"
+	hanging="+number+"
+	v-ideographic="+number+"
+	v-alphabetic="+number+"
+	v-mathematical="+number+"
+	v-hanging="+number+"
+	underline-position="+number+"
+	underline-thickness="+number+"
+	strikethrough-position="+number+"
+	strikethrough-thickness="+number+"
+	overline-position="+number+"
+	overline-thickness="+number+"
+
+font_face_content_class :=
+	+description_class+
+	+font_face_src+
+
+font_face :=
+	<font-face %repeat%(+font_face_attributes+, " ")>+font_face_content_class+</font-face>
+
+missing_glyph_attributes :=
+	+core_attributes+
+	+style_attributes+
+	d="+path_data+"
+	horiz-adv-x="+number+"
+
+missing_glyph_content_class :=
+	+description_class+
+
+missing_glyph :=
+	<missing-glyph %repeat%(+missing_glyph_attributes+, " ")></missing-glyph>
+	<missing-glyph %repeat%(+missing_glyph_attributes+, " ")>+missing_glyph_content_class+</missing-glyph>
+
+glyph_unicode_value :=
+	&#%range%(0-255);
+
+glyph_name_value :=
+	@glyph_name_ref@
+
+arabic_form_value :=
+	initial
+	medial
+	terminal
+	isolated
+
+lang_value :=
+	en
+	en-US
+	de
+
+glyph_attributes :=
+	+core_attributes+
+	+style_attributes+
+	unicode="%repeat%(+glyph_unicode_value+)"
+	glyph-name="%repeat%(+glyph_name_value+, ", ")"
+	d="+path_data+"
+	arabic-form="+arabic_form_value+"
+	lang="+lang_value+"
+	horiz-adv-x="+number+"
+
+glyph_content_class :=
+	+description_class+
+
+glyph :=
+	<glyph %repeat%(+glyph_attributes+, " ")></glyph>
+	<glyph %repeat%(+glyph_attributes+, " ")>+glyph_content_class+</glyph>
+
+hkern_attributes :=
+	+core_attributes+
+	u1="%repeat%(+glyph_unicode_value+)"
+	u2="%repeat%(+glyph_unicode_value+)"
+	g1="!glyph_name_ref!"
+	g2="!glyph_name_ref!"
+	k="+number+"
+
+hkern :=
+	<hkern %repeat%(+hkern_attributes+, " ")></hkern>
+
+vkern_attributes :=
+	+core_attributes+
+	u1="%repeat%(+glyph_unicode_value+)"
+	u2="%repeat%(+glyph_unicode_value+)"
+	g1="!glyph_name_ref!"
+	g2="!glyph_name_ref!"
+	k="+number+"
+
+vkern :=
+	<vkern %repeat%(+vkern_attributes+, " ")></vkern>
+
+font_element_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+external_attributes+
+	horiz-origin-x="+number+"
+	horiz-origin-y="+number+"
+	horiz-adv-x="+number+"
+	vert-origin-x="+number+"
+	vert-origin-y="+number+"
+	vert-adv-y="+number+"
+
+font_content_class :=
+	+description_class+
+	+font_face+
+	+missing_glyph+
+	+glyph+
+	+hkern+
+	+vkern+
+
+font :=
+	<font %repeat%(+font_element_attributes+, " ")>+font_content_class+</font>
+
+font_class :=
+	+font+
+
+foreign_object_attributes :=
+	+core_attributes+
+	+style_attributes+
+	+presentation_attributes+
+	+graphical_event_attributes+
+	+external_attributes+
+	x="+coordinate+"
+	y="+coordinate+"
+	width="+length+"
+	height="+length+"
+	transform="+transform_list+"
+
+foreign_object :=
+	<foreignObject %repeat%(+foreign_object_attributes+, " ")></foreignObject>
+	<foreignObject %repeat%(+foreign_object_attributes+, " ")>+cdata+</foreignObject>
+
+extensibility_class :=
+	+foreign_object+
+
+svg_content_class :=
+	+description_class+
+	+animation_class+
+	+structure_class+
+	+conditional_class+
+	+image_class+
+	+style_class+
+	+shape_class+
+	+text_class+
+	+marker_class+
+	+color_profile_class+
+	+gradient_class+
+	+pattern_class+
+	+clip_class+
+	+mask_class+
+	+filter_class+
+	+cursor_class+
+	+hyperlink_class+
+	+view_class+
+	+script_class+
+	+font_class+
+	+extensibility_class+
+
+
+%section% := variable
+
+glyph_name_ref :=
+	<svg><font id="Font1" horiz-adv-x="1000"><glyph unicode="!" glyph-name="@glyph_name_ref@"></glyph></font></svg>
+
+filter_primitive_ref :=
+	<svg><filter id="filter" filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"><feGaussianBlur stdDeviation="8" result="@filter_primitive_ref@"/></filter></svg>
+
+color_profile_name :=
+	<svg><color-pofile name="@color_profile_name@" %repeat%(+color_profile_element_attributes+, " ")></color-profile></svg>
+
+a_target :=
+	<iframe id="@a_target@" width="1" height="1"></iframe>
+
+class_name :=
+	<style type="text/css">.@class_name@ {background-color: #0000ff;}</style>
+
+element_id :=
+	<svg id="@element_id@">%repeat%(+svg_content_class+)</svg>
+
+
+%section% := variance
+
+svg :=
+	<svg %repeat%(+svg_attributes+, " ")>%repeat%(+svg_content_class+)</svg>
+
