@@ -1,5 +1,5 @@
-Dharma
-======
+![Logo](https://github.com/posidron/posidron.github.io/raw/master/static/images/dharma.png)
+
 
 [![Build Status](https://api.travis-ci.org/MozillaSecurity/dharma.svg)](https://travis-ci.org/MozillaSecurity/dharma)
 
