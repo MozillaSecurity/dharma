@@ -1,4 +1,4 @@
-ection% := value
+%section% := value
 
 payload :=
 	+attack+
