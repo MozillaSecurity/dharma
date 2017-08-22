@@ -5,71 +5,69 @@
 
 
 
-<h3>Requirements</h3>
----
-
+## Requirements
 None
 
 
-<h3>Examples</h3>
----
+## Examples
 Generate a single test-case.
 
-```
+```bash
 % ./dharma.py -grammars grammars/webcrypto.dg
 ```
 
 Generate a single test case with multiple grammars.
 
-```
+```bash
 % ./dharma.py -grammars grammars/canvas2d.dg grammars/mediarecorder.dg
 ```
 
 Generating test-cases as files.
 
-```
+```bash
 % ./dharma.py -grammars grammars/webcrypto.dg -storage . -count 5
 ```
 
 Generate test-cases, send each over WebSocket to Firefox, observe the process for crashes and bucket them.
 
-```
+```bash
 % ./dharma.py -server -grammars grammars/canvas2d.dg -template grammars/var/templates/html5/default.html
 % ./framboise.py -setup inbound64-release -debug -worker 4 -testcase ~/dev/projects/fuzzers/dharma/grammars/var/index.html
 ```
 
-
 Benchmark the generator.
 
-```
+```bash
 % time ./dharma.py -grammars grammars/webcrypto.dg -count 10000 > /dev/null
 ```
 
-<h3>Screenshots</h3>
+## Screenshots
 
-![Dharma Demo](https://people.mozilla.com/~cdiehl/screenshots/dharma_demo.png "")
-![Dharma Menu](https://people.mozilla.com/~cdiehl/screenshots/dharma_menu.png "")
+![Dharma Demo](https://github.com/posidron/posidron.github.io/blob/master/static/images/dharma/dharma_demo.png "")
+![Dharma Menu](https://github.com/posidron/posidron.github.io/blob/master/static/images/dharma/dharma_menu.png "")
 
-<h3>Grammar Cheatsheet</h3>
 
-<h4>comment</h4>
+
+## Grammar Cheatsheet
+
+### comment
 ```
 %%% comment
 ```
 
-<h4>controls</h4>
+### controls
 ```
 %const% name := value
 ```
 
-<h4>sections</h4>
+### sections
 ```
 %section% := value
 %section% := variable
 %section% := variance
 ```
 
-<h4>extension methods</h4>
+### extension methods
 ```
 %range%(0-9)
 %range%(0.0-9.0)
@@ -88,7 +86,7 @@ Benchmark the generator.
 %choice%(foo, "bar", 1)
 ```
 
-<h4>assigning values</h4>
+### assigning values
 ```
 digit :=
     %range%(0-9)
@@ -101,31 +99,30 @@ value :=
     +sign+%repeat%(+digit+)
 ```
 
-<h4>using values</h4>
+### using values
 ```
 +value+
 ```
 
-<h4>assigning variables</h4>
+### assigning variables
 ```
 variable :=
     @variable@ = new Foo();
 ```
 
-<h4>using variables</h4>
+### using variables
 ```
 value :=
     !variable!.bar();
 ```
 
-<h4>referencing values from common.dg</h4>
+### referencing values from common.dg
 ```
 value :=
     attribute=+common:number+
 ```
 
-<h4>calling javascript library functions</h4>
-
+### calling javascript library functions
 ```
 foo :=
     Random.pick([0,1]);
