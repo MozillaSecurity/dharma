@@ -1,4 +1,4 @@
-ection% := value
+%section% := value
 
 payload :=
 	+attack+
@@ -290,18 +290,26 @@ zero :=
 	0
 	0+zero+
 	00+zero+
-		
-payload_attack :=
-	document.body.innerHTML=+grazer+
-	alert(+grazer+)
-	promt(+grazer+)
-	confirm(+grazer+)
 	
-grazer :=
-	"grazer"
-	'grazer'
-	\"grazer\"
-	\'grazer\'
+payload_attack :=
+	document.body.innerHTML=+payload_text+
+	alert(+payload_text+)
+	promt(+payload_text+)
+	confirm(+payload_text+)
+	
+payload_text :=
+	"dharma+random_text+"
+	'dharma+random_text+'
+	\"dharma+random_text+\"
+	\'dharma+random_text+\'
+	
+random_text :=
+	%range%(a-z)
+	%range%(A-Z)
+	%range%(0-9)
+	%range%(a-z)+random_text+
+	%range%(A-Z)+random_text+
+	%range%(0-9)+random_text+
 	
 %section% := variance
 
