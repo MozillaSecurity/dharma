@@ -331,10 +331,8 @@ payload_attack :=
 	+tag_script+:alert(+payload_text+);
 	
 payload_text :=
-	"dharma+random_text+"
-	'dharma+random_text+'
-	\"dharma+random_text+\"
-	\'dharma+random_text+\'
+	+quote+dharma+random_text++quote+
+	+quote+dharma+random_text++quote+
 	
 random_text :=
 	%range%(a-z)
