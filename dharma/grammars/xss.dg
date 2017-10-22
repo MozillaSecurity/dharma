@@ -328,7 +328,7 @@ payload_attack :=
 	alert(+payload_text+)
 	promt(+payload_text+)
 	confirm(+payload_text+)
-	+tag_script+:alert(+payload_text+);
+	+tag_script+:alert(+payload_text+)
 	
 payload_text :=
 	+quote+dharma+random_text++quote+
