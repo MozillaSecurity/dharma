@@ -3,12 +3,16 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import re
 import logging
+import os
+import sys
 from itertools import chain
 from collections import OrderedDict
 from string import Template
 
-from extensions import *
-
+if sys.version_info[0] == 2:
+    from extensions import *
+else:
+    from core.extensions import *
 
 class GenState(object):
     def __init__(self):
