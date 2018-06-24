@@ -2,13 +2,13 @@ from setuptools import setup
 
 setup(
 	name = 'dharma',
-	packages = ['dharma'],
-	version = '1.0',
+	packages = ['dharma', 'dharma.core'],
+	version = '1.1',
 	description = 'A generation-based, context-free grammar fuzzer.',
 	author = 'Mozilla Security',
 	author_email = 'fuzzing@mozilla.com',
 	url = 'https://github.com/mozillasecurity/dharma',
-	download_url = 'https://github.com/mozillasecurity/dharma/tarball/1.0',
+	download_url = 'https://github.com/mozillasecurity/dharma/tarball/1.1',
 	keywords = ['fuzzer', 'security', 'fuzzing', 'testing'],
 	classifiers = [ # https://pypi.python.org/pypi?%3Aaction=list_classifiers
 		'Intended Audience :: Developers',
