@@ -1,8 +1,8 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
 	name = 'dharma',
-	packages = ['dharma', 'dharma.core'],
+	packages = find_packages(),
 	version = '1.1',
 	description = 'A generation-based, context-free grammar fuzzer.',
 	author = 'Mozilla Security',
@@ -16,5 +16,6 @@ setup(
 		'Programming Language :: Python',
 		'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
 		'Topic :: Software Development :: Testing',
-	]
+	],
+	include_package_data = True
 )
