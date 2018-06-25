@@ -218,7 +218,7 @@ class DharmaMachine(object):
             %section%\s*:=\s*(?P<section>value|variable|variance)|
             (?P<ident>[a-zA-Z0-9_]+)\s*:=\s*|
             (?P<empty>\s*)|
-            \t(?P<assign>.*)
+            (\t|[ ]+)(?P<assign>.*)
         )$"""
         self.xref_registry = r"""(
             (?P<type>\+|!|@)(?P<xref>[a-zA-Z0-9:_]+)(?P=type)|
