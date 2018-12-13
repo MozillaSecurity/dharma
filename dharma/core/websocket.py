@@ -40,8 +40,8 @@ class BaseWebSocketHandler(BaseRequestHandler):
                 request, headers = str_t(self.request.recv(1024), 'ascii').split('\r\n', 1)
                 break
             except socket.timeout:
-                #time.sleep(0.01)
-                #print 'timeout 29'
+                # time.sleep(0.01)
+                # print 'timeout 29'
                 continue
         headers = email.parser.HeaderParser().parsestr(headers)
         # TODO(jschwartzentruber): validate request/headers
@@ -62,8 +62,8 @@ class BaseWebSocketHandler(BaseRequestHandler):
                     data = struct.unpack('BB', self.request.recv(2))
                 except socket.timeout:
                     # no data
-                    #time.sleep(0.01)
-                    #print 'timeout 51'
+                    # time.sleep(0.01)
+                    # print 'timeout 51'
                     continue
                 except struct.error:
                     break  # chrome doesn't send a close-frame
@@ -161,7 +161,7 @@ class DharmaTCPServer(ThreadingMixIn, TCPServer):
     allow_reuse_address = True
 
 
-class DharmaWebSocketServer(object):
+class DharmaWebSocketServer:
     def __init__(self, machine, address=("127.0.0.1", 9090)):
         self.server = None
         self.machine = machine

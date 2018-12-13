@@ -14,7 +14,7 @@ from .core.dharma import DharmaMachine
 from .core.websocket import DharmaWebSocketServer
 
 
-class DharmaCommandLine(object):
+class DharmaCommandLine:
     @staticmethod
     def parse_args():
         parser = argparse.ArgumentParser(

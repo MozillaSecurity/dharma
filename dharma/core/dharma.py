@@ -15,13 +15,13 @@ else:
     from dharma.core.extensions import *
 
 
-class GenState(object):
+class GenState:
     def __init__(self):
         self.leaf_mode = False
         self.leaf_trigger = 0
 
 
-class String(object):
+class String:
     """Generator class basic strings which need no further evaluation."""
 
     def __init__(self, value, parent):
@@ -32,7 +32,7 @@ class String(object):
         return self.value
 
 
-class ValueXRef(object):
+class ValueXRef:
     """Generator class for +value+ cross references."""
 
     def __init__(self, value, parent):
@@ -49,7 +49,7 @@ class ValueXRef(object):
         return ref.generate(state)
 
 
-class VariableXRef(object):
+class VariableXRef:
     """Generator class for !variable! cross references."""
 
     def __init__(self, value, parent):
@@ -66,7 +66,7 @@ class VariableXRef(object):
         return ref.generate(state)
 
 
-class ElementXRef(object):
+class ElementXRef:
     """Generator class for @value@ cross references."""
 
     def __init__(self, value, parent):
@@ -202,7 +202,7 @@ class DharmaVariance(DharmaObject):
         return self.eval(random.choice(self), state)
 
 
-class DharmaMachine(object):
+class DharmaMachine:
     def __init__(self, prefix="", suffix="", template=""):
         self.section = None
         self.level = "top"
