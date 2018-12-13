@@ -9,11 +9,12 @@ import random
 import struct
 import sys
 
-from core.dharma import DharmaMachine
-from core.websocket import DharmaWebSocketServer
+from .__version__ import __version__, __title__
+from .core.dharma import DharmaMachine
+from .core.websocket import DharmaWebSocketServer
 
 
-class Dharma(object):
+class DharmaCommandLine(object):
     @staticmethod
     def parse_args():
         parser = argparse.ArgumentParser(
@@ -21,7 +22,7 @@ class Dharma(object):
             description='Dharma Runtime',
             epilog='The exit status is 0 for non-failures and -1 for failures.',
             formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-            prog='Dharma'
+            prog=__title__
         )
 
         m = parser.add_argument_group('mandatory arguments')
@@ -48,7 +49,8 @@ class Dharma(object):
         o.add_argument('-storage', metavar='path', help='folder for test cases')
         o.add_argument('-suffix', metavar='file', type=argparse.FileType(), help='suffix data')
         o.add_argument('-template', metavar='file', type=argparse.FileType(), help='template data')
-        o.add_argument('-version', action='version', version='%(prog)s 1.0', help=argparse.SUPPRESS)
+        o.add_argument('-version', action='version', version='%(prog)s {}'.format(__version__),
+                       help=argparse.SUPPRESS)
 
         return parser.parse_args()
 
@@ -81,7 +83,3 @@ class Dharma(object):
             for _ in range(args.count):
                 print(dharma.generate_content())
         return 0
-
-
-if __name__ == '__main__':
-    sys.exit(Dharma.main())

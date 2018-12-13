@@ -1,18 +1,19 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-import re
-import logging
 import os
+import re
 import sys
+import logging
+from string import Template
 from itertools import chain
 from collections import OrderedDict
-from string import Template
 
 if sys.version_info[0] == 2:
     from extensions import *
 else:
-    from core.extensions import *
+    from dharma.core.extensions import *
+
 
 class GenState(object):
     def __init__(self):
@@ -22,6 +23,7 @@ class GenState(object):
 
 class String(object):
     """Generator class basic strings which need no further evaluation."""
+
     def __init__(self, value, parent):
         self.parent = parent
         self.value = value
@@ -32,6 +34,7 @@ class String(object):
 
 class ValueXRef(object):
     """Generator class for +value+ cross references."""
+
     def __init__(self, value, parent):
         self.value = ("%s:%s" % (parent.namespace, value)) if ":" not in value else value
         self.parent = parent
@@ -48,6 +51,7 @@ class ValueXRef(object):
 
 class VariableXRef(object):
     """Generator class for !variable! cross references."""
+
     def __init__(self, value, parent):
         self.value = ("%s:%s" % (parent.namespace, value)) if ":" not in value else value
         self.parent = parent
@@ -64,6 +68,7 @@ class VariableXRef(object):
 
 class ElementXRef(object):
     """Generator class for @value@ cross references."""
+
     def __init__(self, value, parent):
         self.value = ("%s:%s" % (parent.namespace, value)) if ":" not in value else value
         self.parent = parent
@@ -180,7 +185,7 @@ class DharmaVariable(DharmaObject):
         self.default = ""
 
     def generate(self, state):
-        """Return a random variable if any otherwise create a new default variable."""
+        """Return a random variable if any, otherwise create a new default variable."""
         if self.count:
             return "%s%d" % (self.var, random.randint(1, self.count))
         self.count += 1
@@ -451,21 +456,29 @@ class DharmaMachine(object):
 
     def generate_content(self):
         """Generates a test case as a string."""
+        # Setup pre-conditions.
         if not self.variance:
             logging.error("%s: No variance information %s", self.id(), self.variance)
             sys.exit(-1)
+
         for var in self.variable.values():
             var.clear()
+
+        # Handle variances
         variances = []
         for _ in range(random.randint(DharmaConst.VARIANCE_MIN, DharmaConst.VARIANCE_MAX)):
             var = random.choice(list(self.variance.values()))
             variances.append(DharmaConst.VARIANCE_TEMPLATE % var.generate(GenState()))
             variances.append("\n")
+
+        # Handle variables
         variables = []
         for var in self.variable.values():
             if var.default:
                 variables.append(DharmaConst.VARIANCE_TEMPLATE % var.default)
                 variables.append("\n")
+
+        # Build content
         content = "".join(chain([self.prefix], variables, variances, [self.suffix]))
         if len(self.template):
             return Template(self.template).safe_substitute(testcase_content=content)
