@@ -1,0 +1,21 @@
+# Python byte-compiled
+__pycache__/
+*.py[cod]
+
+# Python distribution
+dist/
+build/
+sdist/
+*.egg
+*.egg-info/
+
+# Sphinx documentation
+docs/_build/
+
+# Platform
+.DS_Store
+
+# Testing / Coverage
+.tox
+.pytest_cache/
+.coverage
