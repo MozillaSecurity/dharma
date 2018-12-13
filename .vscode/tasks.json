@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dharma Test Run",
+      "type": "shell",
+      "command": "python3 -m dharma -grammars dharma/grammars/test.dg"
+    }
+  ]
+}

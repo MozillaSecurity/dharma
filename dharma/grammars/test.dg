@@ -1,0 +1,29 @@
+%const% VARIANCE_MIN := 4
+%const% VARIANCE_MAX := 12
+
+%section% := value
+
+dictContent :=
+    a: null
+    b: {}
+
+dictObject :=
+    {+dictContent+}
+
+testStmnt :=
+    !pc_l! = !pc_r!
+    !pc_r! = !pc_l!
+
+%section% := variable
+
+pc_l :=
+    let @pc_l@ = new +dictObject+;
+
+pc_r :=
+    let @pc_r@ = new +dictObject+;
+
+%section% := variance
+
+main :=
+    +testStmnt+
+

@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Module",
+      "type": "python",
+      "request": "launch",
+      "module": "dharma",
+      "console": "integratedTerminal",
+      "pythonPath": "${config:python.pythonPath}",
+      "env": { "PYTHONPATH": "${workspaceRoot}" },
+      "args": ["-grammars", "dharma/grammars/test.dg"],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false
+    }
+  ]
+}
