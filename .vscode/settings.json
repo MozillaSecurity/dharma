@@ -1,5 +1,15 @@
 {
   "python.pythonPath": "/usr/local/bin/python3",
   "python.linting.enabled": true,
-  "python.linting.pylintEnabled": true
+  "python.linting.pylintEnabled": true,
+  "python.jediEnabled": false,
+  "python.autoComplete.addBrackets": true,
+  "python.formatting.provider": "autopep8",
+  "python.analysis.openFilesOnly": true,
+  "python.linting.pylintUseMinimalCheckers": false,
+  "python.linting.ignorePatterns": [
+    ".tox/**/*.py",
+    ".vscode/*.py",
+    "**/site-packages/**/*.py"
+  ]
 }
