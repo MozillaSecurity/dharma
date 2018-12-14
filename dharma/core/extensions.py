@@ -10,7 +10,12 @@ import logging
 
 class DharmaConst:
     """Configuration settings for the Dharma generator."""
-    pass
+    URI_TABLE = {}
+    LEAF_TRIGGER = 256
+    MAX_REPEAT_POWER = 12
+    VARIANCE_TEMPLATE = "%s"
+    VARIANCE_MIN = 1
+    VARIANCE_MAX = 8
 
 
 class MetaBlock:
@@ -128,9 +133,10 @@ class MetaRange:
     def generate(self, state):
         if self.fmt == "c":
             return "%c" % random.randint(self.a, self.b)
-        elif self.fmt == "f":
+        if self.fmt == "f":
             return "%g" % random.uniform(self.a, self.b)
-        elif self.fmt == "i":
+        if self.fmt == "i":
             if self.base == 16:
                 return "%x" % random.randint(self.a, self.b)
             return "%d" % random.randint(self.a, self.b)
+        return None

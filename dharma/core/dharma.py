@@ -10,9 +10,9 @@ from itertools import chain
 from collections import OrderedDict
 
 if sys.version_info[0] == 2:
-    from extensions import *
+    from extensions import * # pylint: disable=E0401,W0401
 else:
-    from dharma.core.extensions import *
+    from dharma.core.extensions import * # pylint: disable=W0401,W0614
 
 
 class GenState:
@@ -96,7 +96,7 @@ class DharmaObject(list):
         self.namespace = machine.namespace
         self.lineno = machine.lineno
 
-    def id(self):
+    def id(self): # pylint: disable=invalid-name
         return "Line %d [%s]" % (self.lineno, self.namespace)
 
     def __hash__(self):
@@ -136,14 +136,14 @@ class DharmaValue(DharmaObject):
                 return
         self.leaf.append(value)
 
-    def generate(self, state):
+    def generate(self, state): # pylint: disable=too-many-branches
         if not state.leaf_mode:
             state.leaf_trigger += 1
             if state.leaf_trigger > DharmaConst.LEAF_TRIGGER:
                 state.leaf_mode = True
         if not self:
             return ""
-        elif state.leaf_mode and self.leaf:
+        if state.leaf_mode and self.leaf:
             value = random.choice(self.leaf)
         elif state.leaf_mode:  # favour non-repeating
             if self.minimized is None:
@@ -202,7 +202,7 @@ class DharmaVariance(DharmaObject):
         return self.eval(random.choice(self), state)
 
 
-class DharmaMachine:
+class DharmaMachine: # pylint: disable=too-many-instance-attributes
     def __init__(self, prefix="", suffix="", template=""):
         self.section = None
         self.level = "top"
@@ -237,13 +237,13 @@ class DharmaMachine:
     def process_settings(self, settings):
         """A lazy way of feeding Dharma with configuration settings."""
         logging.debug("Using configuration from: %s", settings.name)
-        exec(compile(settings.read(), settings.name, 'exec'), globals(), locals())
+        exec(compile(settings.read(), settings.name, 'exec'), globals(), locals()) # pylint: disable=exec-used
 
     def set_namespace(self, name):
         self.namespace = name
         self.lineno = 0
 
-    def id(self):
+    def id(self): # pylint: disable=invalid-name
         return "Line %d [%s]" % (self.lineno, self.namespace)
 
     def parse_line(self, line):
@@ -385,7 +385,7 @@ class DharmaMachine:
         if not isinstance(self.current_obj, DharmaVariable):
             logging.error("%s: Inconsistent object for variable assignment", self.id())
             sys.exit(-1)
-        prefix, suffix = tokens[:i], tokens[i + 1:]
+        prefix, suffix = tokens[:i], tokens[i + 1:] # pylint: disable=undefined-loop-variable
         self.current_obj.append((prefix, suffix))
 
     def parse_assign_variance(self, tokens):
@@ -410,14 +410,14 @@ class DharmaMachine:
                          self.variable.values(),
                          self.variance.values()):
             try:
-                err = "%s: Undefined value reference from %s to %s"
+                msg = "%s: Undefined value reference from %s to %s"
                 obj.value_xref.update((x, self.value[x]) for x in obj.value_xref)
-                err = "%s: Undefined variable reference from %s to %s"
+                msg = "%s: Undefined variable reference from %s to %s"
                 obj.variable_xref.update((x, self.variable[x]) for x in obj.variable_xref)
-                err = "%s: Element reference without a default variable from %s to %s"
+                msg = "%s: Element reference without a default variable from %s to %s"
                 obj.element_xref.update((x, self.variable[x]) for x in obj.element_xref)
-            except KeyError as e:
-                logging.error(err, self.id(), obj.ident, e.args[0])
+            except KeyError as error:
+                logging.error(msg, self.id(), obj.ident, error.args[0])
                 sys.exit(-1)
 
     def calculate_leaf_paths(self):
@@ -480,7 +480,7 @@ class DharmaMachine:
 
         # Build content
         content = "".join(chain([self.prefix], variables, variances, [self.suffix]))
-        if len(self.template):
+        if self.template:
             return Template(self.template).safe_substitute(testcase_content=content)
         return content
 
@@ -489,8 +489,8 @@ class DharmaMachine:
         path = path.rstrip("/")
         try:
             os.makedirs(path, exist_ok=True)
-        except OSError as e:
-            logging.error("Unable to create folder for test cases: %s", e)
+        except OSError as error:
+            logging.error("Unable to create folder for test cases: %s", error)
             sys.exit(-1)
         for n in range(count):
             filename = os.path.join(path, "%d.%s" % (n + 1, filetype))

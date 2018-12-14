@@ -32,12 +32,12 @@ class BaseWebSocketHandler(BaseRequestHandler):
         10: 'pong'
     }
 
-    def handle(self):
+    def handle(self):  # pylint: disable=too-many-branches,too-many-statements
         self.request.settimeout(self.REQUEST_TIMEOUT)
         str_t = str if sys.version_info[0] == 3 else lambda a, b: str(a).encode(b)
         while not self.should_close():
             try:
-                request, headers = str_t(self.request.recv(1024), 'ascii').split('\r\n', 1)
+                _, headers = str_t(self.request.recv(1024), 'ascii').split('\r\n', 1)
                 break
             except socket.timeout:
                 # time.sleep(0.01)
@@ -91,12 +91,12 @@ class BaseWebSocketHandler(BaseRequestHandler):
                     continue
                 elif buf is not None:
                     logging.warning('Received a new frame while waiting for another to finish, '
-                                    'discarding {} bytes of {}'.format(len(buf), buf_op))
+                                    'discarding %u bytes of %u', len(buf), buf_op)
                     buf = buf_op = None
                 if opcode == 'text':
                     data = str_t(data, 'utf8')
                 elif opcode != 'binary':
-                    logging.warning('Unknown websocket opcode {}'.format(opcode))
+                    logging.warning('Unknown websocket opcode "%s"', opcode)
                     continue
                 if buf is None:
                     buf = data
@@ -171,8 +171,8 @@ class DharmaWebSocketServer:
         machine = self.machine
 
         class DharmaWebSocketHandler(BaseWebSocketHandler):
-            def on_message(self, msg):
-                msg = json.loads(msg)
+            def on_message(self, message):
+                msg = json.loads(message)
                 if msg.get("status") == "open":
                     logging.info("WebSocket connection opened.")
                 if msg.get("status") in ("open", "success"):
@@ -184,8 +184,8 @@ class DharmaWebSocketServer:
 
         try:
             self.server = DharmaTCPServer(self.address, DharmaWebSocketHandler)
-        except Exception as e:
-            logging.error("Unable to start WebSocket server: %s", e)
+        except Exception as error:  # pylint: disable=broad-except
+            logging.error("Unable to start WebSocket server: %s", error)
             return
         logging.info("Socket server is listening at %s:%d", *self.address)
         self.server.serve_forever()
@@ -196,5 +196,5 @@ class DharmaWebSocketServer:
         try:
             logging.info("Stopping WebSocket server.")
             self.server.shutdown()
-        except Exception as e:
-            logging.error("Unable to shutdown WebSocket server: %s", e)
+        except Exception as error:  # pylint: disable=broad-except
+            logging.error("Unable to shutdown WebSocket server: %s", error)
