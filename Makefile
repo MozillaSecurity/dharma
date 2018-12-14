@@ -1,4 +1,4 @@
-.PHONY: clean clean-test clean-pyc clean-build tag docs help
+.PHONY: clean clean-test clean-pyc clean-build tag docs lint help
 .DEFAULT_GOAL := help
 
 define PRINT_HELP_PYSCRIPT
@@ -44,6 +44,12 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	sphinx-apidoc -E -f -o docs/source dharma/
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
+
+lint: ## run Pylint
+	python3 -m pylint \
+		--rcfile=.pylintrc \
+		--msg-template='{path}:{line}: [{msg_id}|{obj}] {msg} [pylint: disable={symbol}]' \
+		dharma/
 
 servedocs: docs ## watch for changes and compile the docs
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
