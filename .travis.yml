@@ -1,15 +1,40 @@
-# http://docs.travis-ci.com/user/build-configuration/
-# http://docs.travis-ci.com/user/languages/python/
 language: python
+sudo: false
 python:
-    - "2.7"
-    - "3.2"
-    - "3.3"
-    - "3.4"
-    - "nightly"
-branches:
-    only:
-        - master
-install: ""
-script: ""
-
+  - "3.6"
+  - nightly
+matrix:
+  include:
+    - env: TOXENV=py36
+before_install:
+  - pip install pipenv
+install:
+  - pipenv install --dev
+script:
+  - pipenv run tox
+after_success:
+  - make docs
+deploy:
+  matrix:
+    - provider: pypi
+      user: mozillasecurity
+      password:
+        secure: j2+f2KdEIkNJrH5mMo0v72gAgsYmbv4189+asRXS+cluCQfkX5+IMEvGqp2c8LeCrgYgMnE02W3Xuy5FEIQZWrTEtvJSVokNBA+0prztgUAkZ9D1TytRsYF86T9mdMGWROp04G7WGZRsCmicGmCLq+rBfkH7Piobtfxxr5B3E9k=
+      distributions: sdist bdist_wheel
+      on:
+        tags: true
+        branches:
+          only:
+            - master
+      skip_cleanup: true
+    - provider: pages
+      keep-history: true
+      skip_cleanup: true
+      github_token:
+        secure: DKaV3TW4LABnFElBO7FqV8M0WRBtkZ90Sr1rNuokK1SD/oT0FSRhlmmXKQc5+raXWb6tk+hvlMCAKds6DsIZQNF35PB8EvkYszWm27jBzSbYoo7940G7SU10XW+lfNE8CgeTrgNtvFP1TYr4uJL8PYFTQTEUxGRPHi4BSWbPF6Y=
+      on:
+        branch: master
+      local_dir: docs/build/html/
+notifications:
+  slack:
+    secure: MnEEIkScGFHvI61pQNQiEA8UjwMOCY9qZqpNt5XA8xC3J7vQ0KrGdm5NMbCKzqMqymibGZ0RH5qu4d6o1cfAV4a9PaEqpaxdAagvY9P5XnqiHxmknEV+voAk0ZEaw4KUlEUxuTp052BPAUrPjXkPZtlG/H9upAmwS1Y3N9kpFCM=
