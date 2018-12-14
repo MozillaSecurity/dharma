@@ -22,6 +22,7 @@ Generation-based, context-free grammar fuzzer.
 - [Screenshots](#Screenshots)
 - [Development](#Development)
 - [Dharma Grammar Cheatsheet](#Dharma-Grammar-Cheatsheet)
+- [API Documentation](#API-Documentation)
 - [Dharma in the Public](#Dharma-in-the-Public)
 
 ## Run
@@ -188,6 +189,10 @@ value :=
 foo :=
     Random.pick([0,1]);
 ```
+
+## API Documentation
+
+- https://mozillasecurity.github.io/dharma
 
 ## Dharma in the Public
 
