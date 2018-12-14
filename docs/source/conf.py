@@ -25,9 +25,9 @@ copyright = '2018, Mozilla Fuzzing Team'
 author = 'Mozilla Fuzzing Team'
 
 # The short X.Y version
-version = dharma.__version__
+version = dharma.__version__.__version__
 # The full version, including alpha/beta/rc tags
-release = dharma.__version__
+release = dharma.__version__.__version__
 
 
 # -- General configuration ---------------------------------------------------
