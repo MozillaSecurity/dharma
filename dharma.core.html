@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dharma.core package &mdash; Dharma 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="dharma package" href="dharma.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Dharma
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Dharma</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dharma.html">dharma package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dharma.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">dharma.core package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dharma.html#module-dharma.dharma">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dharma.html#module-dharma">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Dharma</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">dharma</a> &raquo;</li>
+        
+          <li><a href="dharma.html">dharma package</a> &raquo;</li>
+        
+      <li>dharma.core package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/dharma.core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dharma-core-package">
+<h1>dharma.core package<a class="headerlink" href="#dharma-core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-dharma.core.dharma">
+<span id="submodules"></span><h2>Submodules<a class="headerlink" href="#module-dharma.core.dharma" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dharma.core.dharma.DharmaMachine">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">DharmaMachine</code><span class="sig-paren">(</span><em>prefix=''</em>, <em>suffix=''</em>, <em>template=''</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.add_section_object">
+<code class="descname">add_section_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.add_section_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.calculate_leaf_path">
+<code class="descname">calculate_leaf_path</code><span class="sig-paren">(</span><em>leaf</em>, <em>reverse_xref</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.calculate_leaf_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.calculate_leaf_paths">
+<code class="descname">calculate_leaf_paths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.calculate_leaf_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build map of reverse xrefs then traverse backwards marking path to leaf for all leaves.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.generate_content">
+<code class="descname">generate_content</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.generate_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a test case as a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.generate_testcases">
+<code class="descname">generate_testcases</code><span class="sig-paren">(</span><em>path</em>, <em>filetype</em>, <em>count</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.generate_testcases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes out generated test cases to the provided path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.handle_assign_level">
+<code class="descname">handle_assign_level</code><span class="sig-paren">(</span><em>assign</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.handle_assign_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.handle_const">
+<code class="descname">handle_const</code><span class="sig-paren">(</span><em>const</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.handle_const" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.handle_empty_line">
+<code class="descname">handle_empty_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.handle_empty_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.handle_top_level">
+<code class="descname">handle_top_level</code><span class="sig-paren">(</span><em>ident</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.handle_top_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.id">
+<code class="descname">id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.parse_assign_value">
+<code class="descname">parse_assign_value</code><span class="sig-paren">(</span><em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.parse_assign_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.parse_assign_variable">
+<code class="descname">parse_assign_variable</code><span class="sig-paren">(</span><em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.parse_assign_variable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.parse_assign_variance">
+<code class="descname">parse_assign_variance</code><span class="sig-paren">(</span><em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.parse_assign_variance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.parse_line">
+<code class="descname">parse_line</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.parse_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.parse_xrefs">
+<code class="descname">parse_xrefs</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.parse_xrefs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search token for +value+ and !variable! style references. Be careful to not xref a new variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.process_grammars">
+<code class="descname">process_grammars</code><span class="sig-paren">(</span><em>grammars</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.process_grammars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process provided grammars by parsing them into Python objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.process_settings">
+<code class="descname">process_settings</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.process_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A lazy way of feeding Dharma with configuration settings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.propagate_leaf">
+<code class="descname">propagate_leaf</code><span class="sig-paren">(</span><em>leaf</em>, <em>obj</em>, <em>node_seen</em>, <em>depth</em>, <em>reverse_xref</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.propagate_leaf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.resolve_xref">
+<code class="descname">resolve_xref</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.resolve_xref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaMachine.set_namespace">
+<code class="descname">set_namespace</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaMachine.set_namespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.DharmaObject">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">DharmaObject</code><span class="sig-paren">(</span><em>ident</em>, <em>machine</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+<p>Base object of which Dharma section classes inherit from.</p>
+<dl class="staticmethod">
+<dt id="dharma.core.dharma.DharmaObject.eval">
+<em class="property">static </em><code class="descname">eval</code><span class="sig-paren">(</span><em>tokens</em>, <em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaObject.eval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaObject.id">
+<code class="descname">id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaObject.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.DharmaValue">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">DharmaValue</code><span class="sig-paren">(</span><em>ident</em>, <em>machine</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dharma.core.dharma.DharmaObject" title="dharma.core.dharma.DharmaObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">dharma.core.dharma.DharmaObject</span></code></a></p>
+<p>Dharma class which manages the <a href="#id1"><span class="problematic" id="id2">|value|</span></a> section of a grammar.</p>
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaValue.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span> &#x2192; None -- append object to end<a class="headerlink" href="#dharma.core.dharma.DharmaValue.append" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaValue.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaValue.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaValue.n_xrefs">
+<code class="descname">n_xrefs</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaValue.n_xrefs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.DharmaVariable">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">DharmaVariable</code><span class="sig-paren">(</span><em>ident</em>, <em>machine</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dharma.core.dharma.DharmaObject" title="dharma.core.dharma.DharmaObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">dharma.core.dharma.DharmaObject</span></code></a></p>
+<p>Dharma class which manages the <a href="#id3"><span class="problematic" id="id4">|variable|</span></a> section of a grammar.</p>
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaVariable.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None -- remove all items from L<a class="headerlink" href="#dharma.core.dharma.DharmaVariable.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaVariable.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaVariable.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a random variable if any, otherwise create a new default variable.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.DharmaVariance">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">DharmaVariance</code><span class="sig-paren">(</span><em>ident</em>, <em>machine</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaVariance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dharma.core.dharma.DharmaObject" title="dharma.core.dharma.DharmaObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">dharma.core.dharma.DharmaObject</span></code></a></p>
+<p>Dharma class which manages the <a href="#id5"><span class="problematic" id="id6">|variance|</span></a> section of a grammar.</p>
+<dl class="method">
+<dt id="dharma.core.dharma.DharmaVariance.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.DharmaVariance.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.ElementXRef">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">ElementXRef</code><span class="sig-paren">(</span><em>value</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.ElementXRef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generator class for &#64;value&#64; cross references.</p>
+<dl class="method">
+<dt id="dharma.core.dharma.ElementXRef.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.ElementXRef.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.GenState">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">GenState</code><a class="headerlink" href="#dharma.core.dharma.GenState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.String">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">String</code><span class="sig-paren">(</span><em>value</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.String" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generator class basic strings which need no further evaluation.</p>
+<dl class="method">
+<dt id="dharma.core.dharma.String.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.String.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.ValueXRef">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">ValueXRef</code><span class="sig-paren">(</span><em>value</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.ValueXRef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generator class for +value+ cross references.</p>
+<dl class="method">
+<dt id="dharma.core.dharma.ValueXRef.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.ValueXRef.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.dharma.VariableXRef">
+<em class="property">class </em><code class="descclassname">dharma.core.dharma.</code><code class="descname">VariableXRef</code><span class="sig-paren">(</span><em>value</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.VariableXRef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generator class for !variable! cross references.</p>
+<dl class="method">
+<dt id="dharma.core.dharma.VariableXRef.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.dharma.VariableXRef.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-dharma.core.extensions"></span><dl class="class">
+<dt id="dharma.core.extensions.DharmaConst">
+<em class="property">class </em><code class="descclassname">dharma.core.extensions.</code><code class="descname">DharmaConst</code><a class="headerlink" href="#dharma.core.extensions.DharmaConst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Configuration settings for the Dharma generator.</p>
+<dl class="attribute">
+<dt id="dharma.core.extensions.DharmaConst.LEAF_TRIGGER">
+<code class="descname">LEAF_TRIGGER</code><em class="property"> = 256</em><a class="headerlink" href="#dharma.core.extensions.DharmaConst.LEAF_TRIGGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dharma.core.extensions.DharmaConst.MAX_REPEAT_POWER">
+<code class="descname">MAX_REPEAT_POWER</code><em class="property"> = 12</em><a class="headerlink" href="#dharma.core.extensions.DharmaConst.MAX_REPEAT_POWER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dharma.core.extensions.DharmaConst.URI_TABLE">
+<code class="descname">URI_TABLE</code><em class="property"> = {}</em><a class="headerlink" href="#dharma.core.extensions.DharmaConst.URI_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dharma.core.extensions.DharmaConst.VARIANCE_MAX">
+<code class="descname">VARIANCE_MAX</code><em class="property"> = 8</em><a class="headerlink" href="#dharma.core.extensions.DharmaConst.VARIANCE_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dharma.core.extensions.DharmaConst.VARIANCE_MIN">
+<code class="descname">VARIANCE_MIN</code><em class="property"> = 1</em><a class="headerlink" href="#dharma.core.extensions.DharmaConst.VARIANCE_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dharma.core.extensions.DharmaConst.VARIANCE_TEMPLATE">
+<code class="descname">VARIANCE_TEMPLATE</code><em class="property"> = '%s'</em><a class="headerlink" href="#dharma.core.extensions.DharmaConst.VARIANCE_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.extensions.MetaBlock">
+<em class="property">class </em><code class="descclassname">dharma.core.extensions.</code><code class="descname">MetaBlock</code><span class="sig-paren">(</span><em>path</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Grammar extension which loads code fragments from a file into the grammar.</p>
+<dl class="method">
+<dt id="dharma.core.extensions.MetaBlock.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaBlock.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.extensions.MetaChoice">
+<em class="property">class </em><code class="descclassname">dharma.core.extensions.</code><code class="descname">MetaChoice</code><span class="sig-paren">(</span><em>choices</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaChoice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Grammar extension method which chooses an item out of a list randomly.</p>
+<dl class="method">
+<dt id="dharma.core.extensions.MetaChoice.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaChoice.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.extensions.MetaRange">
+<em class="property">class </em><code class="descclassname">dharma.core.extensions.</code><code class="descname">MetaRange</code><span class="sig-paren">(</span><em>a</em>, <em>b</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Grammar extension method which generates a random value between a range of values <a href="#id7"><span class="problematic" id="id8">|a|</span></a> and <a href="#id9"><span class="problematic" id="id10">|b|</span></a>.</p>
+<dl class="method">
+<dt id="dharma.core.extensions.MetaRange.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaRange.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.extensions.MetaRepeat">
+<em class="property">class </em><code class="descclassname">dharma.core.extensions.</code><code class="descname">MetaRepeat</code><span class="sig-paren">(</span><em>repeat</em>, <em>separator</em>, <em>nodups</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaRepeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Grammar extension method which repeats an arbitrary expression.</p>
+<dl class="method">
+<dt id="dharma.core.extensions.MetaRepeat.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaRepeat.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.extensions.MetaURI">
+<em class="property">class </em><code class="descclassname">dharma.core.extensions.</code><code class="descname">MetaURI</code><span class="sig-paren">(</span><em>path</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaURI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Grammar extension which loads a random file URI into the generated code.</p>
+<dl class="method">
+<dt id="dharma.core.extensions.MetaURI.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.extensions.MetaURI.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-dharma.core.websocket"></span><dl class="class">
+<dt id="dharma.core.websocket.BaseWebSocketHandler">
+<em class="property">class </em><code class="descclassname">dharma.core.websocket.</code><code class="descname">BaseWebSocketHandler</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.BaseRequestHandler</span></code></p>
+<p>Base class for WebSocket server.</p>
+<dl class="attribute">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.REQUEST_TIMEOUT">
+<code class="descname">REQUEST_TIMEOUT</code><em class="property"> = 0.01</em><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.REQUEST_TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.finish">
+<code class="descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.finish" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.handle">
+<code class="descname">handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.handle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.on_close">
+<code class="descname">on_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.on_close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.on_message">
+<code class="descname">on_message</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.on_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.on_pong">
+<code class="descname">on_pong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.on_pong" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.open" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.ping">
+<code class="descname">ping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.ping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.should_close">
+<code class="descname">should_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.should_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>When this returns true, the message loop will exit.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.BaseWebSocketHandler.write_message">
+<code class="descname">write_message</code><span class="sig-paren">(</span><em>message</em>, <em>binary=False</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.BaseWebSocketHandler.write_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.websocket.DharmaTCPServer">
+<em class="property">class </em><code class="descclassname">dharma.core.websocket.</code><code class="descname">DharmaTCPServer</code><span class="sig-paren">(</span><em>server_address</em>, <em>RequestHandlerClass</em>, <em>bind_and_activate=True</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.DharmaTCPServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.ThreadingMixIn</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.TCPServer</span></code></p>
+<dl class="attribute">
+<dt id="dharma.core.websocket.DharmaTCPServer.allow_reuse_address">
+<code class="descname">allow_reuse_address</code><em class="property"> = True</em><a class="headerlink" href="#dharma.core.websocket.DharmaTCPServer.allow_reuse_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dharma.core.websocket.DharmaTCPServer.daemon_threads">
+<code class="descname">daemon_threads</code><em class="property"> = True</em><a class="headerlink" href="#dharma.core.websocket.DharmaTCPServer.daemon_threads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dharma.core.websocket.DharmaWebSocketServer">
+<em class="property">class </em><code class="descclassname">dharma.core.websocket.</code><code class="descname">DharmaWebSocketServer</code><span class="sig-paren">(</span><em>machine</em>, <em>address=('127.0.0.1'</em>, <em>9090)</em><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.DharmaWebSocketServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="dharma.core.websocket.DharmaWebSocketServer.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.DharmaWebSocketServer.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dharma.core.websocket.DharmaWebSocketServer.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dharma.core.websocket.DharmaWebSocketServer.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dharma.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dharma.core" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="dharma.html" class="btn btn-neutral" title="dharma package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Mozilla Fuzzing Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
