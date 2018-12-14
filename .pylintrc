@@ -1,3 +1,4 @@
+# http://pylint.pycqa.org/en/latest/technical_reference/features.html
 [MASTER]
 ignore=CVS .git .hg
 
@@ -18,6 +19,10 @@ ignore=CVS .git .hg
 
 disable=C0111,C0112,W0613,R0201,R0801,R0903,R0904,R0911,R0913,R0914
 
+[MISCELLANEOUS]
+# List of note tags to take into consideration, separated by a comma.
+notes=FIXME
+
 [FORMAT]
 max-line-length=120
 
@@ -25,4 +30,4 @@ max-line-length=120
 output-format=colorized
 
 [BASIC]
-good-names=i,j,k,v,x,fo,_,logger
+good-names=a,b,i,j,k,m,n,o,t,v,x,fo,_,logger
