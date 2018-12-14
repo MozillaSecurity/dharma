@@ -13,50 +13,73 @@ Generation-based, context-free grammar fuzzer.
 
 <h2>Table of Contents</h2>
 
-- [Requirements](#Requirements)
-- [Examples](#Examples)
+- [Run](#Run)
+  - [pip](#pip)
+  - [pipenv](#pipenv)
+  - [package](#package)
   - [Docker](#Docker)
+- [Examples](#Examples)
 - [Screenshots](#Screenshots)
 - [Development](#Development)
-- [Grammar Cheatsheet](#Grammar-Cheatsheet)
+- [Dharma Grammar Cheatsheet](#Dharma-Grammar-Cheatsheet)
 - [Dharma in the Public](#Dharma-in-the-Public)
 
-## Requirements
+## Run
 
-None
+All roads lead to Rome but Python 3.x is the prefered vehicle.
 
-## Examples
-
-Generate a single test-case and print it to `stdout`. Multiple grammars can be appended to the `-grammars` argument.
+### pip
 
 ```bash
-python3 -m dharma -grammars dharma/grammars/canvas2d.dg
+pip install dharma
+dharma --help
 ```
 
-Generating multiple test-cases and save the result to disk.
+### pipenv
 
 ```bash
-python3 -m dharma -grammars dharma/grammars/canvas2d.dg -storage . -count 5
+pipenv install --dev
+pipenv run dharma --help
 ```
 
-Generate test-cases and serve them in a template via WebSocket.
-Launch `dharma/grammars/var/index.html` in the browser after Dharma launched.
+### package
 
 ```bash
-python3 -m dharma -grammars dharma/grammars/canvas2d.dg -server -template grammars/var/templates/html5/default.html
-```
-
-Benchmark the generator.
-
-```bash
-time python3 -m dharma -grammars dharma/grammars/canvas2d.dg -count 10000 > /dev/null
+python -m dharma --help
 ```
 
 ### Docker
 
 ```bash
 docker build -t dharma .
-docker run --rm -it dharma -grammars dharma/grammars/test.dg
+docker run --rm -it dharma -grammars dharma/grammars/canvas2d.dg
+```
+
+## Examples
+
+Generate a single test-case and print it to `stdout`. Multiple grammars can be appended to the `-grammars` argument.
+
+```bash
+dharma -grammars dharma/grammars/canvas2d.dg
+```
+
+Generating multiple test-cases and save the result to disk.
+
+```bash
+dharma -grammars dharma/grammars/canvas2d.dg -storage . -count 5
+```
+
+Generate test-cases and serve them in a template via WebSocket.
+Launch `dharma/grammars/var/index.html` in the browser after Dharma launched.
+
+```bash
+dharma -grammars dharma/grammars/canvas2d.dg -server -template grammars/var/templates/html5/default.html
+```
+
+Benchmark the generator.
+
+```bash
+time dharma -grammars dharma/grammars/canvas2d.dg -count 10000 > /dev/null
 ```
 
 ## Screenshots
@@ -74,7 +97,7 @@ In case you run PyLint 1.9.2 and Python 3.7 you need to upgrade PyLint.
 pip3 install pylint astroid --pre -U
 ```
 
-## Grammar Cheatsheet
+## Dharma Grammar Cheatsheet
 
 ### Comments
 
@@ -97,6 +120,8 @@ pip3 install pylint astroid --pre -U
 ```
 
 ### Extension Methods
+
+Refer to `extensions.py` in `dharma/core/` and to the `xref_registry` in the `DharmaMachine` class to add further extensions.
 
 ```
 %range%(0-9)
