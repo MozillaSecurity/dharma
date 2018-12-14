@@ -2,7 +2,6 @@ language: python
 sudo: false
 python:
   - "3.6"
-  - nightly
 matrix:
   include:
     - env: TOXENV=py36
@@ -11,7 +10,7 @@ before_install:
 install:
   - pipenv install --dev
 script:
-  - pipenv run tox
+  - pipenv run tox -e py36
 after_success:
   - make docs
 deploy:
