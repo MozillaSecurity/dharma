@@ -11,6 +11,10 @@ Generation-based, context-free grammar fuzzer.
 <a href="https://www.irccloud.com/invite?channel=%23fuzzing&amp;hostname=irc.mozilla.org&amp;port=6697&amp;ssl=1"><img src="https://img.shields.io/badge/IRC-%23fuzzing-1e72ff.svg?style=flat" alt="IRC"></a>
 </p>
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/posidron/posidron.github.io/master/static/images/dharma.gif">
+</p>
+
 <h2>Table of Contents</h2>
 
 - [Run](#Run)
@@ -19,7 +23,6 @@ Generation-based, context-free grammar fuzzer.
   - [package](#package)
   - [Docker](#Docker)
 - [Examples](#Examples)
-- [Screenshots](#Screenshots)
 - [Development](#Development)
 - [Dharma Grammar Cheatsheet](#Dharma-Grammar-Cheatsheet)
 - [API Documentation](#API-Documentation)
@@ -82,11 +85,6 @@ Benchmark the generator.
 ```bash
 time dharma -grammars dharma/grammars/canvas2d.dg -count 10000 > /dev/null
 ```
-
-## Screenshots
-
-![Dharma Demo](https://github.com/posidron/posidron.github.io/blob/master/static/images/dharma/dharma_demo.png)
-![Dharma Menu](https://github.com/posidron/posidron.github.io/blob/master/static/images/dharma/dharma_menu.png)
 
 ## Development
 
