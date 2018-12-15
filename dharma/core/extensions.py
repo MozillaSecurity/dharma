@@ -16,6 +16,8 @@ class DharmaConst:
     VARIANCE_TEMPLATE = "%s"
     VARIANCE_MIN = 1
     VARIANCE_MAX = 8
+    VARIABLE_MIN = 1
+    VARIABLE_MAX = 4
 
 
 class MetaBlock:

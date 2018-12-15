@@ -1,6 +1,8 @@
 # pylint: disable = undefined-variable
 DharmaConst.VARIANCE_MIN = 1
-DharmaConst.VARIANCE_MAX = 1
+DharmaConst.VARIANCE_MAX = 8
+DharmaConst.VARIABLE_MIN = 1
+DharmaConst.VARIABLE_MAX = 4
 DharmaConst.VARIANCE_TEMPLATE = "%s"
 DharmaConst.MAX_REPEAT_POWER = 12
 DharmaConst.LEAF_TRIGGER = 256

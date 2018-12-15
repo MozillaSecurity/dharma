@@ -10,9 +10,9 @@ from itertools import chain
 from collections import OrderedDict
 
 if sys.version_info[0] == 2:
-    from extensions import * # pylint: disable=E0401,W0401
+    from extensions import *  # pylint: disable=E0401,W0401
 else:
-    from dharma.core.extensions import * # pylint: disable=W0401,W0614
+    from dharma.core.extensions import *  # pylint: disable=W0401,W0614
 
 
 class GenState:
@@ -96,7 +96,7 @@ class DharmaObject(list):
         self.namespace = machine.namespace
         self.lineno = machine.lineno
 
-    def id(self): # pylint: disable=invalid-name
+    def id(self):  # pylint: disable=invalid-name
         return "Line %d [%s]" % (self.lineno, self.namespace)
 
     def __hash__(self):
@@ -136,7 +136,7 @@ class DharmaValue(DharmaObject):
                 return
         self.leaf.append(value)
 
-    def generate(self, state): # pylint: disable=too-many-branches
+    def generate(self, state):  # pylint: disable=too-many-branches
         if not state.leaf_mode:
             state.leaf_trigger += 1
             if state.leaf_trigger > DharmaConst.LEAF_TRIGGER:
@@ -186,12 +186,14 @@ class DharmaVariable(DharmaObject):
 
     def generate(self, state):
         """Return a random variable if any, otherwise create a new default variable."""
-        if self.count:
+        if self.count >= random.randint(DharmaConst.VARIABLE_MIN, DharmaConst.VARIABLE_MAX):
             return "%s%d" % (self.var, random.randint(1, self.count))
-        self.count += 1
         var = random.choice(self)
+        prefix = self.eval(var[0], state)
+        suffix = self.eval(var[1], state)
+        self.count += 1
         element_name = "%s%d" % (self.var, self.count)
-        self.default = "%s%s%s" % (self.eval(var[0], state), element_name, self.eval(var[1], state))
+        self.default += "%s%s%s\n" % (prefix, element_name, suffix)
         return element_name
 
 
@@ -202,7 +204,7 @@ class DharmaVariance(DharmaObject):
         return self.eval(random.choice(self), state)
 
 
-class DharmaMachine: # pylint: disable=too-many-instance-attributes
+class DharmaMachine:  # pylint: disable=too-many-instance-attributes
     def __init__(self, prefix="", suffix="", template=""):
         self.section = None
         self.level = "top"
@@ -237,13 +239,13 @@ class DharmaMachine: # pylint: disable=too-many-instance-attributes
     def process_settings(self, settings):
         """A lazy way of feeding Dharma with configuration settings."""
         logging.debug("Using configuration from: %s", settings.name)
-        exec(compile(settings.read(), settings.name, 'exec'), globals(), locals()) # pylint: disable=exec-used
+        exec(compile(settings.read(), settings.name, 'exec'), globals(), locals())  # pylint: disable=exec-used
 
     def set_namespace(self, name):
         self.namespace = name
         self.lineno = 0
 
-    def id(self): # pylint: disable=invalid-name
+    def id(self):  # pylint: disable=invalid-name
         return "Line %d [%s]" % (self.lineno, self.namespace)
 
     def parse_line(self, line):
@@ -372,6 +374,14 @@ class DharmaMachine: # pylint: disable=too-many-instance-attributes
         self.current_obj.append(tokens)
 
     def parse_assign_variable(self, tokens):
+        """
+        Example:
+            tokens
+                dharma.String:      'let ',
+                dharma.ElementXRef: 'GrammarNS:<VarName>',
+                dharma.String:      '= new ',
+                dharma.ValueXRef:   'GrammarNS:<ValueName>'
+        """
         for i, token in enumerate(tokens):
             if isinstance(token, ElementXRef):
                 variable = token.value
@@ -385,7 +395,7 @@ class DharmaMachine: # pylint: disable=too-many-instance-attributes
         if not isinstance(self.current_obj, DharmaVariable):
             logging.error("%s: Inconsistent object for variable assignment", self.id())
             sys.exit(-1)
-        prefix, suffix = tokens[:i], tokens[i + 1:] # pylint: disable=undefined-loop-variable
+        prefix, suffix = tokens[:i], tokens[i + 1:]  # pylint: disable=undefined-loop-variable
         self.current_obj.append((prefix, suffix))
 
     def parse_assign_variance(self, tokens):
