@@ -196,6 +196,7 @@ foo :=
 
 Dharma mentionings in the news.
 
+- https://www.zerodayinitiative.com/blog/2019/1/31/implementing-fuzz-logics-with-dharma
 - http://blog.ret2.io/2018/06/13/pwn2own-2018-vulnerability-discovery/
 - https://blog.mozilla.org/security/2015/06/29/dharma/
 - https://www.redpacketsecurity.com/dharma-generation-based-context-free-grammar-fuzzing-tool/
