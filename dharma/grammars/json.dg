@@ -1,0 +1,121 @@
+%%% JSON grammar
+%%% Based on the official JSON BNF:
+%%% http://json.org
+
+%%% NL and CR whitespaces are missing
+
+%section% := value
+
+ws :=
+    %range%( - )+ws+
+    %range%(	-	)+ws+
+    %range%( - )
+    %range%(	-	)
+
+sign :=
+    -
+    +
+
+exp :=
+    E+sign++digits+
+    e+sign++digits+
+    E++digits+
+    e++digits+
+
+frac :=
+    .+digits+
+
+onenine :=
+    %range%(1-9)
+
+digit :=
+    0
+    +onenine+
+
+digits :=
+    +digit+
+    +digit++digits+
+
+int :=
+    +digit+
+    +onenine++digits+
+    -+digit+
+    -+onenine++digits+
+
+number :=
+    +int++frac++exp+
+    +int++exp+
+    +int++frac+
+    +int+
+
+hex :=
+    %range%(a-f)
+    %range%(A-F)
+    %range%(0-9)
+
+escape :=
+    "
+    \
+    /
+    b
+    f
+    n
+    r
+    t
+    u+hex++hex++hex++hex+
+
+character :=
+    %range%( - )
+    +common:character+
+    +common:digit+
+    !
+    %range%(#-/)
+    %range%(:-@)
+    [
+    %range%(]-`)
+    %range%({-~)
+    \+escape+
+
+characters :=
+    +character+
+    +character++characters+
+
+string :=
+    "+characters+"
+    ""
+
+element :=
+    +ws++value++ws+
+
+elements :=
+    +element+
+    +element+,+elements+
+
+array :=
+    [+ws+]
+    [+elements+]
+
+member :=
+    +ws++string++ws+:+element+
+
+members :=
+    +member+
+    +member+,+members+
+
+object :=
+    {+ws+}
+    {+members+}
+
+value :=
+    +object+
+    +array+
+    +string+
+    +number+
+    true
+    false
+    null
+
+%section% := variance
+
+main :=
+    +element+
