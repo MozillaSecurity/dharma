@@ -1,6 +1,8 @@
 .PHONY: clean clean-test clean-pyc clean-build tag docs lint help
 .DEFAULT_GOAL := help
 
+VERSION=`python3 -c 'import dharma.__version__; print(dharma.__version__.__version__)'`
+
 define PRINT_HELP_PYSCRIPT
 import re, sys
 for line in sys.stdin:
@@ -36,7 +38,6 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 tag: ## tag version for new release
-	VERSION=$$(python3 -c 'import dharma.__version__; print(dharma.__version__)')
 	git tag -a v$(VERSION)
 	git push origin v$(VERSION)
 
