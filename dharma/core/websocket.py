@@ -71,7 +71,7 @@ class BaseWebSocketHandler(BaseRequestHandler):
                 opcode = self._OPCODES[data[0] & 0xF]
                 if opcode == 'close':
                     break
-                elif opcode == 'pong':
+                if opcode == 'pong':
                     self.on_pong()
                     continue
                 length = data[1] & 0x7F
