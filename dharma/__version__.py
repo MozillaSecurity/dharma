@@ -1,5 +1,5 @@
 __title__ = 'dharma'
-__version__ = '1.2.0'
+__version__ = '1.3.0'
 __license__ = 'MPL 2.0'
 __description__ = 'Generation-based, context-free grammar fuzzer.'
 __keywords__ = 'fuzzer fuzzing security testing generator'
