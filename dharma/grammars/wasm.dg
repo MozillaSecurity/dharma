@@ -1,0 +1,199 @@
+%%% ## Author: Patrick Ventuzelo
+%%% ## Twitter: https://twitter.com/Pat_Ventuzelo
+%%% ## Blogpost title: Fuzzing JavaScript WebAssembly APIs using Dharma/Domato (Chrome/V8)
+%%% ## Blogpost link: https://webassembly-security.com/fuzzing-wasm-javascript-dharma-chrome-v8/
+%%% ## Description: Simple grammar for fuzzing WebAssembly JavaScript APIs in JS engines. 
+
+%%% ###########################################################
+%%% ############# WebAssembly JavaScript APIs #################
+%%% ## APIs Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly
+%%% ###########################################################
+
+%const% VARIANCE_MIN := 200
+%const% VARIANCE_MAX := 1000
+%const% VARIABLE_MIN := 4
+%const% VARIABLE_MAX := 15
+
+%%% ####################################################
+%%% ####################################################
+%%% ####### VALUE  SECTION
+%%% ####### only definition of value
+%%% ####### you can use & assign value: +value+
+%%% ####### you can use variable: !variable!.bar();
+%%% ####################################################
+%%% ####################################################
+
+%section% := value
+
+%%% ######## WebAssembly.Global() values ###########
+%%% ## https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Global
+
+WasmTypeInt :=
+	"i32"
+	"i64"
+
+WasmTypeFloat :=
+	"f32"
+	"f64"
+
+GlobalDescriptorFloat :=
+	{value: +WasmTypeFloat+, mutable: +common:bool+}
+
+GlobalDescriptorInt :=
+	{value: +WasmTypeInt+, mutable: +common:bool+}
+
+GlobalParameters :=
+	+GlobalDescriptorFloat+, +common:decimal_number+
+	+GlobalDescriptorInt+, +common:integer+
+
+GlobalWasmMethods :=
+	!globalwasm!.value = !number!;
+	!globalwasm!.value = +common:number+;
+	!number! = !globalwasm!.value;
+	!number! = !globalwasm!.valueOf();
+	!string! = !globalwasm!.toString();
+%%% delete !globalwasm!;
+
+%%% ############# WebAssembly.Table() #################
+%%% ## https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Table
+
+TableDescriptor :=
+	{element: "anyfunc", initial: %range%(0-42)}
+	{element: "anyfunc", initial: %range%(0-42), maximum: %range%(43-99)}
+
+TableWasmMethods :=
+	!number! = !tablewasm!.length - 1;
+	!funcRef! = !tablewasm!.get(%range%(0-42));
+	!funcRef! = !tablewasm!.get(!number!);
+	!number! = !tablewasm!.grow(%range%(0-42));
+	!number! = !tablewasm!.grow(!number!);
+	!tablewasm!.set(%range%(0-42), !funcRef!);
+	!tablewasm!.set(!number!, !funcRef!);
+%%% delete !tablewasm!;
+
+%%% ############# WebAssembly.Memory() #################
+%%% ## https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Memory
+
+memoryDescriptor :=
+	{initial: %range%(0-9)}
+	{initial: %range%(0-9), maximum: %range%(9-999)}
+
+MemoryWasmMethods :=
+	!number! = !memorywasm!.buffer.length - 1;
+	!array! = !memorywasm!.buffer;
+	!number! = !memorywasm!.grow(!number!);
+	!number! = !memorywasm!.grow(%range%(0-9));
+	!memorywasm!.buffer[%range%(0-9)] = %range%(0-9);
+	!memorywasm!.buffer[!number!] = %range%(0-9);
+	!memorywasm!.buffer[!number!] = !number!;
+	for (var i = 0; i < !memorywasm!.buffer.length; i++) {!memorywasm!.buffer[i] = %range%(0-9);}
+	for (var i = 0; i < !memorywasm!.buffer.length; i++) {!memorywasm!.buffer[i] = +common:number+;}
+%%% delete !memorywasm!;
+
+%%% ############# WebAssembly.Module() #################
+%%% ## https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module
+
+%%% hello world module with main function exported
+bufferSource := 
+	new Uint8Array([0,97,115,109,1,0,0,0,1,133,128,128,128,0,1,96,0,1,127,3,130,128,128,128,0,1,0,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,145,128,128,128,0,2,6,109,101,109,111,114,121,2,0,4,109,97,105,110,0,0,10,138,128,128,128,0,1,132,128,128,128,0,0,65,42,11])
+
+SectionName :=
+	"name"
+	""
+	"debug"
+
+ModuleWasmMethods :=
+	!array! = WebAssembly.Module.customSections(!modulewasm!, +SectionName+);
+	!array! = WebAssembly.Module.customSections(!modulewasm!, !string!);
+	!array! = WebAssembly.Module.exports(!modulewasm!);
+	!string! = WebAssembly.Module.exports(!modulewasm!).toString();
+	!array! = WebAssembly.Module.imports(!modulewasm!);
+	!string! = WebAssembly.Module.imports(!modulewasm!).toString();
+	!modulewasm! = new WebAssembly.Module(+bufferSource+);
+%%% delete !modulewasm!;
+
+%%% ############# WebAssembly.Instance() #################
+%%% ## https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Instance
+
+importObject :=
+	{}
+	{ js: { !globalwasm! } }
+	{ js: { tbl: !tablewasm! } }
+	{ js: { mem: !memorywasm! } }
+
+InstanceWasmMethods :=
+	!instancewasm!.exports.main();
+	!memorywasm! = !instancewasm!.exports.memory;
+	!instancewasm! = new WebAssembly.Instance(!modulewasm!, +importObject+);
+%%% delete !instancewasm!;
+%%% TODO instantiateStreaming
+
+%%% ############# WebAssembly Methods #################
+%%% ## https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly#Methods
+
+WasmMethods :=
+	!bool! = WebAssembly.validate(+bufferSource+);
+	WebAssembly.compile(+bufferSource+);
+%%% TODO compileStreaming
+
+
+%%% ############# Wrapper #################
+
+wrapper :=
+	+GlobalWasmMethods+
+	+TableWasmMethods+
+	+MemoryWasmMethods+
+	+ModuleWasmMethods+
+	+InstanceWasmMethods+
+%%% +WasmMethods+
+
+%%% ####################################################
+%%% ####################################################
+%%% ####### VARIABLE  SECTION
+%%% ####### only assignement of variable here
+%%% ####### ex: @MyVariable@= 5;
+%%% ####################################################
+%%% ####################################################
+
+%section% := variable
+
+bool :=
+	try { var @bool@ = true; } catch(e) {}
+	try { var @bool@ = false; } catch(e) {}
+
+number :=
+	try { var @number@ = %range%(0-42); } catch(e) {}
+
+string :=
+	try { var @string@ = "main"; } catch(e) {}
+
+array :=
+	try { var @array@ = []; } catch(e) {}
+
+funcRef :=
+	try { var @funcRef@ = 0; } catch(e) {}
+
+globalwasm :=
+	try { var @globalwasm@ = new WebAssembly.Global(+GlobalParameters+); } catch(e) {}
+
+tablewasm :=
+	try { var @tablewasm@ = new WebAssembly.Table(+TableDescriptor+); } catch(e) {}
+
+memorywasm :=
+	try { var @memorywasm@ = new WebAssembly.Memory(+memoryDescriptor+); } catch(e) {}
+
+modulewasm :=
+	try { var  @modulewasm@ = new WebAssembly.Module(+bufferSource+); } catch(e) {}
+
+instancewasm :=
+	try { var @instancewasm@ = new WebAssembly.Instance(!modulewasm!, +importObject+); } catch(e) {}
+
+%%% ####################################################
+%%% ####################################################
+%%% ####### VARIANCE  SECTION
+%%% ####################################################
+%%% ####################################################
+%section% := variance
+
+main :=
+	try { +wrapper+ } catch(e) {}
