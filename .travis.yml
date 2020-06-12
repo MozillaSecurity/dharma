@@ -1,16 +1,16 @@
 language: python
 sudo: false
 python:
-  - "3.6"
+  - "3.8"
 matrix:
   include:
-    - env: TOXENV=py36
+    - env: TOXENV=py3
 before_install:
   - pip install pipenv
 install:
   - pipenv install --dev
 script:
-  - pipenv run tox -e py36
+  - pipenv run tox -e py3
 after_success:
   - make docs
 deploy:
