@@ -77,7 +77,7 @@ Generate test-cases and serve them in a template via WebSocket.
 Launch `dharma/grammars/var/index.html` in the browser after Dharma launched.
 
 ```bash
-dharma -grammars dharma/grammars/canvas2d.dg -server -template grammars/var/templates/html5/default.html
+dharma -grammars dharma/grammars/canvas2d.dg -server -template dharma/grammars/var/templates/html5/default.html
 ```
 
 Benchmark the generator.
