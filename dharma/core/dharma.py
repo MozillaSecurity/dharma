@@ -188,10 +188,10 @@ class DharmaVariable(DharmaObject):
         """Return a random variable if any, otherwise create a new default variable."""
         if self.count >= random.randint(DharmaConst.VARIABLE_MIN, DharmaConst.VARIABLE_MAX):
             return "%s%d" % (self.var, random.randint(1, self.count))
-        self.count += 1
         var = random.choice(self)
         prefix = self.eval(var[0], state)
         suffix = self.eval(var[1], state)
+        self.count += 1
         element_name = "%s%d" % (self.var, self.count)
         self.default += "%s%s%s\n" % (prefix, element_name, suffix)
         return element_name

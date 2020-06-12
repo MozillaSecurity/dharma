@@ -2235,10 +2235,13 @@ rendering_intent_value :=
 	absolute-colorimetric
 
 color_profile_element_attributes :=
+	name="@color_profile_name@"
+	+color_profile_element_attributes_without_name+
+
+color_profile_element_attributes_without_name :=
 	+core_attributes+
 	+xlink_attributes+
 	local="+local_value+"
-	name="@color_profile_name@"
 	rendering-intent="+rendering_intent_value+"
 
 color_profile_content_class :=
@@ -3180,7 +3183,7 @@ filter_primitive_ref :=
 	<svg><filter id="filter" filterUnits="userSpaceOnUse" x="0" y="0" width="1200" height="400"><feGaussianBlur stdDeviation="8" result="@filter_primitive_ref@"/></filter></svg>
 
 color_profile_name :=
-	<svg><color-pofile name="@color_profile_name@" %repeat%(+color_profile_element_attributes+, " ")></color-profile></svg>
+	<svg><color-profile name="@color_profile_name@" %repeat%(+color_profile_element_attributes_without_name+, " ")></color-profile></svg>
 
 a_target :=
 	<iframe id="@a_target@" width="1" height="1"></iframe>
