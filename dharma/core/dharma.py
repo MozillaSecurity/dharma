@@ -22,7 +22,7 @@ class GenState:
 
 
 class String:
-    """Generator class basic strings which need no further evaluation."""
+    """Generator class for basic strings which need no further evaluation."""
 
     def __init__(self, value, parent):
         self.parent = parent
