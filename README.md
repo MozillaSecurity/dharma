@@ -1,3 +1,5 @@
+**<p align="center">Archived &mdash; please see https://github.com/posidron/dharma for maintained version.</p>**
+
 <p align="center">
   <img src="https://github.com/posidron/posidron.github.io/raw/master/static/images/dharma.png" alt="Logo" />
 </p>
